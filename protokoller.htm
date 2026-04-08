@@ -1,0 +1,4427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>Protokolloversikt</title>
+  <style>
+    body {
+        background-color: rgb(29, 43, 67);
+        color: white;
+        font-family: Arial, sans-serif;
+        font-size: 75%;
+        margin: 0;
+        padding: 10px;
+    }
+
+    .content-wrapper {
+        margin-top: 20px;
+        padding: 10px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
+
+    /* Flex container for search bar and button */
+    .search-bar-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-bottom: 5px;
+        position: sticky; /* Sticky position */
+        top: 0; /* Stick to the top */
+        background-color: rgb(29, 43, 67); /* Background color to avoid overlap with content */
+        z-index: 10; /* Ensures the search bar is on top */
+        padding: 5px 0; /* Padding to make it look nice */
+    }
+
+    .search-container {
+        position: sticky;
+        top: 0;
+        width: 40%;
+    }
+	 .hjem-container {
+        position: sticky;
+        top: 0;
+        width: 10px;
+    }
+    #search {
+        height: 32px;
+        width: 100px;
+        padding: 10px;
+        font-size: 16px;
+        box-sizing: border-box;
+    }
+
+    .button {
+        background-color: rgb(46, 68, 103);
+        border: none;
+        color: white;
+        padding: 2px 4px;
+        margin: 0px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .button:hover {
+        background-color: rgb(29, 43, 67);
+    }
+
+    .round-button-container {
+        display: flex;
+	flex-wrap: wrap;
+        justify-content: flex-start;
+        margin: 0px 0;
+	width: 60%;
+	margin-left: 5px;
+    }
+
+    .round-button {
+        background-color: rgb(46, 68, 103);
+        border: none;
+        color: white;
+        padding: 0px;
+        width: 20px;
+        height: 16px;
+        border-radius: 0%;
+        font-size: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin: 0 0px; /* Add spacing between buttons */
+    }
+
+    .round-button:hover {
+        background-color: red;
+    }
+
+    .active-button {
+        background-color: red;
+    }
+
+    .toggle-header {
+        font-weight: bold;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+
+    .toggle-content {
+        display: none;
+        margin-left: 20px;
+    }
+
+    .section {
+        text-align: right;
+        margin-bottom: 5px;
+        padding-top: 5px;
+        position: sticky;
+        top: 0;
+        right: 0;
+    }
+  </style>
+</head>
+<body>
+   
+
+    <!-- Search bar and filter buttons -->
+    <div class="search-bar-container">
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search..." onkeyup="searchHeaders()">
+        </div>
+        <div class="round-button-container">
+            <button class="round-button" onclick="filterByLetter('A')">A</button>
+	<button class="round-button" onclick="filterByLetter('N')">N</button>
+            <button class="round-button" onclick="filterByLetter('T')">T</button>
+            <button class="round-button" onclick="filterByLetter('M')">M</button>
+            <button class="round-button" onclick="filterByLetter('B')">B</button>
+            <button class="round-button" onclick="clearFilter()">All</button>
+		
+        </div>
+	 <div class="hjem-container">
+	</div>	<a href="#" class="button" onclick="history.back(); return false;" title="Hjem">🏠</a>
+    </div>
+
+    <script>
+        let activeButton = null;
+        let activeLetter = '';
+
+        function hideAllToggleContent() {
+            var contents = document.getElementsByClassName("toggle-content");
+            for (var i = 0; i < contents.length; i++) {
+                contents[i].style.display = "none";
+            }
+        }
+
+        function toggleContent(element) {
+            var content = element.nextElementSibling;
+            content.style.display = content.style.display === "none" ? "block" : "none";
+        }
+
+        function filterByLetter(letter) {
+            hideAllToggleContent();
+            document.getElementById("search").value = '';
+            var headers = document.getElementsByClassName("toggle-header");
+            if (activeButton) {
+                activeButton.classList.remove("active-button");
+            }
+            activeButton = document.querySelector(`.round-button:nth-child(${['A', 'N', 'T', 'M', 'B', 'All'].indexOf(letter) + 1})`);
+            activeButton.classList.add("active-button");
+            activeLetter = letter;
+            for (var i = 0; i < headers.length; i++) {
+                var headerText = (headers[i].textContent || headers[i].innerText).trim();
+                if (headerText.startsWith(letter)) {
+                    headers[i].style.display = "block";
+                    headers[i].dataset.activated = "true";
+                } else {
+                    headers[i].style.display = "none";
+                    headers[i].dataset.activated = "false";
+                }
+            }
+        }
+
+        function searchHeaders() {
+            var input = document.getElementById("search").value.toLowerCase();
+            var headers = document.getElementsByClassName("toggle-header");
+            for (var i = 0; i < headers.length; i++) {
+                if (headers[i].style.display !== "none") {
+                    var text = headers[i].textContent || headers[i].innerText;
+                    if (input && !text.toLowerCase().includes(input)) {
+                        headers[i].style.display = "none";
+                    } else if (!input) {
+                        if (activeLetter) {
+                            filterByLetter(activeLetter);
+                        } else {
+                            clearFilter();
+                        }
+                    }
+                }
+            }
+        }
+
+        function clearFilter() {
+            hideAllToggleContent();
+            document.getElementById("search").value = '';
+            var headers = document.getElementsByClassName("toggle-header");
+            if (activeButton) {
+                activeButton.classList.remove("active-button");
+            }
+            activeButton = null;
+            activeLetter = '';
+            for (var i = 0; i < headers.length; i++) {
+                headers[i].style.display = "block";
+            }
+        }
+    </script>
+
+
+    <!-- Sample Toggle Sections -->
+    <div>
+             
+        <div title="evt. Tra og Cor T1 VIBE dixon senfase (5min) ved cholangiocarcinom eller hemangiom &#013 &#013 Med kontrast&#013 Dag/Kveld &#013 45 min &#013 MR1-3 &#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.1a - MR Abdomen - Tumor, metastaser og andre fokale lesjoner (med IVK - Clariscan)</div>
+        <div  class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16749" target="_blank" style="color: white;">E-håndbok: 16749</a><br><br>
+            T2 HASTE (Cor,Tra)<br>
+            Tra DWI (b50,800 og ADC)<br>
+            Tra T2 SPACE fs trig<br>
+            Tra T1 VIBE dixon<br>
+            Testbolus cor 2ml (clariscan)<br>
+            Tra T1 VIBE dixon x3 (dynamisk)<br>
+        </div>
+        
+        <div title=" Uten kontrast&#013 Dag/Kveld &#013 30 min &#013 MR1-3 &#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.1b - MR Abdomen - Metastaser og tumorkontroll (uten IVK) </div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/135905" target="_blank" style="color: white;">E-håndbok: 13905</a><br><br>
+            T2 HASTE (Cor,Tra)<br>
+            Tra T1 VIBE dixon<br>
+            Tra DWI (b50, 800 og ADC)<br>
+            Tra T2 SPACE fs trig<br>
+        </div>
+        
+        <div title=" Uten kontrast&#013 Dag/Kveld &#013 45 min &#013 MR1-3 &#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.1c - MR Abdomen/Bekken - Metastaser og tumorkontroll (uten IVK)</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/135905" target="_blank" style="color: white;">E-håndbok: 13905</a><br><br>
+            T2 HASTE (Cor,Tra) (lever til bekkenbunn)<br>
+            Tra T1 VIBE dixon (lever til bekkenbunn)<br>
+            Tra DWI (b50, 800 og ADC) (lever til bekkenbunn)<br>
+            Tra T2 SPACE fs trig (lever)<br>
+        </div>
+        
+        <div title="Det tas alltid serier over både hjerte og lever&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.1d - MR Lever - Jernavleiring/ Thalassemi (uten IVK)</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/135905" target="_blank" style="color: white;">E-håndbok: 13905</a><br><br>
+            T2 HASTE (Cor,Tra)<br>
+            Tra T1 FLASH i- og ute-av-fase<br>
+            Tra gre_12echos_liver<br>
+        </div>
+        
+        <div title="Hepatocyt fase (20min - 2t)&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.2a - MR Lever - Tumor, metastaser og andre fokale lesjoner (med IVK - Primovist)</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/58647" target="_blank" style="color: white;">E-håndbok: 58647</a><br><br>
+            T2 HASTE (Cor,Tra)<br>
+            Tra T1 VIBE dixon<br>
+            Testbolus cor 1ml(primovist)<br>
+            Tra T1 VIBE dixon x3 (dynamisk)<br>
+            Tra T1 VIBE dixon (5min)<br>
+            Tra DWI (b50,800 og ADC)<br>
+            Tra T2 SPACE fs trig<br>
+            Tra T1 VIBE dixon (20min)<br>
+            Tra T1 VIBE dixon HR (20min)<br>
+        </div>
+        
+        <div title="Hepatocyt fase (20min - 2t)&#013 &#013 Med kontrast&#013 Dag&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.2b - MR Lever - HAI-pumpe redusert SAR (med IVK - Primovist)</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/58647" target="_blank" style="color: white;">E-håndbok: 58647</a><br><br>
+           Tra T1 VIBE dixon<br>
+	 Testbolus cor 1ml(primovist)<br>
+	 Tra T1 VIBE dixon (5min)<br>
+             Tra T1 VIBE dixon x3 (dynamisk)<br>
+            Tra DWI (b50, 800 og ADC)<br>
+            Tra T2 SPACE fs trig<br>
+            Tra T1 VIBE dixon (20min)<br>
+  		Tra T1 VIBE dixon HR (20min)<br>
+        </div>
+        <div title="Kontrast (Primovist) settes på bordet rett før undersøkelsesstart&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+            A7.2c - MR Lever - Metastase kontroll uten dynamisk (med IVK - Primovist)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/135905" target="_blank" style="color: white;">E-håndbok: 13905</a><br><br>
+        Tra DWI (b50,800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+        Tra T1 VIBE dixon (20min)<br>
+        Tra T1 VIBE dixon HR (20min)<br>
+    </div>
+    
+    <div title="evt:&#013 Tra tynnsnitt 3D MRCP SPACE m/PACE trigging ved hilustumor&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.3a - MR Lever og galleveier MRCP (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58705" target="_blank" style="color: white;">E-håndbok: 58705</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tra T1 GRE in/out phase<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor)<br>
+        Tra DWI (b50, 800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+    </div>
+    
+    <div title="evt:&#013 Tra tynnsnitt 3D MRCP SPACE m/PACE trigging ved hilustumor&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 2&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.3b - MR Lever og galleveier - Liver lab (uten IVK)</div>
+    <div class="toggle-content">
+         <a href="https://ehandbok.ous-hf.no/document/58705" target="_blank" style="color: white;">E-håndbok: 58705</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tra T1 GRE in/out phase<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor)<br>
+        Tra DWI (b50, 800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+        + Liver lab (spør Bac)<br>
+    </div>
+    <div title="evt:&#013 Tra tynnsnitt 3D MRCP SPACE m/PACE trigging ved hilustumor&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.3c - MR Lever og galleveier - Cholangiocarcinom (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+         <a href="https://ehandbok.ous-hf.no/document/58705" target="_blank" style="color: white;">E-håndbok: 58705</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor)<br>
+        Tra DWI (b50,800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+        Cor T1 VIBE dixon<br>
+        Tra T1 VIBE dixon<br>
+        Testbolus (2ml clariscan)<br>
+        Tra T1 VIBE dixon 3x (dynamisk)<br>
+        5min: Tra T1 VIBE dixon + Cor T1 VIBE dixon<br>
+        10min: Tra T1 VIBE dixon + Cor T1 VIBE dixon<br>
+    </div>
+    
+    <div title="Hepatocyt fase (20min - 2t)&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 4&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.3d - MR Lever og galleveier - levende donor (med IVK - Primovist)</div>
+    <div class="toggle-content">
+         <a href="https://ehandbok.ous-hf.no/document/58647" target="_blank" style="color: white;">E-håndbok: 58647</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tykksnitt MRCP (Cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/pace trigging (skrå cor)<br>
+        Tra T1 VIBE dixon<br>
+        Testbolus cor 1ml(primovist)<br>
+        Tra T1 VIBE dixon x3 (dynamisk)<br>
+        Tra T1 VIBE dixon (5min)<br>
+        Tra DWI (b50,800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+        Tra T1 VIBE dixon (20min)<br>
+        Tra T1 VIBE dixon HR (20min)<br>
+    </div>
+    
+    <div title="Default skal galledren være åpent ved us start. &#013 Hør med radiolog om drenet skal stenges ved et tidspunkt.&#013 Evt lengre: Tra T1 VIBE dixon med økt flip vinkel 35° (1.5T) og 25° (3T) &#013 for økt kontrast/vevs kontrast fra og med 20min. &#013 Hør med radiolog&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 - 120 min&#013 MR 2-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.3e - MR Gallelekkasje (med IVK - Primovist)</div>
+    <div class="toggle-content">
+         <a href="https://ehandbok.ous-hf.no/document/58705" target="_blank" style="color: white;">E-håndbok: 58705</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor)<br>
+        Tra T1 VIBE dixon<br>
+        Cor T1 VIBE dixon<br>
+        evt. DYNAMISK<br>
+        Testbolus (1ml)<br>
+        Tra T1 VIBE dixon 3x (dynamisk)<br>
+        Tra + Cor T1 VIBE dixon 5,10,15,20min + +  <br>
+    </div>
+    <div title=" Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.4a - MR Pancreas - Utredning/kontroll tumor (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+         <a href="https://ehandbok.ous-hf.no/document/90397" target="_blank" style="color: white;">E-håndbok: 90397</a><br><br>
+        T2 HASTE (cor,tra)<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor/rett cor) få fremstilt pancreas<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging axial gjennom pancreas<br>
+        Tra DWI (b50, 800, ADC)<br>
+        Tra T2 SPACE fs trig<br>
+        Tra T1 VIBE dixon<br>
+        Testbolus (2ml)<br>
+        Tra T1 VIBE dixon 3x (dynamisk)<br>
+        Tra T1 VIBE dixon 3min<br>
+    </div>
+
+    <div title=" Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Faste#013 Aker" class="toggle-header" onclick="toggleContent(this)">
+        A7.4b - MR Pancreas - Cystisk neoplasi, 1. Kontroll (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/90397" target="_blank" style="color: white;">E-håndbok: 90397</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tra T1 VIBE dixon<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag), evt flere snitt for å avbilde cystisk lesjon<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor/rett cor) få fremstilt pancreas<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging axial gjennom pancreas<br>
+        Tra DWI (b50,800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+    </div>
+
+    <div title=" Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Faste#013 Aker" class="toggle-header" onclick="toggleContent(this)">
+        A7.4c - MR Pancreas - Cystisk neoplasi, f.o.m 2. Kontroll (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/90397" target="_blank" style="color: white;">E-håndbok: 90397</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tra T1 VIBE dixon<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag)<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging axial gjennom pancreas<br>
+        Tra DWI (b50,800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+    </div>
+
+    <div title="Chirhostim 0.2mcg/kg - bland med 8ml NaCl, deretter trekk ut 0.1 ml/kg, max 8ml&#013 &#013 Tykksnitt hvert minutt fra 1 til 10min etter start av injeksjon. &#013 Snitt plan justeres gjerne sammen med en radiolog hvor man skyter seg inn med gjentatte tomserier&#013 &#013 Snittplanet skal dekke pancreasgang + størstedelen av duodenum&#013 &#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.4d - MR Pancreas - Sekretin stimuliert MRCP - kronisk pancreatitt, anatomiske varianter, sphincter Oddi-dysfunksjon og pancreas divisum (med Chirrostim)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/90397" target="_blank" style="color: white;">E-håndbok: 90397</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Tra T1 VIBE dixon<br>
+        Tykksnitt MRCP (cor, skrå cor, sag, fri pust sag), evt flere snitt for å avbilde cystisk lesjon<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging (skrå cor/rett cor) få fremstilt pancreas<br>
+        Tynnsnitt 3D MRCP SPACE m/PACE trigging axial gjennom pancreas<br>
+        Tra DWI (b50,800 og ADC)<br>
+        Tra T2 SPACE fs trig<br>
+    </div>
+    <div title="OBS! snittføringen skal kun dekke nyrene, IKKE lever.&#013 &#013 Med kontrast&#013 Dag&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.5 - MR Nyrer (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/132276" target="_blank" style="color: white;">E-håndbok: 132276</a><br><br>
+        Cor T2 HASTE (nyreakse),<br>
+        Tra T2 HASTE (rett tra),<br>
+        GRE IN/OUT (rett tra),<br>
+        Sag T2 HASTE dxt (nyreakse),<br>
+        Sag T2 HASTE sin (nyreakse),<br>
+        Cor T2 TSE Dixon resp. trig (nyreakse),<br>
+        Cor DWI b50, 400, 800 og calc. 1500 (nyreakse),<br>
+        Tra T1 VIBE dixon (rett tra),<br>
+        Cor T1 VIBE dixon (nyreakse)<br>
+        Testbolus<br>
+        Tra T1 VIBE dixon x3 (rett tra) (dynamisk),<br>
+        Cor T1 VIBE dixon (nyreakse)<br>
+        3min<br>
+        Tra T1 VIBE dixon (rett tra)<br>
+        Cor T1 VIBE dixon (nyreakse)<br>
+        5min<br>
+        Tra T1 VIBE dixon (rett tra)<br>
+        Cor T1 VIBE dixon (nyreakse)<br>
+        Cor T1 VIBE dixon økt Flip Angle (nyreakse)<br>
+    </div>
+
+    <div title=" Med kontrast&#013 Dag&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.6 - MR Binyrer - Tumor: adenom vs. metastase o.a. (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58666" target="_blank" style="color: white;">E-håndbok: 58666</a><br><br>
+        Cor T2 HASTE,<br>
+        Tra T2 HASTE,<br>
+        Tra T1 FLASH in/out phase,<br>
+        Tra T1 VIBE dixon,<br>
+        Cor 2D TrueFisp,<br>
+        Tra 2D TrueFisp,<br>
+        Tra DWI (b50,400,800),<br>
+        Tra T2 SPACE fs trigg<br>
+        Dersom annen tumor/ekspansjon enn adenom: Tra T1 VIBE dixon dynamisk<br>
+        Testbolus (2ml) 0.2ml/kg Clariscan<br>
+        Tra T1 VIBE dixon 3x (dynamisk)<br>
+    </div>
+    <div title="Pasient møter ca 1½ time før selve MR-undersøkelsen. fastet 6 siste timer.&#013 Venflon i armen for medikamenter og i.v. kontrastmiddel. &#013 Drikkeblanding: 960ml vann + 40ml Sorbitol (4%), totalt 1000ml.&#013 Drikke siste time før undersøkelsen for å fylle opp tynntarmen:&#013 100ml (et halvt plastglass) hvert femte (5.) minutt, totalt 50 min. &#013 Buscopan iv 20mg/ml. Sjekk kontraindikasjoner og husk å registrere i RIS!&#013 0,1 mmol/kg Gd-kontrast (= 0,2 ml/kg Clariscan)&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-3&#013 Faste (6 timer)" class="toggle-header" onclick="toggleContent(this)">
+        A7.7 - MR Tynntarm (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60152" target="_blank" style="color: white;">E-håndbok: 60152</a><br><br>
+        Cor T2 HASTE (fremre bukvegg til mest dorsale tarm)<br>
+        Cor T2 HASTE fs (fremre bukvegg til mest dorsale tarm)<br>
+        Cor multislice dynamisk TrueFisp (plasser snittet helt anterior, bruk deretter CTRL 3 eller 4 for å flytte bakover)<br>
+        Cor T2 TrueFisp<br>
+        Tra T2 TrueFisp<br>
+        Cor DWI<br>
+        Buscopan i.v 1ml (1 ampulle)<br>
+        Cor 3D VIBE dixon, posisjoneres som Cor HASTE<br>
+        K+ (håndinjeksjon clariscan)<br>
+        Cor 3D VIBE 3x (30sek, 70sek og 90sek)<br>
+        Varianter: Sagittale serier, serier i rygg- eller sideleie<br>
+        Ved MR tynntarm enteroklyse (Aasen- kontrast settes inn på lab 11) må Buscopan gis helt først. Dynamisk serie til slutt.<br>
+    </div>
+
+    <div  title=" Uten kontrast&#013 Dag / Kveld&#013 15 min (45 min)&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.8a - MR Abdomen - MEN 1 og 2 (uten IVK)</div>
+    <div class="toggle-content">
+        Tra T2 HASTE<br>
+        Cor T2 Haste<br>
+        Tra T1 VIBE DIXON<br>
+        Tra DWI<br>
+    </div>
+
+    <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.8b - MR Abdomen/bekken - SDHx (uten IVK)</div>
+    <div class="toggle-content">
+        <strong>Abdomen:</strong><br>
+        Tra T2 HASTE<br>
+        Cor T2 HASTE<br>
+        Tra T1 VIBE DIXON<br>
+        Tra DWI<br><br>
+        <strong>Bekken:</strong><br>
+        Tra T2 HASTE<br>
+        Cor T2 HASTE<br>
+        Tra T1 VIBE DIXON<br>
+        Tra DWI<br>
+    </div>
+
+    <div title=" Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+        A7.8c - MR Abdomen VHL (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        Tra T2 HASTE<br>
+        Cor T2 HASTE<br>
+        Tra T1 VIBE DIXON<br>
+        Tra DWI (B50, 800 og ADC)<br>
+        Testbolus K+ 0.2ml/kg Clariscan<br>
+        Tra T1 VIBE DIXON K+ x3 (dynamisk)<br>
+    </div>
+    <div title="Varianter: Axial T1 TSE FS før og etter K+, erstatter VIBE dixon ved tumor i ovarier og innvekst i blære&#013 &#013 Med kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.1a - MR Bekken - Tumor, abscess og lignende (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        T2 TSE (Sag, Tra, evt. Cor)<br>
+        Tra DWI (b50,400,1000)<br>
+        Tra T1 VIBE dixon<br>
+        K+ 0.2ml/kg Clariscan<br>
+        Tra T1 VIBE dixon (evt. gjenta i sag. eller cor. retning)<br>
+    </div>
+
+    <div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.1b - MR Bekken - Uterusanatomi (misdannelser), mannlige genitalia (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        T2 TSE (Sag, Tra, Cor (evt. skråsnitt))<br>
+        Variant:<br>
+        Tra T1 VIBE dixon<br>
+        Tra T2 SPACE fs<br>
+    </div>
+
+    <div title="(evt. etter konvensjonell fistulografi og innsetting av saltvann i fistel) &#013 &#013 Med kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.1c - MR Bekkenbunn - fistler Uretra Divertikler (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        T2 TSE (Sag, Tra, Cor)<br>
+        Tra STIR<br><br>
+        Varianter:<br>
+        Tra T2 SPACE fs<br>
+        K+ 0.2ml/kg Clariscan<br>
+        Tra T1 VIBE dixon før og etter kontrast<br>
+    </div>
+
+    <div title=" Med kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.1d - MR Bekkenbunn - fistler/abscess OBS! snittføringer etter analkanalen (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        PD TSE dixon (Sag, Tra)<br>
+        T2 SPACE STIR(Tra, Cor)<br>
+        T1 TSE dixon (Tra, Cor)<br>
+        DWI Tra STIR
+        K+ 0.2ml/kg håndinjeksjon<br>
+        T1 TSE dixon (Tra, Cor)<br>
+    </div>
+
+    <div title="Penis legges i anatomisk stilling, dvs. oppover støttet med hhv. et sammenrullet håndkle på hver side&#013 &#013 Med kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.2a - MR Penis - Kartlegging av sirkulasjonsforhold (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        Liten FOV.<br>
+        T2 TSE (Sag, Tra, Cor)<br>
+        Tra T1 VIBE fs<br>
+        0.2ml/kg Clariscan injektor<br>
+        TWIST COR, 3sek tidsoppløselighet med en scan på 1 min og 45 sek.<br>
+        Tra T1 VIBE fs 2,3,4,5 min + 10min<br>
+        evt. supplere Cor T1 VIBE fs<br>
+    </div>
+    <div title="Penis legges i anatomisk stilling, dvs. oppover støttet med hhv. et sammenrullet håndkle på hver side, &#013 viktig at det ikke blir «knekk»!&#013 &#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.2b - MR Penis - penisfraktur (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        Liten FOV.<br>
+        T2 TSE (Sag, Tra, Cor)<br>
+        T2 TSE DIXON (Sag, Cor)<br>
+        T1 TSE DIXON (Sag, Cor)<br>
+    </div>
+
+    <div title="Penis legges i anatomisk stilling, dvs. oppover støttet med hhv. et sammenrullet håndkle på hver side. Us. &#013 Tas fortrinnsvis med inflatert protese!&#013 &#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 2-4" class="toggle-header" onclick="toggleContent(this)">
+        A8.2c - MR Penis - Proteseposisjon (AMS 700) (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        T2 TSE (Sag, Tra, Cor)<br>
+        Tra STIR<br>
+        Varianter:<br>
+        Tra T2 SPACE fs<br>
+        K+ 0.2ml/kg Clariscan<br>
+        Tra T1 VIBE dixon før og etter kontrast<br>
+    </div>
+
+    <div title=" Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+        A11.7a - MR Abdomenangio (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58669" target="_blank" style="color: white;">E-håndbok: 58669</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        Cor 3D MRA tomserie (FLASH)<br>
+        Testbolus Cor (1.5T - 2ml og 3T - 1/1.5ml) Clariscan<br>
+        Cor 3D MRA x3 med 20sek. intervall mellom seriene<br>
+    </div>
+
+    <div title="evt. Cor T2 SPACE STIR (MIP/MPR + invert Cor)&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+        A11.7b - MR Abdomenangio (Uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        T2 HASTE (Cor,Tra)<br>
+        2D TrueFisp (Cor,Tra)<br>
+        2D TOF. (evt. vinklet i flere plan avhengig av kar anatomi)<br>
+    </div>
+
+    <div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+        A11.8 - MR Bekkenangio Non-Kontrast Bekkenkar tx utredning</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/58682" target="_blank" style="color: white;">E-håndbok: 58682</a><br><br>
+        T2 HASTE (Cor, Tra)<br>
+        T2 TrueFisp (Cor, Tra)<br>
+        Tra 2D TOF arterie (fra bifikraturen og nedover)<br>
+    </div>
+
+    <div title="Tilpass bruk av spole etter problemstilling.&#013 &#013 Husk å bruk SET IMAGE COMMENT og skriv på vibe sekvensene 2min, 3min, 4min osv..&#013 &#013 Husk å sende over alt av TWIST inkl. rådata&#013 &#013 Med kontrast&#013 Dag&#013 75 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+        A12.1a - MR Vaskulærmalformasjon dynamisk (med IVK - Clariscan)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/90401" target="_blank" style="color: white;">E-håndbok: 90401</a><br><br>
+        T2 STIR 2x plan<br>
+        T1 TSE 2x plan<br>
+        T1 VIBE fs i 1 plan (bruk det planet som fremstiller lesjonen best)<br>
+        TWIST COR, 3 sek tidsoppløselighet med en scan på 1 min og 45 sek.<br>
+        Fortsett med VIBE i 10 min. (Dvs fra 2 min etter injeksjon)<br>
+    </div>
+
+    <div title="Tilpass bruk av spole etter problemstilling.&#013 &#013 &#013 &#013Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+        A12.1b - MR Vaskulærmalformasjon (uten IVK)</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/90401" target="_blank" style="color: white;">E-håndbok: 90401</a><br><br>
+        T2 STIR 2x plan<br>
+        T1 tse 2x plan<br>
+    </div>
+
+    <div title="volum-måling av fett/transplantert fett i forbindelse &#013 med rekonstruksjon av bryst) som er i samarbeid med plastikk-kirurgene&#013 &#013 Etter MR følger vi pas bort til CT (stikkerom), der er det en vekt de må stå på for å hente ut body mass %. &#013 Resultatet skannes inn i PACS&#013 &#013 Uten kontrast&#013 Dag&#013 30 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+        DIEP - Deep inferior epigastric perforator</div>
+    <div class="toggle-content">
+        Tra T1 TSE<br>
+        Tra T1 VIBE dixon<br>
+        T2w 2D FS DRB<br>
+    </div>
+    </div>
+    <div>
+        <div title=" &#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4, MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+            N1.1a - MR Caput rutine</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            axT2 TSE <br> 
+            Ax DWI RESOLVE<br> 
+            SagT1 MPRAGE<br> 
+            Ax SWI<br> 
+            Sag FLAIR SPACE</div>
+    </div>
+    <div>
+        <div title=" &#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4 og MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+            N1.1a_kort - MR Caput rutine (kort protokoll)</div>
+        <div class="toggle-content"><a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Ax T2 TSE, <br> Ax DWI epi, <br> Sag T1 MPRAGE, <br> Sag FLAIR SPACE</div>
+    </div>
+    <div>
+        <div title=" &#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4, MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+            N1.1b - MR Caput K+ T1 SPACE</div>
+        <div class="toggle-content"><a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Ax T2 TSE <br> Sag T1 SPACE<br> Sag FLAIR SPACE<br> Ax DWI Resolve<br> Clariscan® - 0,2ml/kg<br> Ax SWI<br> Sag T1 SPACE<br> Sag Flair SPACE</div>
+    </div>
+    <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4 og MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+            N1.1b_kort - MR Caput K+ T1 SPACE (kort protokoll)</div>
+        <div class="toggle-content"><a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Sag T1 SPACE(radiolog fjerner hvis mulig) <br> Sag FLAIR SPACE, <br> K+, <br> Ax DWI RESOLVE, <br> Sag T1 SPACE.</div>
+    </div>
+    <div>
+        <div title="Ved leptomeningial sykdom: FLAIR også etter kontrast.&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4, MR7" class="toggle-header" onclick="toggleContent(this)">
+            N1.1c - MR Caput  K+ T1 MPRAGE</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Ax T2 TSE <br>
+            Sag T1 MPRAGE <br>
+            Sag FLAIR SPACE <br>
+            Ax DWI Resolve <br>
+            K+ <br>
+            Ax SWI <br>
+            Sag T1 MPRAGE</div>
+    </div>
+    
+    <div>
+        <div title=" Ved leptomeningial sykdom: FLAIR tas også etter kontrast.&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+            N1.1c_kort - MR Caput K+ T1 MPRAGE (kort protokoll)
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Sag T1 MPRAGE(radiolog fjerner hvis mulig)<br>
+            Sag FLAIR SPACE,<br>
+            K+,<br>
+            Ax DWI RESOLVE,<br>
+            Sag T1 MPRAGE. </div>
+    </div>
+ <div>
+    <div title="Subtraksjon av T1 MPRAGE pre- og postkontrast.&#013Lag Brainlab av postkontrast MPRAGE&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+        N1.2a - MR Caput Tumorprotokoll  standardisert utredning</div>
+    <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Sag T1 MPRAGE<br>
+            Sag FLAIR SPACE<br>
+            Ax DTI 30 retninger<br>
+            K+, <br>
+            AX T2* Perfusjon<br>
+            Ax T2 TSE<br>
+            AX SWI<br>
+            Sag T1 MPRAGE<br>
+            MRS:CSI TE 135ms<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Subtraksjon av T1 MPRAGE pre- og postkontrast.&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+            N1.2b - MR Caput Tumorprotokoll  standardisert postoperativ
+        </div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Sag T1 MPRAGE<br>
+            Sag FLAIR SPACE<br>
+            Ax DTI 30 retninger.<br>
+            K+<br>
+            Ax T2 TSE<br>
+            AX SWI (middels kort)<br>
+            Sag T1 MPRAGE.<br>
+        </div>
+    </div>
+
+ <div>
+        <div title="Subtraksjon av T1 MPRAGE pre og postkontrast.&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+            N1.2b_kort - MR Caput Tumorprotokoll post op (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Sag T1 MPRAGE,<br>
+            Sag FLAIR SPACE,<br>
+            Ax DWI RESOLVE,<br>
+            K+<br>
+            Ax T2 TSE,<br>
+            Sag T1 MPRAGE,<br> 
+ </div>
+    </div>
+
+ <div>
+        <div title="Subtraksjon av T1 SPACE pre- og postkontrast. Evt: CSI TE 135 ms&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+            N1.2c - MR Caput Tumorprotokoll  standardisert oppfølgning
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 SPACE<br>
+Sag FLAIR SPACE<br>
+Ax DWI RESOLVE<br>
+K+<br>
+AX T2* Perfusjon<br>
+Ax T2 TSE<br>
+AX SWI<br>
+Sag T1 SPACE,<br>  
+ </div>
+    </div>
+
+ <div>
+        <div title="0,1ml/kg kontrast&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+            N1.3a - MR Caput med Hypofyse K+ 1,5 T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Cor T1 TSE<br>
+Sag T1 SPACE<br>
+Cor T2 TSE<br>
+K+<br>
+Cor T1 TSE<br>
+Sag T1 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="0,1ml/kg kontrast&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+            N1.3a_kort - MR Hypofyse 10 a K+ 1,5T (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 SPACE,<br>
+Cor T2 TSE,<br>
+K+,<br>
+Sag T1 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Evt: Dynamisk,senserie,T2 FLAIR SPACE&#013 OBS: Ved dynamisk grasp vibe - 0,2ml/kg kontrast&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4, MR7" class="toggle-header" onclick="toggleContent(this)">
+            N1.3b - MR Caput med Hypofyse K+ 3 T
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Cor T1 TSE<br>
+Sag T1 SPACE<br>
+Cor T2 TSE<br>
+Sag T2 TSE<br>
+K+<br>
+Cor T1 TSE<br>
+Sag T1 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 4"
+ class="toggle-header" onclick="toggleContent(this)">
+N1.3b_kort - MR Hypofyse 10 a K+ 3T (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 SPACE,<br>
+Cor T2 TSE,<br>
+ K+,<br>
+Sag T1 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div  title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.3c - MR  Hypofyse K- Postoperativ > 6 mnd
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Cor T1 TSE<br>
+Sag T1 SPACE<br>
+Cor T2 TSE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 1-4 og MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.3c_kort - MR Hypofyse 10c K- postoperativ>6 mnd (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 SPACE,<br>
+Cor T2<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4, MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.3d - MR Caput/Hypofyse Kraniofaryngeom  utredning
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE,<br>
+Cor T1 TSE,<br>
+Sag T1 SPACE,<br>
+Cor T2 TSE,<br>
+Sag T2 SPACE (IAC)<br> 
+K+,<br>
+Cor T1 TSE,<br>
+Sag T1 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4, MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.3e - MR Caput/Hypofyse Kraniofaryngeom  kontroll K-
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T2 SPACE(IAC)<br>
+Ax T2 TSE,<br>
+Sag T2 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+N1.4a - MR Caput Epiprotokoll 1,5 T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax t2 TSE<br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Cor T2 TSE(vinklet temporalt)<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.4b - MR Caput  Epiprotokoll 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 MPRAGE(ADNI)<br>
+Sag FLAIR SPACE<br>
+Ax T2 TSE(2mm)<br>
+Cor T2 TSE (2mm)<br>
+Sag T2 TSE (2mm) <br>
+ </div>
+    </div>
+
+ <div>
+        <div title="RsfMRI skal kjøres med optio acustics utstyr.&#013 &#013Uten kontrast&#013 Dag / Kveld&#013 60 min&#013 MR7"
+ class="toggle-header" onclick="toggleContent(this)">
+N1.4c - MR Caput rsfMRI Epiprotokoll 3T D7 Prisma
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Prot N01.4b +<br>
+Ax rsfMRI med to aksiale Field map, en med PA phase og en med AP phase.
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.5a - MR Caput akutt hjerneslag
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax DWI (Kort epi)<br>
+Ax FLAIR BLADE<br>
+3D TOF(COW)<br>
+K+<br>
+Ax T2* perfusjon<br>
+Ax SWI (kort)
+ </div>
+    </div>
+
+ <div>
+        <div title="Kontroll tas helst på 1,5T&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.5b - MR Caput kontroll hjerneslag
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax DWI (kort epi)<br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+3D TOF<br>
+Sag FLAIR SPACE<br>
+Ax SWI(middels kort)
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.5b_kort - MR Caput 6b kontroll hjerneslag (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax DWI(kort epi),<br>
+Ax 3D TOF,<br>
+Sag FLAIR SPACE,<br>
+ Ax SWI(middels kort)
+ </div>
+    </div>
+
+ <div>
+        <div title="Lik vinkling på Ax SPACE og TOF.&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.5c - MR Caput Nevrovaskulær kontakt
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Sag FLAIR SPACE<br>
+Ax T2 SPACE(IAC)<br>
+3D TOF. 
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.5c_kort - MR Caput Nevrovaskulær kontakt (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE,<br>
+Ax T2 SPACE(IAC),<br>
+Ax 3D TOF,
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.5d - MR Caput Sinusvenetrombose utredning
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Ax DWI Resolve<br>
+Sag Phase Contrast 3D<br>
+K+<br>
+Ax SWI<br>
+Ax T1-VIBE-dixon<br>
+Sag T1 MPRAGE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.5e - MR Caput Sinusvenetrombose kontroll
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Sag Phase Contrast 3D<br>
+K+<br>
+Sag T1 MPRAGE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.5f - MR Caput coilet aneurisme
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Ax DWI RESOLVE<br>
+3D TOF<br>
+Sag FLAIR SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.5f_kort - MR Caput Coilet aneurisme (kort protokoll
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE,<br>
+Ax DWI epi,<br>
+Ax 3D TOF<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.5g - MR Caput AVM/dAVF 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Ax DWI RESOLVE<br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Cor T2 TSE (2mm)<br>
+Ax SWI(middels kort)<br>
+3D TOF (dekke hele hodet)<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Evt: Dedikerte T2 TSE HR i flere plan&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 4 og MR7"
+ class="toggle-header" onclick="toggleContent(this)">
+N1.5h - Karvegg/Vaskulitt, 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Ax 3D TOF<br>
+Ax DWI RESOLVE<br>
+Sag FLAIR SPACE<br>
+Sag WIP Dante SPACE<br>
+K+<br>
+Sag WIP Dante SPACE<br>
+Ax SWI<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.5h_kort - MR Karvegg/vaskulitt 3T (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax 3D TOF hele hodet (hvis ikke oppdatert CTA),<br>
+Sag FLAIR SPACE,<br>
+Sag WIP Dante SPACE<br>
+K+,<br>
+Ax DWI RESOLVE<br>
+Sag WIP Dante SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Evt 1: 2D TOF Halskar&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 50 min&#013 MR 1-4&#013 " class="toggle-header" onclick="toggleContent(this)">
+N1.5i - MR Karvegg/disseksjon
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Ax DWI RESOLVE<br>
+SagT1 MPRAGE<br>
+Ax SWI<br>
+Sag FLAIR SPACE<br>
+Ax3D TOF Halskar<br>
+Ax T1 TSE  fs (3 mm, satpuls sup./inf.)<br>
+Ax T2 TSE(3mm, satpuls sup./inf.)<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Ax dynamisk T2* Gadovist 0.1 ml/kg. Flow 5ml/s. &#013 Sykepleier injiserer Diamox etter skjema. Ax SWI i ventetiden &#013
+
+Ny Ax dynamisk T2* Gadovist 0.1 ml/kg. Flow 5ml/s. &#013 Den andre perfusjonen skal starte 10 min etter at Diamox injeksjonen er ferdig.&#013 &#013 Med kontrast&#013 Dag&#013 90 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.5j - MR Perfusjon Diamox 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            Sag T1 MPRAGE (Brainlab)<br>
+            Sag FLAIR fs<br>
+            Cor CISS<br>
+            Ax ToF hele hodet<br>
+            Ax PCASL multi 3 3 3 4 4 4 <br>
+            Ax PCASL multi M0<br>
+            K+<br>
+            Ax T2* Perfusjon<br>
+            Diamox<br>
+            AX SWI<br>
+            Ax T2 tse<br>
+            Ax DWI Resolve<br>
+            k+<br>
+            Ax T2* Perfusjon<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4 og MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.6a - MR CSF-flow standard
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T2 SPACE<br>
+Sag CISS<br>
+ </div>
+    </div>
+
+ <div>
+        <div class="toggle-header" onclick="toggleContent(this)">
+N1.6b - MR Caput HASTE
+
+</div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 15 min&#013 MR 1-4" class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+T2 HASTE 3 plan (4mm)
+ </div>
+    </div>
+
+
+ <div>
+        <div title="Evt:&#013 Totalcolumna: &#013 sagT1-volum fs(VIBE , rek.1mm. cor/ax, akt.omr.)&#013 /sag/corT1 fs 2D 3mm(Dixon)&#013 &#013 Med kontrast&#013 Dag&#013 2 x 30 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+N1.6c - MR Caput CSF-lekkasje/MR-cisternografi
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+1: MR-lab:<br>
+sagT1-volum fatsat(SPACE fs, rek 1 mm.ax/cor)<br>
+
+2: Gj.l.lab 0,5 ml Gd (Gadovist) intrathecalt<br>
+
+3: Etter ca. 2 t:Caput:<br>
+axT2<br>
+sagCISS<br>
+sagT1-volum fatsat(SPACE fs, rek.1mm.ax./cor)<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Evt: &#013 WIP T2 SPACE (3T) &#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4h - MR Totalcolumna CSF-lekkasje 
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: 16884</a><br><br>
+Sag T2 SPACE<br>
+Cor T2 SPACE FS<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag&#013 Dag 1: 35 min - MR 1-3 &#013 Dag 2: 15 min - MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+N1.6d - MR Caput iNPH
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Prekontrast dag en:<br>
+Prot N01.6a +<br>
+Sag FLAIR SPACE,<br>
+Sag T1 MPRAGE,<br>
+Ax SWI,<br>
+AX DWI<br>
+
+Postkontrast (ca24t)<br>
+dag2: Sag T1 MPRAGE_24t<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Ax og Cor T2 med lang TR/ TE på barn 0-1 år.&#013 Cor T2 på barn 1-2år&#013 Sag Flair Space på barn over 2 år&#013 Ax T1 IR på barn under 3 år&#013 &#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7a - MR Caput småbarn rutine 0-1år / 2år / >2år / premature i kuvøse
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+0-1 år<br>
+Ax T2 TSE(TR/TE: 6000/146)<br>
+Cor T2 TSE (TR/TE: 6000/146)<br>
+Ax T1 TSE IR<br>
+Sag T1 MPRAGE<br>
+Ax DWI RESOLVE(b0/400/800)<br>
+Ax SWI<br><br>
+
+1-2 år<br>
+Ax T2 TSE<br>
+Cor T2 TSE<br>
+Ax T1 TSE IR<br>
+Sag T1 MPRAGE<br>
+Ax DWI RESOLVE(b0/400/800)<br>
+Ax SWI<br><br>
+
+Over 2 år<br>
+Ax T2 TSE<br>
+Ax T1 TSE IR under 3 år<br>
+Ax DWI RESOLVE(b0/400/800)<br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Ax SWI<br><br>
+
+Premature kuvøse 3T<br>
+Ax T2 TSE(TR/TE: 6000/277)<br>
+Cor T2 TSE (TR/TE: 6000/277)<br>
+Ax T1 TSE IR<br>
+Sag T1 MPRAGE<br>
+Ax DWI RESOLVE(b0/400/800)<br>
+Ax SWI<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7(a) - MR Caput barn 1-2år
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Cor T2 TSE<br>
+Ax T1 TSE IR<br>
+Sag T1 MPRAGE<br>
+Ax DWI RESOLVE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7(a) - MR Caput barn over 2år
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Ax T1 TSE IR under 3 år<br>
+Ax DWI RESOLVE<br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 90 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.7(a) - MR Caput premature, kuvøse 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE(TR/TE: 6000/277)<br>
+Cor T2 TSE(TR/TE: 6000/277)<br>
+Ax T1 TSE IR<br>
+Sag T1 MPRAGE<br>
+Ax DWI(b0/400/800)<br>
+Ax SWI<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag&#013 90 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7b - MR Caput barn tumorprotokoll m/columna
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+<strong>Caput:</strong><br>
+Sag T1 SPACE<br>
+Ax T2 TSE<br>
+Ax DWI RESOLVE<br>
+k+<br>
+SWI<br>
+Sag T1 SPACE<br>
+Sag FLAIR SPACE<br><br>
+
+<strong>Totalcolumna:</strong><br>
+Sag T2 TSE  Totalcolumna<br>
+Sag Ciss LS (før k+)<br>
+Sag T1 TSE<br>
+Ax T1 TSE / Vibe (alltid nede + evt v. funn oppe)<br><br>
+
+evt.1 MRS<br>
+evt.2 DSC T2*<br>
+evt.3 ASL<br>
+evt.4 DTI<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7c - MR Caput barn tumorprotokoll u/columna
+
+</div>
+        <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>    
+Sag T1 SPACE<br>
+Ax T2 TSE<br>
+Ax DWI RESOLVE<br>
+k+<br>
+SWI<br>
+Sag T1 SPACE<br>
+Sag FLAIR SPACE<br><br>
+
+evt.1 MRS<br>
+evt.2 DSC T2*<br>
+evt.3 ASL<br>
+evt.4 DTI<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7d - MR Caput barn/ Traume/ “Shaken baby”
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+Ax T2 TSE,<br>
+Ax T1 TSE IR,<br>
+Ax SWI,<br>
+Ax DWI RESOLVE,<br>
+Sag FLAIR SPACE,<br>
+Sag T1 MPRAGE,<br>
+
+Totalcolumna: Sag T2 TSE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7e - MR Caput barn-misdannelser
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+Sag T1 MPRAGE,<br>
+Ax T2 TSE,<br>
+Ax DTI,<br>
+Cor T2 TSE under 2år,<br>
+Sag FLAIR SPACE<br>
+>2 år, Ax T1 TSE IR<br>
+Sag T2 SPACE<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Husk å lage ratio av metabolitter, Se e-håndbok.&#013 &#013 Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7f - MR Caput barn/ HIE/asfyksi
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+Prot N1.7a +<br>
+Ax SWI,<br>
+CSI slaser270(basalganglier),<br>
+CSI slaser270(sentrum semiovale)<br>
+ </div>
+    </div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7g - Mr Caput barn0-1 år/neonatale kramper/infarkt/blødning/SVT
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+Prot N01.7a+<br>
+Ax SWI,<br>
+Ax 3D TOF,<br>
+Sag Phase Contrast venografi<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Hvis patologi suppler med SVS 30 akt nivå(radiolog bestemmer).&#013 &#013 Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.7h - MR Caput/ Metabolsk sykdom
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE,<br>
+Cor T2 TSE,<br>
+Ax T1 TSE IR,<br>
+Sag FLAIR SPACE,<br>
+Sag T1 MPRAGE,<br>
+Ax DWI RESOLVE,<br>
+Ax SWI,<br>
+CSI slaser 135(basalganglier),<br>
+CSI slaser 135(sentrum semiovale)<br>
+på sted med signalavik på 3T, CSI slaser 270(basalganglier og sentrum semiovale) på 1,5 T<br>
+ </div>
+    </div>
+
+ <div>
+        <div title="Dagtid, Evt ax/cor/sag TRUE FISP&#013 &#013 Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+N1.7i - MR Foster
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+Oversikt mor mage:<br>
+ax/cor/sag HASTE (4mm.),<br>
+ Barn:<br>
+Ax/Cor/Sag HASTE(3mm),<br>
+AX T1 GRE<br>
+AxDiff(3mm)<br>
+Ax EPI FLAIR(4mm)<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.8a - MR- Spektroskopi, multivoxel middels ekkotid
+
+</div>
+        <div class="toggle-content">
+<a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+<a href="https://ehandbok.ous-hf.no/document/16909" target="_blank" style="color: white;">E-håndbok: Spektroskopi</a><br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.8b - MR- Spektroskopi, singelvoxel middels ekkotid
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+<a href="https://ehandbok.ous-hf.no/document/16909" target="_blank" style="color: white;">E-håndbok: Spektroskopi</a><br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.8c - MR- Spektroskopi, multivoxel kort ekkotid
+
+</div>
+        <div class="toggle-content">
+<a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+<a href="https://ehandbok.ous-hf.no/document/16909" target="_blank" style="color: white;">E-håndbok: Spektroskopi</a><br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.8d - MR- Spektroskopi, singelvoxel kort ekkotid
+
+</div>
+        <div class="toggle-content">
+<a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+<a href="https://ehandbok.ous-hf.no/document/16909" target="_blank" style="color: white;">E-håndbok: Spektroskopi</a><br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.8e - MR- Spektroskopi, multivoxel lang ekkotid
+
+</div>
+        <div class="toggle-content">
+<a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+<a href="https://ehandbok.ous-hf.no/document/16909" target="_blank" style="color: white;">E-håndbok: Spektroskopi</a><br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.8f - MR- Spektroskopi, singelvoxel lang ekkotid
+
+</div>
+        <div class="toggle-content">
+<a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+<a href="https://ehandbok.ous-hf.no/document/16909" target="_blank" style="color: white;">E-håndbok: Spektroskopi</a><br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: Opticusnevritt: Cor T2 fs TSE&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.9a - MR Caput MS 1,5T K+
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Ax DWI RESOLVE<br>
+SWI_Optimized<br>
+K+<br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt.1: Ax T2/T1 TSE medulla spinalis  &#013 Evt 2: Opticusnevritt: Cor T2 fs TSE Evt 3: Medulla spinalis K+ Sag T1 PSIR&#013 evt 4: Sag DIR SPACE&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 90 min&#013 MR 1-3&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.9b - MR Caput MS 1,5T m/medulla K+
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Caput:
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Ax DWI RESOLVE<br>
+SWI_Optimized<br>
+K+<br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+
+Medulla :<br>
+Sag Stir (før k+)<br>
+Sag T2 TSE<br>
+Sag T1 TSE k+<br>
+Ax T2 TSE cervicalt<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-3&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.9a_kort - MR Caput MS 1,5T K-
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+Sag FLAIR SPACE<br>
+Ax T2 TSE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Hvis medulla skal tas, MÅ dette spesifiseres. &#013 Evt.1: medulla spinalis K+: Sag T2/T1 TSE, Ax T2 TSE Cervicalt, (Ax T2/T1 TSE) &#013 Evt 2: Opticusnevritt: Cor T2 fs TSE &#013 Evt 3: Medulla spinalis K+ Sag T1 PSIR&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-3&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N1.9b_kort - MR Caput MS 1,5T m/medulla K-
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Caput:<br>
+Ax T2 TSE<br>
+Sag FLAIR SPACE<br>
+
+Medulla:<br>
+Sag T2 TSE<br>
+Sagt T1 TSE<br>
+Ax T2 TSE cervicalt<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: Opticusnevritt: Cor T2 fs TSE&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.9c - MR Caput MS 3,0 K+
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Ax DWI RESOLVE<br>
+Sag DIR SPACE<br>
+SWI_Optimized<br>
+K+<br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Hvis medulla skal tas, MÅ dette spesifiseres. &#013 &#013 Evt.1: medulla spinalis K+: Sag T2/T1 TSE, Ax T2 TSE Cervicalt, (Ax T2/T1 TSE) &#013 &#013 Evt 2: Opticusnevritt: Cor T2 fs TSE &#013 &#013 Evt 3: Medulla spinalis K+ Sag T1 PSIR&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 105 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.9d - MR Caput MS 3,0T m/medulla K+
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 MPRAGE<br>
+Sag FLAIR SPACE<br>
+Ax DWI RESOLVE<br>
+Sag DIR SPACE<br>
+SWI_Optimized<br>
+K+<br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE<br>
+
+Medulla :<br>
+Sag Stir (før k+)<br>
+Sag T2 TSE<br>
+Sag T1 TSE k+<br>
+Ax T2 TSE cervicalt<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div class="toggle-header" onclick="toggleContent(this)">
+N1.9c_kort - MR Caput MS 3,0T K-
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            
+Ax T2 TSE<br>
+Sag FLAIR SPACE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.9d_kort - MR Caput MS 3,0T m/medulla K-
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Ax T2 TSE<br>
+Sag FLAIR SPACE<br>
+
+Medulla:<br>
+Sag T2 TSE<br>
+Sag T1 TSE<br>
+Ax T2 TSE cervicalt<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.10a - MR Caput Nevronavigasjon tumor
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+K+
+Ax T2 TSE<br>
+Sag T1 MPRAGE (Brainlab)<br>
+Sag FLAIR SPACE(Btrainlab)<br>
+Ax DTI<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="OBS: Skal ha std dose - 0,2ml/kg kontrast&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N1.10b - MR Hypofyse Nevronavigasjon tumor
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+K+<br>
+Cor T2 TSE Hypofyse<br>
+Sag T1 MPRAGE (Brainlab)<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.10c - MR Caput Nevronavigasjon GPi preop DBS 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 MPRAGE (Brainlab)<br>
+Sag FLAIR SPACE (Brainlab)<br>
+Ax T2 TSE(2 mm) Sag FLAIR SPACE (Brainlab)<br>
+Ax FGATIR<br>
+DTI 30 retninger<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.10d - MR Caput Nevronavigasjon STN/ZI/Vim preop 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 MPRAGE (Brainlab)<br>
+Ax T2 TSE(2mm) (Brainlab)<br>
+Sag FLAIR SPACE (Brainlab)<br>
+AX SWI,<br>
+AX DTI 64 retninger<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.10e - MR Caput Nevronavigasjon ANT preop DBS 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag FLAIR SPACE,<br>
+Ax T2 TSE(2mm),<br>
+Ax FGATIR,<br>
+Ax DTI 64 retninger,<br>
+K+,<br>
+Sag T1 MPRAGE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.10f - MR Caput SEEG 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Sag T1 MPRAGE(ADNI)<br>
+Sag FLAIR SPACE<br>
+AX DTI 30 retninger<br>
+ </div>
+    </div>
+<div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.10g - MRgFUS 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Ax T2 TSE<br>
+Sag T1 MPRAGE(Brainlab)<br>
+Ax DWI Resolve<br>
+Ax SWI<br>
+Ax 3D ToF<br>
+Cor T2 FLAIR TSE<br>
+AX DTI 30 retninger<br>
+ </div>
+    </div>
+
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 &#013 Dag / Kveld&#013 &#013 Dag: 60 min&#013 &#013 Kveld: 75 min&#013 &#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N1.11 - MR Caput fMRI 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16906" target="_blank" style="color: white;">E-håndbok: fMRI</a><br><br>
+    T1-volum(MPRAGE)<br>
+a - Gen-FingerTap-RL<br>
+	b - Gen-FingerTap-RL-kort<br>
+	c - Gen-fot-RL<br>
+	d - Gen-Lepper<br>
+	e - Ord-Bokstaver<br>
+	f - Ord-Antonymer<br>
+	g - Ord-Bildebenevning<br>
+h - Ord-Bildebenevning-kort<br>
+i - Txt-Lese Vs Tull Vs Hvile<br>
+j - Txt_Lese Vs Tull<br>
+k - Txt-Lytte Vs Baklengs Vs Stille<br>
+l - Txt-Lytte Vs Baklengs Vs Stille-kort<br>
+m - Txt-LeseSetningRespons<br>
+n - Gen-Visuell_Flimmer<br>
+o - Gen-Generisk_blokk<br>
+B e - Ord-Bokstaver-barn<br>
+B g - Ord-Bildebenevning-barn<br>
+B j - Txt_LeseVsTull-barn<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag&#013 60 min&#013 MR 3" class="toggle-header" onclick="toggleContent(this)">
+N1.11b - MR Caput fMRI 1,5T
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16906" target="_blank" style="color: white;">E-håndbok: fMRI</a><br><br>
+T1-volum (MPRAGE) /fingertap/fottap/høretekst/lesetekt/orddannelse (spesifiser)
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / kveld&#013 30 min&#013 MR 1-4 og D7" class="toggle-header" onclick="toggleContent(this)">
+N1.12a - MR Orbita med caput, K-
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Orbita:<br>
+AxT1 TSE(3mm)<br>
+Cor T1 TSE(3mm)<br>
+Cor T2 Dixon(3mm)<br>
+
+Caput:<br>
+AxT2 TSE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / kveld&#013 45 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.12b - MR Orbita opticusnevritt 2D
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Cor T2 TSE Dixon<br>
+K+<br>
+Cor T1 Dixon<br>
+Ax T1 Dixon<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 1-4 og MR 7" class="toggle-header" onclick="toggleContent(this)">
+N1.12b_kort - MR Orbita opticusnevritt 2D (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Cor T2 Dixon,<br>
+K+,<br>
+Cor T1 Dixon<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / kveld&#013 45 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.12c - MR Orbita med caput tumor, inflammasjon 2D
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Orbita:<br>
+CorT1 TSE<br>
+K+<br>
+CorT1 TSE Dixon<br>
+Ax T1 TSE Dixon<br>
+Cor T2 TSE Dixon<br>
+
+Caput:<br>
+Ax T2 TSE<br>
+K+<br>
+Ax T1 TSE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / kveld&#013 45 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N1.12d - MR Orbita med caput tumor, inflammasjon 3D
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Orbita<br>
+Cor T2 Dixon<br>
+
+Caput:<br>
+Ax T2 TSE<br>
+Sag T1 SPACE<br>
+K+<br>
+Sag T1 SPACE<br>
+Sag T1 SPACE fs<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4 og MR 7" class="toggle-header" onclick="toggleContent(this)">
+N1.12d_kort - MR Orbita med Caput tumor/inflamasjon 3D (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Orbita:<br>
+Cor T2 Dixon <br>
+Caput:<br>
+Ax T2 TSE,<br>
+Sag T1 SPACE,<br>
+K+,<br>
+Sag T1 SPACE fs<br>
+ </div>
+    </div>
+
+
+
+ <div>
+        <div title=" Med kontrast&#013 Dag&#013 60 min&#013 MR 4 " class="toggle-header" onclick="toggleContent(this)">
+N1.12e - MR Orbita med caput, Retinoblastom europeisk protokoll, 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+Caput:<br>
+Ax Resolve Diffusjon<br>
+Ax T2 TSE(2mm)<br>
+Orbita:<br>
+Ax T2 SPACE(IAC) m rek skrå sag,<br>
+Ax DWI ZoomIt<br>
+Ax T1 TSE(2mm)<br>
+k+<br>
+Ax T1 TSE(2mm)<br>
+Ax T1 TSE Dixon(2mm)<br>
+Ax T1 TSE fs(2mm)<br>
+Sag-oblique T1 TSE(2mm) synsnerver/orbita<br>
+Caput:<br>
+Sag T1 MPRAGE(rek 1mm Ax/cor, 1mm skrå-oblique synsnerver)<br><br>
+
+I tilfeller med ekstensiv ON invasjon<br> 
+eller embryonal tumor:<br>
+evt. k+ sagittal T1-se spinal akse ≤3mm
+
+
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: Ax T1 TSE&#013 &#013 Med kontrast&#013 Dag&#013 45 min &#013 60 min hvis flere seksjoner&#013 MR 1-4 " class="toggle-header" onclick="toggleContent(this)">
+N1.13a - MR Caput VHL m/columna
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Caput:<br>
+K+,<br>
+Sag T1 MPRAGE,<br>
+Totalcolumna:<br>
+K+,<br>
+Sag T1 TSE Dixon,<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 15 min (45 min)&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+N1.13b - MR Hypofyse MEN1
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: 16883</a><br><br>
+            
+Cor T2 TSE
+
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4, MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N2.1a - MR Cervicalcolumna 2D
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+Ax T2 Medic<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4, MR7 og Aker" class="toggle-header" onclick="toggleContent(this)">
+N2.1b - MR Cervicalcolumna 3D
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+Sag T2 SPACE(rek Ax/cor og skrå-sag rotkanaler)<br>
+Ax T2 Medic<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 1-4 og MR 7" class="toggle-header" onclick="toggleContent(this)">
+N2.1b_kort - MR Cervicalcolumna 3D (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T2 TSE,<br>
+Sag T2 SPACE(rek Ax/cor, skrå-sag rotkanaler)<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: Ax T1/T2 TSE&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4, MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N2.2 - MR Thoracalcolumna
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 30 min&#013 MR 1-4, MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N2.3a - MR LS-columna standard
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+Ax T2 TSE<br>
+Sag T2 SPACE( rek 1mm Ax og curved cor)<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4, MR7 og Aker" class="toggle-header" onclick="toggleContent(this)">
+N2.3b - MR LS-columna/postoperativt prolaps
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+Ax T2 TSE<br>
+Ax T1 TSE<br>
+K+<br>
+Sag T1 TSE<br>
+Ax T1 TSE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: &#013 Ax T1/T2 TSE, &#013 Ax T2_hemoserie,&#013 Sag DWI&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 50 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4a - MR Totalcolumna, spinal blødning, medullær iskemi/infarkt, traume
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+Sag T2_hemoserie<br>
+ </div>
+    </div>
+
+</div>
+
+ 
+
+</div>
+
+ <div>
+        <div title="Evt: &#013 K+ Ax T1 TSE Dixon&#013 Sag/Ax DWI&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4b - MR Totacolumna, Dropmetastaser, leptomeningial spredning
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T2 TSE Dixon<br>
+Sag CISS lumbalt inkl cauda equina<br>
+K+<br>
+Sag T1 TSE Dixon<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4c - MR Totalcolumna ,metastaser
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T2 TSE Dixon<br>
+Sag DWI resolve<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4d - MR Totalcolumna , Primær bentumor
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T2 TSE Dixon<br>
+Ax T2 TSE Dixon<br>
+Ax T1 TSE Dixon<br>
+K+<br>
+Sag T1 TSE Dixon<br>
+Ax T1 TSE Dixon<br>
+Sag DWI<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: &#013 Sag DWI, &#013 Cor T2 TSE Dixon&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 75 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4e - MR Totalcolumna , Intramedullær, intradural, epidural tumor, infeksjon
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE Dixon<br>
+Ax T2 TSE<br>
+Sag T2 SPACE<br>
+K+<br>
+Sag T1 TSE Dixon<br>
+Ax T1 TSE Dixon<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N2.4f - MR Totalcolumna/ Medulla spinalis misdannelser
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T1 TSE<br>
+Sag T2 TSE<br>
+Ax T1 TSE<br>
+Ax T2 TSE<br>
+Sag T2 SPACE(rek 1 mm Ax+ cor curved)<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 1-4 og MR 7" class="toggle-header" onclick="toggleContent(this)">
+N2.4f_kort - MR Totalcolumna misdannelser (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Ved kontroll syrinx:<br>
+Sag T2 TSE,<br>
+evt: Ax T2 TSE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld (ikke helg)&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+N2.4g - MR Caput og totalcolumna Spinraza
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+              <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Caput:
+AX T2 TSE,<br>
+SAG FLAIR SPACE.<br>
+Columna:<br>
+T2 SPACE CC,TH og LS<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt1: &#013 K+ Cor T1 TSE Dixon &#013 (Ax/sag T1 Dixon) &#013 Evt2: &#013 Cor STIR SPACE K+, &#013 Evt3: &#013 Ax T2 TSE Dixon  &#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N2.5a - MR Plexus brachialis
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+N2.1b (dersom nylig utført, kun Sag T2 SPACE)+<br>
+Cor T1 SPACE<br>
+Cor STIR SPACE<br>
+Sag T1 TSE  aktuell side.<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Ses på av radiolog!&#013 &#013 Eventuelt kontrast&#013 Dag&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N2.5b - MR Plexus brachialis traume barn 3T
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag CISS<br>
+Cor STIR SPACE<br>
+Cor T1 SPACE<br>
+Sag T2 TSE<br>
+Ax T2 TSE Dixon, <br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Sea på av radiolog!&#013 &#013 Uten kontrast&#013 Dag&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N2.5c - MR Plexus brachialis traume voksen 3T
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag CISS<br>
+Cor STIR SPACE<br>
+Cor T1 SPACE<br>
+Sag T2 TSE<br>
+Ax T2 TSE Dixon<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N2.5d - MR Plexus lumbosacralis
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+N2.3a(Dersom nylig utført kun Sag T2 SPACE)+<br>
+Cor T1 TSE<br>
+Cor STIR SPACE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 20 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N2.5d_kort - MR Plexus Lumbosacralis (kort protokoll)
+
+</div>
+        <div class="toggle-content">
+             <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+Sag T2 SPACE lumbosacralt,<br>
+Cor T1 TSE,<br>
+Cor STIR SPACE,<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med  kontrast&#013 Dag /Kveld&#013 45 min&#013 MR 1-4, MR7 og Aker" class="toggle-header" onclick="toggleContent(this)">
+N3.1a - MR Caput med tinningben, utredning
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+AxT2 TSE<br>
+Ax DWI RESOLVE<br>
+Ax T1 (3mm 512)<br>
+AxT2SPACE<br>
+K+<br>
+Sag T1 SPACE SPACE<br>
+Ax T1 TSE DIXON (3 mm 512)<br>
+ </div>
+    </div>
+
+</div>
+
+ 
+
+</div>
+
+ <div>
+        <div title=" Med  kontrast&#013 Dag /Kveld&#013 30 min&#013 MR 1-4, MR7&#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N3.1b - MR Caput med tinningben, kontroll
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Ax T2 SPACE (IAC)<br>
+K+<br>
+Sag T1 SPACE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med  kontrast&#013 Dag /Kveld&#013 60 min&#013 MR 4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N3.2 - MR Caput med skallebasis/hjernenerver 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Ax T2 TSE<br>
+Cor T2 TSE<br>
+Sag T2 TSE<br>
+Sag T1 TSE<br>
+Cor T1 TSE<br>
+K+<br>
+Sag T1 TSE<br>
+Cor T1 TSE<br>
+Sag T1 SPACE fs<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: K+ Ax 3D TOF&#013 &#013 Eventuelt  kontrast&#013 Dag /Kveld&#013 15 min&#013 MR 1-4, MR7 &#013 Aker og Unilabs" class="toggle-header" onclick="toggleContent(this)">
+N11.1a - MR 3D TOF arterier intrakraniell
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Ax 3D TOF
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag /Kveld&#013 30 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N11.1b - MR 3D TOF arterier intrakraniell og halskar
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Ax 3D TOF intrakraniell<br>
+Ax 3D TOF halskar<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: Ax SWi eller Ax T2*_Hemo,&#013 &#013 Med kontrast&#013 Dag /Kveld&#013 45 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N11.1c - MR Venografi 3D fasekontrast
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Sag Phase Contrast 3D<br>
+ K+<br>
+sag T1 MPRAGE<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag /Kveld&#013 30 min&#013 MR 1-4 og MR7" class="toggle-header" onclick="toggleContent(this)">
+N11.1d - MR Perfusjon standard T2*/DSC
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Ax dynamisk T2*<br>
+Gadovist 0.1 ml/kg.Flow 5ml/s,<br>
+barn under 10år Gadovist 0.1ml/kg/Flow 3-5ml/s<br>
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Med kontrast&#013 Dag&#013 30 min&#013 MR1-4" class="toggle-header" onclick="toggleContent(this)">
+N11.1e - MR Perfusjon, T1/DCE
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+dynT1fs(VIBE), Gadovist 0.1 ml/kg Flow 3ml/s
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title=" Uten kontrast&#013 Dag &#013 30 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N11.1f - MR Perfusjon K-/ASL, 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16883" target="_blank" style="color: white;">E-håndbok: Caput</a><br><br>
+Ax PCASL med PLD på 1500 eller 2500 ms
+ </div>
+    </div>
+
+</div>
+
+ <div>
+        <div title="Evt: K +TWIST&#013 &#013 Med kontrast&#013 Dag&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+N11.2 - MR Angio K+ spinal, 3T
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16884" target="_blank" style="color: white;">E-håndbok: Columna</a><br>
+            <a href="https://ehandbok.ous-hf.no/document/63881" target="_blank" style="color: white;">E-håndbok: Spinalangio</a><br>
+            <a href="Syngo/Spinalangio.htm" target="_blank" style="color: white;">Rekontruksjoner</a><br><br>
+Sag T2 TSE Totalcolumna<br>
+Cor 3D MRA tomserie<br>
+K+<br>
+Cor 3D MRA(FOV aktuelt område, tre kontinuerlige opptak)<br>
+ </div>
+    </div>
+
+</div>
+
+ 
+
+</div>
+
+ <div>
+        <div title=".Fra aorta t.o.m. COW. Subtraksjon, rek MPR 5/1 mm (cor/sag/ax). &#013 Kontrast: &#013 MR1-3: Clariscan 0.3 ml/kg, &#013 MR4: Clariscan 0.2 ml/kg.&#013 &#013 Med kontrast&#013 Dag /Kveld&#013 30 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+N11.3 - MR Angio halskar, K+
+
+</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/16898" target="_blank" style="color: white;">E-håndbok: MRA Halskar</a><br><br>
+Cor3D T1 tomserie<br>
+Ax testbolus<br>
+K+ 2 serier(hold pusten). <br>
+ </div>
+    </div>
+
+</div>
+<div>
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 MR 1-4&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T3.1a - MR Tinningbein - Tumor i cerebellopontine vinkel (oppstått sensorinevralt hørselstap, tinnitus, vertigo, helst ensidig)</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Hjerne:<br>
+            Tra T2 TSE 5mm,<br>
+            Tra DWI (RESOLVE)<br>
+            Tinningben:<br>
+            Tra T1 TSE 3mm,<br>
+            Tra T2 SPACE (IAC)<br>
+            K+ Clariscan 0.2ml/kg<br>
+            Hjerne:<br>
+            Sag 3D T1 SPACE<br>
+            Tinningben:<br>
+            Tra T1 TSE Dixon 3mm<br>
+        </div>
+        
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 MR 1-4&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T3.1b - MR Tinningbein - Kontroll acusticusschwannom</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Hjerne:<br>
+            Tra T2 TSE 5mm, Tra DWI (RESOLVE)<br>
+            Tinningben:<br>
+            Tra T2 SPACE (IAC)<br>
+            K+ Clariscan 0.2ml/kg<br>
+            Hjerne:<br>
+            Sag 3D T1 SPACE<br>
+            Tinningben:<br>
+            Tra T1 TSE Dixon 3mm<br>
+        </div>
+        
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 MR 1-4&#013 30 min" class="toggle-header" onclick="toggleContent(this)">T3.1c - MR Tinningbein - CI utredning</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Tra T1 TSE 3mm<br>
+            Tra T2 SPACE (IAC)<br>
+        </div>
+        
+        <div title="Varianter: Axial T1 TSE Dixon&#013 IVK - Coronal og Axial T1 Dixon (kun unntaksvis ved cholesteatom-utredning)&#013 3D TOF&#013 &#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T3.1d - MR Tinningben, eksempler: tumor, otosklerose, mucocele, cholesteatom, cholesterolgranulom</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Cor T2 TSE 3mm,<br>
+            Tra T1 TSE 3mm<br>
+            Tra 3D T2 SPACE (IAC),<br>
+            Tra Non-EPI DWI med både b50 og b1000<br>
+            Cor Non-EPI DWI med både b50 og b1000<br>
+        </div>
+        
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 10 min&#013 (60 min)" class="toggle-header" onclick="toggleContent(this)">
+            T3.1e - MR Tinningben - VHL</div>
+        <div class="toggle-content">
+            IAC- Tra T2 SPACE (MPR SAG, COR)
+        </div>
+        
+        <div title="Hvis tannregulering, velg spin echo sekvenser uten fettsuppresjon.&#013 &#013 Uten kontrast&#013 Dag&#013 MR 1-3&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T3.2a - MR Kjeveledd - Rutine ADD (anterior disk displacement)</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60603" target="_blank" style="color: white;">E-håndbok: Kjeveledd</a><br><br>
+            Tra T2 TSE Dixon,<br>
+            Skrå Sag T2 TSE FS,<br>
+            Skrå Cor T1 TSE<br>
+            Skrå Sag FLASH med og uten GAP<br>
+        </div>
+        
+        <div title="Hvis tannregulering, velg spin echo sekvenser uten fettsuppresjon.&#013 &#013 Med kontrast&#013 Dag&#013 MR 1-3&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T3.2b - MR Kjevledd - Artritt</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60603" target="_blank" style="color: white;">E-håndbok: Kjeveledd</a><br><br>
+            Tra T2 TSE Dixon,<br>
+            Skrå Sag T2 TSE FS,<br>
+            Skrå Sag T1 TSE<br>
+            K+ Clariscan 0.2ml/kg<br>
+            Skrå Sag T1 TSE FS,<br>
+            Skrå Cor T1 TSE FS,<br>
+            Skrå Sag FLASH med og uten GAP<br>
+        </div>
+        
+        <div title="Varianter:&#013 Tra T1 TSE Dixon pre/post GD (ved ekspansjon med høyt T1-signal)&#013 Sagittal 3D T1 SPACE (evt. HR Tra VIBE Dixon) etter ivk ved tumor i tungebasis/vallecula&#013 TWIST (ved vaskulær tumor eller kar-kompresjon)&#013 &#013 Tykksnitts sialografi (som tykksnitts MRCP), evt med sitronsaft ved spyttkjertelpatologi. &#013 Skrått sagittalt tykksnitt som dekker alle de store spyttkjertlene på en side før sitronsaft, &#013 kort etter og deretter hvert minutt i fem minutter. Gjennomføres parallelt på begge sider.&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 MR 1-4&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T4.1a - MR ØNH - tumor, abscess, spyttkjertel-patologi, lymfeknuter</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Sag 3D T1 SPACE (MPR tra og cor),<br>
+            Cor T2 TSE Dixon,<br>
+            Tra T2 TSE,<br>
+            Tra DWI (RESOLVE)<br>
+            K+ Clariscan 0.2ml/kg<br>
+            Tra T1 TSE Dixon,<br>
+            T1 SPACE FS<br>
+        </div>
+        
+        <div title="Varianter:&#013 Tra T1 TSE Dixon pre/post GD (ved ekspansjon med høyt T1-signal)&#013 Sagittal 3D T1 SPACE (evt. HR Tra VIBE Dixon) etter ivk ved tumor i tungebasis/vallecula&#013 TWIST (ved vaskulær tumor eller kar-kompresjon)&#013 &#013 Tykksnitts sialografi (som tykksnitts MRCP), evt med sitronsaft ved spyttkjertelpatologi. &#013 Skrått sagittalt tykksnitt som dekker alle de store spyttkjertlene på en side før sitronsaft, &#013 kort etter og deretter hvert minutt i fem minutter. Gjennomføres parallelt på begge sider.&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 MR 4&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T4.1b - MR ØNH-tumor, abscess, spyttkjertel-patologi, lymfeknuter. 3T</div>
+            
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Sag 3D T1 SPACE (MPR tra og cor),<br>
+            Cor T2 TSE Dixon,<br>
+            Tra T2 TSE,<br>
+            Tra DWI (ZoomIt)<br>
+            K+ Kort Grasp Vibe Clariscan 0.2ml/kg<br>
+            T1 SPACE FS<br>
+        </div>
+        
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 MR 1-4 og MR7&#013 30 min" class="toggle-header" onclick="toggleContent(this)">
+            T4.2 - MR ØNH - Kontroll benign tumor/bihuler</div>
+            
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60576" target="_blank" style="color: white;">E-håndbok: Hals</a><br><br>
+            Sag 3D T1 SPACE (MPR tra og cor)<br>
+            Cor T2 TSE Dixon<br>
+            Tra T2 TSE<br>
+        </div>
+
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T4.3 - MR Hals/Thorax - SDHx</div>
+        <div class="toggle-content">
+            Hals/Skallebasis:<br>
+            Tra T2 DIXON,<br>
+            COR T1,<br>
+            COR DWI<br>
+            Thorax:<br>
+            Cor T2 HASTE,<br>
+            Tra T2 HASTE,<br>
+            Tra T1 VIBE DIXON,<br>
+            COR DWI<br>
+        </div>
+        
+        <div title="Subtraksjon Tra T1 Vibe Dixon (20sek, 60sek, 3min og 5min)&#013 &#013 evt.&#013 Tra T1 GRE in out phase&#013 StarVibe Tra og Sag&#013 &#013 Med kontrast&#013 Dag&#013 MR 1-4&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T5.1 - MR Thorax - Tumor / Thymus</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60608" target="_blank" style="color: white;">E-håndbok: Thorax</a><br><br>
+            Cor T2 HASTE,<br>
+            Tra T2 HASTE,<br>
+            Tra DWI evt. Cor DWI fra helkropp,<br>
+            Tra T2 TSE Dixon resp. trig,<br>
+            Tra T1 Vibe Dixon<br>
+            0.2ml/kg Clariscan håndinjeksjon<br>
+            Tra T1 Vibe Dixon 20sek<br>
+            Tra T1 Vibe Dixon 60sek<br>
+            Tra T1 Vibe Dixon 3min<br>
+            Cor T1 Vibe Dixon 3-4min<br>
+            Sag T1 Vibe Dixon 3-4min<br>
+            Tra T1 Vibe Dixon 5min.<br>
+        </div>
+        
+        <div title=" Uten kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 30 min" class="toggle-header" onclick="toggleContent(this)">
+            T5.2 - MR Thorax - MEN1</div>
+            
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60608" target="_blank" style="color: white;">E-håndbok: Thorax</a><br><br>
+            Cor T2 HASTE,<br>
+            Tra T2 HASTE,<br>
+            Tra T1 VIBE DIXON,<br>
+            COR DWI<br>
+        </div>
+
+        <div title="Kronisk ischemi/ sekvele (infarkt/ inflammasjon/ myokarditt/ kardiotoksisitet/ immunterapi)&#013Utredning hjertesvikt/ DCM/ dyssynkroni/ LBBB/ dårlig innsyn ekko/ arytmi fokus VV&#013 Med kontrast&#013 Dag / Kveld&#013 75 min &#013 90 min på helg&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+            T6.1a - MR Hjerte</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Kontroll: &#013 Standard MR-hjerte&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 75 min &#013 90 min på helg&#013 MR1-3"  class="toggle-header" onclick="toggleContent(this)">
+        T6.1b - MR Hjerte kontroll</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        Cine: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Uten kontrast standard MR-hjerte&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 60min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.1c - MR hjerte uten kontrast</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        Cine SAX: alle<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: alle<br>
+        T2-map LAX: 2k, 4k, 3k<br>
+        T2-map SAX: alle<br>
+    </div>
+
+    <div title="Utredning;&#013 HCM/HOCM&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 75 min &#013 90 min på helg&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.2 - MR Hjerte m/ødem</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        T2-map LAX: 2k, 4k, 3k<br>
+        T2-map SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Utredning:&#013 HFpEF/AF/atriene&#013 &#013 Med kontrast&#013 Dag / Kveld &#013 90 min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.3 - MR Hjerte m/atriene</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle + inkl. begge atriene<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Utredning:&#013 Kontriktiv perikarditt/ pulmonal hypertensjon&#013 &#013 Med kontrast&#013 Dag / Kveld &#013 90 min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.4 - MR Hjerte m/ekstra cine og 3d-TrueFisp</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview SAX: basal, midt, apikal<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+        3d-TrueFISP<br>
+        Cine i full inspirasjon: 4k, basal, midt, apikal<br>
+    </div>
+
+    <div title="Utredning: &#013 arytmi fokus HV/ ARVC/ RBBB/ACM/atleter&#013 Cine skrå tra: &#013 Kopier 4k og perp på 2k HV&#013 &#013 Med kontrast&#013 Dag / Kveld &#013 90 min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.5 - MR Hjerte m/ HV-fokus</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        Cine skrå tra: gjennom HV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Utredning sarcoidose/AV-blokk&#013 &#013Med kontrast&#013 Dag / Kveld &#013 90 min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.6 - MR Hjerte m/ ekstra mapping</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: alle<br>
+        T2-map LAX: 2k, 4k, 3k<br>
+        T2-map SAX: alle<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: alle<br>
+    </div>
+
+    <div title="Utredning avleiring/ amyloidose/ Fabrys/ Danon/ fett&#013 &#013 Med kontrast&#013 Dag / Kveld &#013 90 min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.7 - MR Hjerte m/avleirings-fokus</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        Cine SAX: alle<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+        k+ (Gadovist 0,1 ml/kg)<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Utredning avleiring jern/hematokromatose&#013 Alltid i kombinasjon med:&#013 A7.1d - Jernavleiring&#013 &#013 Uen kontrast&#013 Dag / Kveld &#013 45 min&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.8 - MR Hjerte m/avleirings-fokus uten kontrast</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt<br>
+        T2*-map SAX: basal, midt<br>
+    </div>
+
+    <div title="Aktiv myokarditt/ inflammasjon/ MINOCA/ arytmi/ VT/ stans /hjertesvikt/ kardiotoksisitet/ immunterapi&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 75 min &#013 90 min på helg&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.9 - MR Hjerte akutt m/perfusjon og ødem</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        T2-map LAX: 2k, 4k, 3k<br>
+        T2-map SAX: basal, midt, apikal<br>
+        k+ perfusjon (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+    <div title="Akutt hemorrhagisk infarkt&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 75 min &#013 90 min på helg&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.10 - MR Hjerte akutt m/perfusjon og ødem og T2*</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk SAX: basal, midt, apikal<br>
+        T2-map LAX: 2k, 4k, 3k<br>
+        T2-map SAX: basal, midt, apikal<br>
+        T2*-map LAX: 2k, 4k, 3k<br>
+        T2*-map SAX: basal, midt, apikal<br>
+        k+ perfusjon (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+    </div>
+
+    <div title="Utredning HMAS/SLE/revma&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 75 min &#013 90 min på helg&#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.11 - MR Hjerte akutt m/perfusjon, ødem og 3d-TrueFISP</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br>
+        <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        Cine LAX: 2k, 4k, 3k<br>
+        T1-map u/ivk LAX: 2k, 4k, 3k, 2kHV<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+        T2-map LAX: 2k, 4k, 3k<br>
+        T2-map SAX: basal, midt, apikal<br>
+        k+ perfusjon (Gadovist 0,1 ml/kg)<br>
+        Cine SAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+        T1-map m/ivk LAX: 2k, 4k, 3k<br>
+        T1-map m/ivk SAX: basal, midt, apikal<br>
+        3D-truefisp<br>
+    </div>
+
+    <div title="Utredning ischemi stress perfusjon&#013 &#013 Med kontrast&#013 Dag&#013 60 min &#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.12 - MR Hjerte m/stress-perfusjon</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br><br>
+        Localizer<br>
+        T2 Haste DB: Tra<br>
+        k+ Stress perfusjon (Gadovist 0,1 ml/kg)<br>
+        Cine LAX: 2k, 4k, 3k, 2kHV<br>
+        Cine LAX: alle<br>
+        TI-Scout<br>
+        DE-overview LAX: 2k, 4k, 3k<br>
+        DE-overview SAX: alle<br>
+        LGE HR LAX: 2k, 4k, 3k<br>
+        LGE HR SAX: alle<br>
+    </div>
+
+
+    <div title="Utredning tumor dag m/radiolog&#013 &#013 Med kontrast&#013 Dag&#013 90 min &#013 MR1-3" class="toggle-header" onclick="toggleContent(this)">
+        T6.13 - MR Hjerte tumorutredning</div>
+    <div class="toggle-content">
+        <a href="https://ehandbok.ous-hf.no/document/60584" target="_blank" style="color: white;">E-håndbok: Hjerte</a><br><br>
+        Protokoll tilpasses tumorsbeliggenhet og funn på CT<br>
+    </div>
+</div>
+        
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 30 min&#013 (senserier: + 15min)" class="toggle-header" onclick="toggleContent(this)">
+            T11.5a - MR Thoraxangio - Aortapatologi, vaskulitt</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60754" target="_blank" style="color: white;">E-håndbok: MRA Thorax</a><br><br>
+            Tra T2 HASTE black blood <br>
+            Cor 3D MRA tomserie<br>
+            Testbolus Clariscan i nivå med pulmonalarteriedelingen<br>
+            Cor 3D MRA x 2 med 20 sek intervall mellom seriene.<br>
+        </div>
+        
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 30 min" class="toggle-header" onclick="toggleContent(this)">
+            T11.5b - MR Thoracalaorta non-kontrast</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60754" target="_blank" style="color: white;">E-håndbok: MRA Thorax</a><br><br>
+            Tra T2 HASTE black blood<br>
+            Skråsag 3D TrueFISP<br>
+        </div>
+        
+        <div title="evt.&#013 TWIST&#013 &#013 Med kontrast&#013 Dag / Kveld&#013 MR 1-4&#013 30 min" class="toggle-header" onclick="toggleContent(this)">
+            T11.5c - MR Thoraxangio - Pulmonalarterier</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60754" target="_blank" style="color: white;">E-håndbok: MRA Thorax</a><br><br>
+            Tra T2 HASTE black blood<br>
+            Cor 3D MRA tomserie (ca. 9sek sekvens.)<br>
+            Tesbolus Clariscan i arterie pulmonal<br>
+            Cor 3D MRA (ca. 9sek sekvens.) x 2 uten pause m/hold pusten.<br>
+        </div>
+        
+        <div title="Variant v/spørsmål om thoracic outlet syndrome:&#013 Coronal 3D MRA tomserie Coronal 3D MRA x 2 med 20 sek intervall mellom seriene først med armer opp, &#013 deretter med armer ned med ny kontrastmiddelinjeksjon.&#013 &#013 Evt for redusert dose kontrastmiddel: Armer ned: 3D True Fisp m/Navigator Evt: TWIST&#013 &#013 Med kontrast&#013 Dag&#013 MR 1-4&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T11.5d - MR Angio overekstremiteter, thoracic outlet syndrome</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60173" target="_blank" style="color: white;">E-håndbok: MRA Overekstremitet</a><br><br>
+            Cor T2 HASTE bb<br>
+            Cor 3D MRA tomserie<br>
+            Testbolus Clariscan i nivå med pulmonalarteriedelingen<br>
+            Cor 3D MRA x 2 med 20 sek intervall mellom seriene.<br>
+        </div>
+        
+        <div title=" Med kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 30 min&#013 (senserier: + 15min)" class="toggle-header" onclick="toggleContent(this)">
+            T11.7a - MR Abdomenangio - Kontrastforsterket</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60169" target="_blank" style="color: white;">E-håndbok: MRA Abdomen</a><br><br>
+            Cor T2 HASTE,<br>
+            Tra T2 HASTE<br>
+            Corl 3D MRA tomserie (FLASH)<br>
+            Testbolus Clariscan (abd. aorta)<br>
+            Cor 3D MRA x3 med 20sek. intervall<br>
+        </div>
+        
+        <div title="eventuelt:&#013 2D TOF. Gjerne vinklet i flere plan avhengig av kar-anatomi..&#013 &#013 Uten kontrast&#013 Dag / Kveld&#013 MR 1-3&#013 45 min" class="toggle-header" onclick="toggleContent(this)">
+            T11.7b - MR Abdomenangio - Non-Kontrast</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60169" target="_blank" style="color: white;">E-håndbok: MRA Abdomen</a><br><br>
+            Cor T2 HASTE,<br>
+            Tra T2 HASTE<br>
+            2D Free Breathing TrueFISP med PACE for lokalisering.<br>
+            EKG-trigget NATIVE True FISP (en variant for lever og en variant for nyrer)<br>
+        </div>
+        
+        <div title="Variant:  3D TrueFisp i thorax Space MRA, bekken/undereks TOF &#013 &#013 Med kontrast&#013 Dag / Kveld&#013 MR 1-3, Aker&#013 45 min&#013 (senserier: +30min og ikke Aker)" class="toggle-header" onclick="toggleContent(this)">
+            T11.13 - MR Totalaorta - Aortapatologi, vaskulitt CE MRA</div>
+        <div class="toggle-content">
+            <a href="https://ehandbok.ous-hf.no/document/60169" target="_blank" style="color: white;">E-håndbok: MRA Totalaorta</a><br>
+            <a href="syngo\totalaorta.htm" target="_blank" style="color: white;">Rekontruksjoner</a><br><br>
+            Tra T2 HASTE black blood (skallebasis til bekken)<br>
+            Cor 3D MRA tomserie Thorax<br>
+            Cor 3D MRA tomserie Abdomen<br>
+            Testbolus Clariscan i nivå med pulmonalarteriedelingen<br>
+            Cor 3D MRA x 2 med 20 sek intervall mellom seriene i thorax<br>
+            Cor 3D MRA x 2 med 20 sek intervall mellom seriene i abdomen<br>
+        </div>
+    </div>
+    </div>
+    
+    <div>
+
+       <div title="Uten kontrast&#013Dag / Kveld&#013 30 min&#013MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+        M2.1a - MR Cervicalcolumna rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Sag T2<br>
+    Sag T1<br>
+    Tra Medic (dekke fra skallebasis til C4)<br>
+    Evt. Sag STIR<br>
+    Sag T2 SPACE iso
+</div>
+
+<div title="Hvis kombinert med kjeve M3.2b og det er gitt kontrast: &#013Clariscan® ‐ 0,2ml/kg: &#013sag T1 FS TSE&#013&#013Uten kontrast&#013Dag / Kveld&#013 30 min&#013MR 2-4"
+ class="toggle-header" onclick="toggleContent(this)">
+    M2.1b - MR Cervicalcolumna artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Sag T2 dixon<br>
+    Sag T1<br>
+    Cor T2 Dixon<br>
+    Tra Medic (dekke fra skallebasis til C4)
+</div>
+
+<div title="Uten kontrast&#013Dag / Kveld&#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M2.3a - MR Lumbalcolumna rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Sag T2<br>
+    Sag T1<br>
+    Tra T2<br>
+    Tra T1<br>
+    Evt. Sag STIR<br>
+    Sag T2 SPACE iso
+</div>
+
+<div title="Med kontrast&#013Dag / Kveld&#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4"
+ class="toggle-header" onclick="toggleContent(this)">
+    M2.3b - MR Lumbalcolumna operert</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Sag T2<br>
+    Sag T1<br>
+    Tra T1<br>
+    Tra T2<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Sag T1<br>
+    Tra T1<br>
+    Evt. sag STIR (før kontrast)
+</div>
+
+<div title="Hele columna avbildes&#013&#013Uten kontrast&#013Dag / Kveld&#013 45 min&#013MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    M2.4a - MR Totalcolumna ankyloserende spondylitt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Sag T1<br>
+    Sag STIR<br>
+    Cor T2 Dixon<br>
+    Evt. Tra T2 lumbalt hvis skivedegenerasjon/prolaps
+</div>
+
+<div title="Hele columna avbildes&#013&#013Uten kontrast&#013Dag&#013 45 min&#013MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    M2.4b - MR Totalcolumna Scoliose</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Sag T2 TSE<br>
+    Sag T1 TSE<br>
+    Cor T2 TSE<br>
+    Sag T2 SPACE<br>
+    Evt. Tra T2<br>
+    Tra T1
+</div>
+
+<div title="Evt1: &#013K+ Cor T1 TSE Dixon (Ax/sag T1 Dixon) &#013Evt2: &#013Cor STIR SPACE K+, &#013Evt3: &#013Ax T2 TSE Dixon  &#013&#013Uten kontrast&#013Dag&#013 45 min&#013MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M2.5a - MR Plexus brachialis</div>
+    
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    N2.1b (dersom nylig utført, kun Sag T2 SPACE)<br>
+    Cor T1 TSE<br>
+    Cor STIR SPACE<br>
+    Sag T1 TSE aktuell side
+</div>
+
+<div title="Tra snitt fra nedre lumbal til nedenfor trochanter minor&#013&#013Uten kontrast&#013Dag&#013 45 min&#013MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M2.5d - MR Plexus lumbosacralis</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    N2.3a (dersom nylig utført kun Sag T2 SPACE)<br>
+    Cor T1 TSE<br>
+    Cor STIR SPACE<br>
+	Tra T1 dixon<br>
+	Tra T2 dixon<br>
+</div>
+
+<div title="Fasretning skal være R-L på Skrå Cor serier&#013Tra T2 Dixon skal dekke hele bekken og ned til trochanter minor&#013&#013Uten kontrast&#013Dag / Kveld&#013 30 min&#013MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    M2.6 - MR Iliosacralledd</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16804" target="_blank" style="color: white;">E-håndbok: Columna</a><br><br>
+    Localizer<br>
+    Skrå Cor T1 TSE<br>
+    Skrå Cor STIR<br>
+    Skrå Cor 3D T1 Vibe Dixon<br>
+    Tra T2 Dixon
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 30 min&#013Over 16 år: MR 2-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M3.2a - MR Kjeveledd rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16812" target="_blank" style="color: white;">E-håndbok: Kjeveledd</a><br><br>
+    Localizer<br>
+    Skrå Sag T2 TSE FS<br>
+    Skrå Cor T1 TSE<br>
+    Skrå Sag PD TSE (GAP)<br>
+    Evt. Cor 3D T1 Vibe we isotrop (begge kjeveledd)
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013&#013Med kontrast&#013Dag&#013 30 min&#013Over 16 år: MR 2-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M3.2b - MR Kjeveledd artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16812" target="_blank" style="color: white;">E-håndbok: Kjeveledd</a><br><br>
+    Localizer<br>
+    Tra Stir<br>
+    Tra T1 TSE<br>
+    Skrå Sag T2 TSE FS<br>
+    Skrå Sag T1 TSE<br>
+    Kontrast 0,2ml/kg Clariscan<br>
+    Skrå Sag T1 TSE FS<br>
+    Cor T1 TSE FS<br>
+    Skrå Sag PD TSE (GAP)<br>
+    Evt. Cor 3D T1 Vibe we isotrop (begge kjeveledd)
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013&#013Med kontrast&#013Dag&#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.1 - MR Sternoclavicularledd artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16802" target="_blank" style="color: white;">E-håndbok: Sternoclavicularledd</a><br><br>
+    Localizer<br>
+    Cor T2 Stir<br>
+    Cor T1<br>
+    Axial T1<br>
+    Axial PD FS<br>
+    Kontrast 0,2ml/kg Clariscan<br>
+    Cor T1 Dixon<br>
+    Tra T1 DIXON
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 30 min&#013Over 16 år: MR 2-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.2a - MR Skulder rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16809" target="_blank" style="color: white;">E-håndbok: Skulder</a><br><br>
+    Localizer,<br>
+    Skrå sag PD FS TSE<br>
+    Skrå sag T1 TSE<br>
+    Tra PD FS TSE<br>
+    Skrå Cor PD FS TSE<br>
+    Skrå Cor T2 TSE<br>
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 2-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.2b - MR Skulder artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16809" target="_blank" style="color: white;">E-håndbok: Skulder</a><br><br>
+    Localizer<br>
+    Skrå Cor T1<br>
+    Skrå Cor PD FS<br>
+    Skrå Sag T2 TSE<br>
+    Axial PD FS<br>
+    Kontrast 0,2ml/kg Clariscan<br>
+    Skrå Cor T1 FS<br>
+    Tra T1 FS
+</div>
+
+<div title="Uten kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.3a - MR Albue rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16861" target="_blank" style="color: white;">E-håndbok: Albue</a><br><br>
+    Localizer<br>
+    Cor T1 TSE<br>
+    Cor STIR<br>
+    Sag 3D DESS<br>
+    Tra T1<br>
+    Tra T2
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.3b - MR Albue artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16861" target="_blank" style="color: white;">E-håndbok: Albue</a><br><br>
+    Localizer<br>
+    Cor T1 TSE<br>
+    Cor STIR<br>
+    Sag 3D DESS<br>
+    Tra T1<br>
+    Tra T2<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Sag T1 FS<br>
+    Tra T1 FS
+</div>
+
+<div title="Uten kontrast&#013Dag &#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.4a - MR Håndledd rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16863" target="_blank" style="color: white;">E-håndbok: Håndledd</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor PD FS<br>
+    Cor T2* Flash<br>
+    Sag PD FS<br>
+    Tra T2<br>
+    evt. Tra PD FS
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013Ved mistanke om septisk artritt: Tra Diffusjon&#013&#013 9.4b skal i utg.pkt kun ha håndledd/håndrot. Ved hevelser i fingre må protokoll 9.5b Hel Hånd brukes.&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.4b - MR Håndledd artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16863" target="_blank" style="color: white;">E-håndbok: Håndledd</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Cor T2* Flash<br>
+    Sag PD FS<br>
+    Tra T2<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Cor T1 FS<br>
+    Tra T1 FS<br>
+    evt. Cor 3D T1 Vibe dixon
+</div>
+
+<div title="Uten kontrast&#013Dag &#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.5a - MR Hånd/finger rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16864" target="_blank" style="color: white;">E-håndbok: Hånd</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag PD FS<br>
+    Axial T2
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013FOV skal inkludere distale radioulnarledd, håndledd og alle fingre i alle plan&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.5b - MR Hånd/finger artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16864" target="_blank" style="color: white;">E-håndbok: Hånd</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag PD FS<br>
+    Tra T2<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Cor T1 FS<br>
+    Tra T1 FS<br>
+    evt. Cor 3D T1 Vibe dixon iso
+</div>
+
+<div title="Kommentar: FOV skal inkludere håndledd og hele aktuelle finger&#013&#013Uten kontrast&#013Dag &#013 30 min&#013MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.5c - MR Hånd/finger seneruptur</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16864" target="_blank" style="color: white;">E-håndbok: Hånd</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Sag T1<br>
+    Sag STIR<br>
+    Axial T2
+</div>
+
+<div title="Kommentar: FOV skal inkludere håndledd og hele aktuelle finger&#013&#013Uten kontrast&#013Dag &#013 30 min&#013MR 4"  class="toggle-header" onclick="toggleContent(this)">
+    M9.5d - MR Hånd/finger PVNS</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16864" target="_blank" style="color: white;">E-håndbok: Hånd</a><br><br>
+    <!-- Content not provided -->
+</div>
+
+<div title="Definer om det er hel arm eller bare overarm/underarm&#013Stilling: Tilstrebe supinasjon, evt nøytral med tommel opp&#013&#013Uten kontrast&#013Dag&#013 60 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M9.6a - MR Muskler - Hele armen</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra STIR<br>
+</div>
+
+<div title="Definer om det er hel arm eller bare overarm/underarm&#013Stilling: Tilstrebe supinasjon, evt nøytral med tommel opp&#013&#013Uten kontrast&#013Dag&#013 30 min&#013MR 1-4&#013"  class="toggle-header" onclick="toggleContent(this)">
+    M9.6b - MR Muskler - Overarm</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra STIR
+</div>
+
+<div title="Definer om det er hel arm eller bare overarm/underarm&#013Stilling: Tilstrebe supinasjon, evt nøytral med tommel opp&#013&#013Uten kontrast&#013Dag&#013 30 min&#013MR 1-4&#013"  class="toggle-header" onclick="toggleContent(this)">
+    M9.6c - MR Muskler - Underarm</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra STIR
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 75 min&#013MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M9.7a - MR Nerver - Hele armen</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136258" target="_blank" style="color: white;">E-håndbok: Ekstremitet</a><br><br>
+    Cor T1<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra T2<br>
+    Tra Stir<br>
+    Evt.<br>
+    Sagital 3D PD FS space<br>
+    Sag diffusjon<br>
+    Sag 3D DW PSIF fs
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 75 min&#013MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M9.7b - MR Nerver - Underarm</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136258" target="_blank" style="color: white;">E-håndbok: Ekstremitet</a><br><br>
+    Cor T1<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra T2<br>
+    Tra Stir<br>
+    Evt.<br>
+    Sagital 3D PD FS space<br>
+    Sag diffusjon<br>
+    Sag 3D DW PSIF fs
+</div>
+
+<div title="Pasient ligger helst på magen i supermann stilling med aktuell arm forover. Bruk bodyphase 18ch spole og ryggelementer til avbildning. Området som skal dekkes er 10cm over og under albueledd (radiolog ser om større dekningsområde med hele underarmen trengs&#013&#013Evt kontrast&#013Dag &#013 75 min&#013MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M9.7c - MR Nerver - Albue/underarm</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136258" target="_blank" style="color: white;">E-håndbok: Ekstremitet</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag 3D PD Space FS iso<br>
+    Tra T1<br>
+    Tra T2<br>
+    Evt kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Cor T1 FS<br>
+    Tra T1 Dixon<br>
+    Evt:<br>
+    Sag diffusjon<br>
+    Sag 3D DW PSIF FS
+</div>
+
+<div title="Cor STIR og T1 skal ha med leddspalte for lokalisasjon. Axial skal dekke gjennom aktuelle område. Evt bruke markør om det er hensiktsmessig.&#013Radiolog vurderer dynamisk kontrastinjeksjon. Tra T1 Dixon subtraheres ved kontrastundersøkelser.&#013&#013Med kontrast&#013Dag&#013 60 min&#013MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M9.8a - MR Bløtvevstumor - Overekstremitet</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136258" target="_blank" style="color: white;">E-håndbok: Ekstremitet</a><br><br>
+    Cor STIR<br>
+    Cor T1<br>
+    Tra T1 dixon<br>
+    Tra T2 dixon<br>
+    Tra diffusjon<br>
+    K+ (Clariscan 0,2ml/kg, dynamisk T1 TwistVibe)<br>
+    Tra T1 dixon<br>
+    Cor T1 dixon
+</div>
+
+<div title="Hør med radiolog: &#013- Bytte til dedikert spole og sekvenser over et bestemt område.&#013- Kontrast, evt dynamisk.&#013T1 Dixon W skal subtraheres ved kontrastundersøkelse&#013&#013Med kontrast&#013Dag&#013 90 min&#013MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M9.8b - MR Beintumor/osteomyelitt - Overekstremitet</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136258" target="_blank" style="color: white;">E-håndbok: Ekstremitet</a><br><br>
+    Localizer<br>
+    Coronal STIR (hel rørknokkel)<br>
+    Cor T2 Dixon<br>
+    Tra T2 Dixon<br>
+    Cor T1 Dixon<br>
+    Tra T1 Dixon<br>
+    Cor/Tra diffusjon<br>
+    K+: Clariscan ‐ 0,2 ml/kg (evt. dynamisk med Tra Twist Vibe)<br>
+    Cor T1 Dixon<br>
+    Tra T1 Dixon
+</div>
+
+<div title="Kun en hofte&#013&#013Uten kontrast&#013Dag / Kveld &#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M10.1a - MR Hofte rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16865" target="_blank" style="color: white;">E-håndbok: Hofter</a><br><br>
+    MR1/MR2/MR3:<br>
+    Localizer<br>
+    Cor T1<br>
+    Cor PD FS<br>
+    Skrå Tra PD fs<br>
+    Sag T2* Flash<br>
+    MR4:<br>
+    Localizer<br>
+    Cor T1<br>
+    Cor PD FS<br>
+    Skrå Tra PD FS<br>
+    Sag PD FS
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M10.1b - MR Hofter artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16865" target="_blank" style="color: white;">E-håndbok: Hofter</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag T2* Flash<br>
+    Evt kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Cor T1 FS<br>
+    Tra T1 FS
+</div>
+
+<div title="Begge hofter&#013&#013Uten kontrast&#013Dag / Kveld &#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M10.1c - MR Hofter AVN</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16865" target="_blank" style="color: white;">E-håndbok: Hofter</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag T2* Flash
+</div>
+
+<div title="Kun en hofte. Ofte ved hofteproteser. Bruk evt metallreduserende sekvenser (MARS) eller SEMAC&#013&#013Uten kontrast&#013Dag&#013 45 min&#013MR1-3&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.1d - MR Hofte ruptur</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16865" target="_blank" style="color: white;">E-håndbok: Hofter</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Cor T2<br>
+    Tra T1<br>
+    Tra T2<br>
+    Sag T2
+</div>
+
+<div title="Uten kontrast&#013Dag / Kveld&#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.2a - MR Kne rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16868" target="_blank" style="color: white;">E-håndbok: Kne</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor PD FS<br>
+    Sag PD FS<br>
+    Tra PD FS<br>
+    Sag T2<br>
+    ev. Sag 3D DESS we
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013Kommentar: Ved mistanke om septisk artritt: Sag Diffusjon&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M10.2b - MR Kne artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16868" target="_blank" style="color: white;">E-håndbok: Kne</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag PD FS<br>
+    Tra PD FS<br>
+    Sag T2<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Sag T1 FS<br>
+    Tra T1 FS<br>
+    ev. Sag 3D DESS we
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013Denne kan brukes ved 1.gangs kontroll/ preoperativt. Ved kontroller kan coronal T1 og sagital 3D DESS we utelates.&#013&#013Med kontrast&#013Dag &#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.2c - MR Kne PVNS</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16868" target="_blank" style="color: white;">E-håndbok: Kne</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag T1<br>
+	Sag T1 FS<br>
+    Sag T2<br>
+    Tra T1<br>
+    Tra T2<br>
+    Sag 3D DESS we<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Sag T1 FS<br>
+    Tra T1 FS
+</div>
+
+<div title="Uten kontrast&#013Dag / Kveld&#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.3a - MR Ankel rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16871" target="_blank" style="color: white;">E-håndbok: Ankel</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor PD FS<br>
+    Sag T1<br>
+    Sag STIR<br>
+    Sag 3D DESS we<br>
+    Tra T2
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013Axiale snitt skal dekke både ankel og fotrot&#013&#013Med kontrast&#013Dag&#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M10.3b - MR Ankel/fotrot artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16871" target="_blank" style="color: white;">E-håndbok: Ankel</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor PD FS<br>
+    Sag T1<br>
+    Sag STIR<br>
+    Tra T2<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Sag T1 FS<br>
+    Tra T1 FS<br>
+    evt. Sag 3D T1 vibe dixon iso
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.3c - MR Ankel/fotrot akillessene</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16871" target="_blank" style="color: white;">E-håndbok: Ankel</a><br><br>
+    Localizer<br>
+    Sag T1<br>
+    Sag STIR<br>
+    Tra T2<br>
+    Tra T1
+</div>
+
+<div title="Ved mistanke om Mortens nevrom - evt. bukleie, evt. K+ Tra T1 FS og Cor T1 FS&#013&#013Uten kontrast&#013Dag&#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.4a - MR Forfot rutine</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16872" target="_blank" style="color: white;">E-håndbok: Forfot</a><br><br>
+    Localizer<br>
+    Tra T1<br>
+    Tra STIR<br>
+    Sag PD FS<br>
+    Cor T1<br>
+    Cor STIR
+</div>
+
+<div title="Radiolog skal vurdere om det skal gis kontrast.&#013&#013Med kontrast&#013Dag&#013 45 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4" class="toggle-header" onclick="toggleContent(this)">
+    M10.4b - MR Forfot/tær artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16872" target="_blank" style="color: white;">E-håndbok: Forfot</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Sag PD FS<br>
+    Tra T1<br>
+    Tra STIR<br>
+    Kontrast: Clariscan® ‐ 0,2ml/kg<br>
+    Sag T1 FS<br>
+    Tra T1 FS
+</div>
+
+<div title="Ved diabetes / nedsatt nyrefunksjon&#013&#013Uten kontrast&#013Dag&#013 30 min&#013Over 16 år: MR 1-4&#013Under 16 år: MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.4c - MR Forfot/tær - Osteomyelitt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16872" target="_blank" style="color: white;">E-håndbok: Forfot</a><br><br>
+    Sag T1<br>
+    Sag STIR<br>
+    Tra T1<br>
+    Tra T2 DIXON
+</div>
+
+<div title="Coronale serier skal dekke bekken til kne med synlig kneleddspalte.&#013Axiale serier dekker fra hofteledd til kneleddspalte.&#013&#013Uten kontrast&#013Dag / Kveld&#013 30 min&#013MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    M10.6a - MR Muskler - Lår</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra STIR
+</div>
+
+<div title="Dekke begge legger coronalt og axialt&#013&#013Uten kontrast&#013Dag / Kveld&#013 30 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.6b - MR Muskler - Legger</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra STIR
+</div>
+
+<div title="Coronale snitt skal dekke bekken, lår og legger &#013Axiale snitt skal dekke fom. hofteledd tom. ankler&#013&#013Uten kontrast&#013Dag / Kveld&#013 45 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.6c - MR Muskler - Hele undereks</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor STIR<br>
+    Tra T1<br>
+    Tra STIR
+</div>
+
+<div title="Cor STIR og T1 skal ha med leddspalte for lokalisasjon. Axial skal dekke gjennom aktuelle område. Evt bruke markør om det er hensiktsmessig.&#013Radiolog vurderer dynamisk kontrastinjeksjon. Tra T1 Dixon subtraheres ved kontrastundersøkelser.&#013&#013Med kontrast&#013Dag&#013 60 min&#013MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.8a - MR Bløtvevstumor - Undereks</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Cor STIR<br>
+    Cor T1<br>
+    Tra T1 dixon<br>
+    Tra T2 dixon<br>
+    Tra diffusjon<br>
+    K+ (Clariscan 0,2ml/kg, dynamisk T1 TwistVibe)<br>
+    Tra T1 dixon<br>
+    Cor T1 dixon
+</div>
+
+<div title="Hør med radiolog: &#013- Bytte til dedikert spole og sekvenser over et bestemt område.&#013- Kontrast, evt dynamisk.&#013T1 Dixon W skal subtraheres ved kontrastundersøkelse&#013&#013Med kontrast&#013Dag&#013 90 min&#013MR 4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M10.8b - MR Beintumor/osteomyelitt - Undereks</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136258" target="_blank" style="color: white;">E-håndbok: Ekstremitet</a><br><br>
+    Localizer<br>
+    Coronal STIR (hel rørknokkel)<br>
+    Cor T2 Dixon<br>
+    Tra T2 Dixon<br>
+    Cor T1 Dixon<br>
+    Tra T1 Dixon<br>
+    Cor/Tra diffusjon<br>
+    K+: Clariscan ‐ 0,2 ml/kg (evt. dynamisk med Tra Twist Vibe)<br>
+    Cor T1 Dixon<br>
+    Tra T1 Dixon
+</div>
+
+<div title="Få armene godt inntil kroppen og hender legges flatt på lårene.&#013Hver diffusjonsserie må nummeres (1, 2, 3, 4 etc.)&#013&#013Uten kontrast&#013Dag&#013 90 min&#013MR 1-3&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.1 - MR Helkropp - CRMO</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16876" target="_blank" style="color: white;">E-håndbok: Benmarg</a><br><br>
+    Helkropps localizer<br>
+    Cor T2 Dixon (dekker hele kroppen)<br>
+    Evt:<br>
+    Cor T1 (helkropp)<br>
+    Cor DWI (helkropp)<br>
+    Sag T2 Dixon (Totalcolumna)
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 60 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.2 - MR Helkropp - Mb. Gaucher</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16876" target="_blank" style="color: white;">E-håndbok: Benmarg</a><br><br>
+    Localizer<br>
+    Totalcolumna:<br>
+    Sag T1<br>
+    Sag T2 Dixon<br>
+    Bekken og begge femur:<br>
+    Cor T1<br>
+    Cor T2 Dixon
+</div>
+
+<div title="Få armene godt inntil kroppen og hender legges flatt på lårene.&#013&#013Uten kontrast&#013Dag&#013 60 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.3 - MR Helkropp - JIA</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16876" target="_blank" style="color: white;">E-håndbok: Benmarg</a><br><br>
+    Localizer (evt ekstra localizer over føtter)<br>
+    Cor T2 Dixon (TMJ til midt på lår)<br>
+    Sag T2 Dixon (totalcolumna, knær, føtter)<br>
+    Skrå Cor T2 Dixon (IS-ledd)
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 60 min&#013MR 1-3&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.4 - MR Benmarg - Columna/thorax/bekken</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16876" target="_blank" style="color: white;">E-håndbok: Benmarg</a><br><br>
+    Localizer<br>
+    Totalcolumna:<br>
+    Sag T1<br>
+    Sag STIR<br>
+    Sag DWI<br>
+    Thorax:<br>
+    Cor T1 bh<br>
+    Cor STIR resp.trig<br>
+    Cor DWI<br>
+    Bekken:<br>
+    Cor T1<br>
+    Cor STIR<br>
+    Tra DWI
+</div>
+
+<div title="Dekkes fra skallebasis - føtter. Antall stasjoner og snitt tilpasses etter pasientestørrelse&#013&#013Uten kontrast&#013Dag&#013 90 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.6a - MR Muskler - Helkropp</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor T1<br>
+    Tra T1<br>
+    Tra STIR
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 60 min&#013MR 2-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.6b - MR Muskler - Nakke/skuldre/thorax</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor T1 bh<br>
+    Cor STIR resp.trig<br>
+    Tra T1 bh<br>
+    Tra STIR resp.trig
+</div>
+
+<div title="Uten kontrast&#013Dag&#013 30 min&#013MR 1-4&#013" class="toggle-header" onclick="toggleContent(this)">
+    M13.6c - MR Muskler - Abdomen/bekken</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16873" target="_blank" style="color: white;">E-håndbok: Muskler</a><br><br>
+    Localizer<br>
+    Cor T1 bh<br>
+    Cor STIR resp.trig<br>
+    Tra T1 bh<br>
+    Tra STIR resp.trig<br>
+    Evt: Sag T1
+</div>
+
+
+
+    <div>
+        <div title="Tra T2 space iac (rek Coronal og Sagittal)&#013 &#013 Uten kontrast&#013 Dag&#013 15 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+            B3.1c - MR Barn: Tinningbein - cochlea utredning</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16604" target="_blank" style="color: white;">E-håndbok: ØNH</a><br><br>
+    T2 Space IAC (Tra)
+</div>
+
+<div title="Lag ADC av Tra og Cor HASTE  DWI (b50 og b1000)&#013 Tra T2 space iac (rek Coronal og Sagittal)&#013 &#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B3.1d - MR Barn: Tinningbein - Cholesteatom residiv eller atypisk lokalisasjon</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16604" target="_blank" style="color: white;">E-håndbok: ØNH</a><br><br>
+    T2 DIXON (Cor)<br>
+    T1 TSE (Tra)<br>
+    T2 space IAC (Tra)<br>
+    HASTE DWI (Tra og Cor) (b50 og b1000)
+</div>
+
+<div title="NB! Koordiner sekvenser med nevro, hvis aktuelt&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-4"
+ class="toggle-header" onclick="toggleContent(this)">
+    B4.1a - MR Barn: ØNH - Tumorutredning/preoperativt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16604" target="_blank" style="color: white;">E-håndbok: ØNH</a><br><br>
+    T2 DIXON TSE (Tra, Cor og Sag)<br>
+    T1 DIXON TSE (Tra)<br>
+    DWI (Tra)<br>
+    K+Clariscan® ‐ 0,2ml/kg<br>
+    T1 DIXON (Tra, Cor eller Sag (samme plan som T2 DIXON prekontrast))
+</div>
+
+<div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    B4.1b - MR Barn: ØNH - Tumorkontroll</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16604" target="_blank" style="color: white;">E-håndbok: ØNH</a><br><br>
+    T2 DIXON TSE (Tra, Cor og Sag)<br>
+    T1 TSE (Tra) kun ved behov<br>
+    DWI (Tra)
+</div>
+
+<div title="Fri pust (FB) små barn eller hold pusten (BH) større barn&#013 Cor T1 TSE tas kun dersom benmargspatologi&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B5.1a - MR Barn: Thorax - Tumorutredning/preoperativt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16607" target="_blank" style="color: white;">E-håndbok: Thorax</a><br><br>
+    T2 HASTE (Cor, Tra)<br>
+    T2 HASTE fs (Cor)<br>
+    T2 DIXON TSE (Tra)<br>
+    Tra eller Cor DWI<br>
+    StarVIBE eller T1 VIBE DIXON (Tra)<br>
+    Kontrast: Clariscan® ‐ 0.2ml/kg<br>
+    StarVIBE eller T1 VIBE DIXON (Tra, Cor)<br>
+    Evt:Cor T1 TSE, Sag StarVIBE eller VIBE DIXON
+</div>
+
+<div title="Fri pust (FB) små barn eller hold pusten (BH) større barn&#013 Cor T1 TSE tas kun dersom benmargspatologi&#013 &#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B5.1b - MR Barn: Thorax - Tumorkontroll</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16607" target="_blank" style="color: white;">E-håndbok: Thorax</a><br><br>
+    T2 HASTE (Cor, Tra)<br>
+    T2 DIXON TSE (Tra)<br>
+    DWI (Tra eller Cor)<br>
+    Evt:Cor T1 TSE
+</div>
+<div title="Lymfografi av thorax/øvre abdomen - fremstilling av lymfekar lekkasjer i thorax/abdomen og anomalier av ductus thoracicus&#013 &#013 Uten kontrast&#013 Dag&#013 75 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B5.2 - MR Barn: Lymfografi</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/137756" target="_blank" style="color: white;">E-håndbok: Lymfografi</a><br><br>
+    Localizer, 3-plan<br>
+    T2 HASTE<br>
+    Cor 3D Truefisp EKG og resp.trigging<br>
+    Cor T2 SPACE fs resp.trig (MRCP-sekvens)<br>
+    Cor T2 SPACE STIR (bright blood) resp.trig<br>
+    Evt: ekstra Cor T2 SPACE fs (MRCP)
+</div>
+
+<div title=" Evt kontrast&#013 Dag&#013 90 min&#013 (120 min hvis K+)&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B6.1: - MR Barnehjerte medfødt hjertefeil, generell_RRH</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br><br>
+    T2 HASTE DB BH: Tra, Cor, Sag<br>
+    3D trueFISP: Cor<br>
+    Cine: 2k, 3k, 4k, 2kHV, kortakse, utløp aorta og pulm<br>
+    Flowmåling: Aorta, Pulmonal, HAP, VAP<br><br>
+    Ved k+, hør med radiolog om:<br>
+    - Dynamisk med TWIST/IR-flash eller MRA med 3 faser<br>
+    - T1-map før og etter kontrast.<br>
+    - LGE (DE-overview eller HR-LGE)<br><br>
+    Ved Ebstein Anomali:<br>
+    - Cine kant-i-kant gjennom AV-klaffene (vinklet som 4k)<br><br>
+    Alt. sekvenser:<br>
+    - Cor T2 SPACE STIR, T1 SPACE DB
+</div>
+
+<div title=" Med kontrast&#013 Dag&#013 105 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B6.2 - MR Barnehjerte myokardsykdom_RRH</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br>
+    <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+    T2 HASTE DB BH: Tra, Cor, Sag<br>
+    Cine: 2k, 3k, 4k, 2kHV, utløp aorta og pulm<br>
+    T1-map uten kontrast: 2k, 4k, 3k, basal, midt, apikal<br>
+    IVK (Gadovist 0,2ml/kg)<br>
+    Cine: kortakse<br>
+    DE-overview 2k, 3k, 4k, kortakse<br>
+    HR-LGE: 2k, 3k, 4k, kortakse<br>
+    T1-map med kontrast: 2k, 4k, 3k, basal, midt, apikal<br><br>
+    Ved spørsmål om myokarditt:<br>
+    -STIR: 2-,3- og 4-kammer langakse samt 3 kortaksesnitt (inflammatoriske forandringer i ventrikkelvegg?)<br>
+     eller Evt 2D trueFISP.<br>
+    -T2 mapping i samme snittplan som T1 mapping.<br><br>
+    Ved spørsmål om ARVC:<br>
+    Ax cine gjennom HV (copy 4k og perp på 2kHV) utføres i ventetiden etter kontrast<br><br>
+    Evt:<br>
+    - Cor 3D True FISP<br>
+    - Flowmåling: vinkelrett på AO, dersom tegn til obstruksjon her.<br>
+    - Coronal T2 Space STIR for fremstilling av lungevener.
+</div>
+
+<div title=" Evt kontrast&#013 Dag&#013 105 min&#013 120 min hvis K+&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B6.3 - MR Barnehjerte TGA_RRH</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br>
+    <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+    Ax, Cor, Sag T2 HASTE DB BH<br>
+    Cor 3D trueFISP<br>
+    Cine: 2k, 3k, 4k, 2k HV, kortakse, utløp aorta og pulmonal<br>
+    Cine: 4-kammerprojeksjon kant i kant over atriene.<br>
+    Cine: Ax/skrå cor for framstilling av baffelanastomosene VCS/VCI<br>
+    Flowmåling: Aorta, Pulmonal, HAP, VAP<br><br>
+    Eventuelt:<br>
+    - Fasekontrast vinkelrett på baffle hvis tegn til stenose/lekkasje.<br>
+    - Cor T2 SPACE STIR, T1 SPACE DB<br>
+    - k+ (TWIST/IR-Flash, MRA, T1-map, LGE)<br><br>
+    Postop. arteriell switch.<br>
+    - Fasekontrast vinkelrett på AP sidegrener.<br>
+    - Kontrastfosterket<br><br>
+    Vurder:<br>
+    - MRA med testbolus og 3 faser, hvis mistanke om stenose AP, sidegrener. (10 min)<br>
+    - Cor T2 SPACE STIR for fremstilling av lungevener (10 min)<br>
+    - T1 maping 3 kortaksesnitt før og >15 min etter kontrast. (10 min)<br><br>
+    NB! HUSK å bestille hematocrit<br><br>
+    Viabilitetsopptak 3D Overview (10 min postkontrast). (20 min)
+</div>
+
+<div title=" Evt kontrast&#013 Dag&#013 150 min&#013 MR 1-3&#013 (i kombinasjon med MR Lever:&#013 over to dager med MR Hjerte dag 1)" class="toggle-header" onclick="toggleContent(this)">
+    B6.4 - MR Barnehjerte BCPC, TCPC</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br>
+    <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+    Ax, Cor, Sag T2 HASTE DB BH<br>
+    3D trueFISP<br>
+    Cine langakse (min 2plan).<br>
+    Cine kortakse multiple cine i kortakseplan gjennom en eller to ventrikler).<br>
+    Cine utløp fra ventrikkel til aorta evt AP<br><br>
+    Vurder:<br>
+    - TWIST for dynamisk vaskulær fremstilling og IR-flash<br>
+    - MRA med testbolus og 3 faser, evt senfase ved fylning av VCI.<br>
+    - Fase kontrast vinkelrett på AO, AP sidegrener, anastomoser VCS og VCI.<br>
+    - Cor T2 SPACE STIR for fremstilling av lungevener (10 min)<br>
+    - T1 maping 3 lange- og 3 kortaksesnitt før og etter kontrast. (10 min)<br><br>
+    NB! HUSK å bestille hematocrit.<br><br>
+    - Viabilitetsopptak 3D Overview (20 min)<br>
+    - Lymfografi: 3D T2 space MRCP
+</div>
+
+<div title=" Evt kontrast&#013 Dag&#013 60 min + tillegg&#013 MR 1-3"  class="toggle-header" onclick="toggleContent(this)">
+    B6.5 - MR Barnehjerte aorta bindevevssykdom_RRH</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br><br>
+    Localizer<br>
+    Tra T2 HASTE DB (Skallebasis til bekkenbunn)<br>
+    Skrå sag T2 HASTE DB<br>
+    Tra Cine trueFisp (FB)<br>
+    Utredning: Cor 3D trueFISP<br>
+    Kontroll: Skrå sagittal 3D trueFISP<br>
+    2D-TOF (abdominalaorta)<br>
+    Cine LAX + MAD snitt<br><br>
+    Evt:<br>
+    - Flowmålinger (10 min)<br>
+    - Skrå sag Cine trueFISP, (5 min)<br>
+    - k+ MRA i 3 faser (10 min)<br><br>
+    Legg på EKG. Optimaliser 3D TrueFisp i forhold til EKG og pust.
+</div>
+
+<div title=" Evt kontrast&#013 Dag&#013 120 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B6.6 - MR Barnehjerte muskelsykdommer_RRH</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br>
+    <a href="Syngo/Blodprøver.htm" target="_blank" style="color: white;">Blodprøvebestilling</a><br><br><br>
+    Ax, cor og sag T2 HASTE DB BH<br>
+    Cine langakse 2-,3-,4- kammer VV. 2-kammer HV.<br>
+    Cine kortakse (multiple snitt gjennom HV og VV).<br>
+    Cine utløp HV (pulmonalarterien) og VV (aorta ascendens) i to plan (perp).<br><br>
+    T1mapping før og >15 min etter kontrast, 3 kortaksesnitt<br><br>
+    NB! Husk hematocrit.!<br><br>
+    Viabilitetsopptak: 3D Overview 10 min post kontrast, og HR LGE
+</div>
+
+<div title=" Uten kontrast&#013 Dag&#013 45 min&#013 (60 min med Lever)&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B6.8 - MR Barnehjerte avleiring-jern</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br><br>
+    Ax T2 HASTE gjennom thorax.<br>
+    Cine langakse 2-,3-,4- kammer VV<br>
+    evt. Cine SAX<br>
+    T2* FLASH multi ekko dark blood BH, kortakse midtventrikulært<br>
+    T2* FLASH multi ekko bright blood BH, kortakse midtventrikulært<br>
+    T1 map MOLLI, kortakse midtventrikulært<br><br>
+    (i kombinasjon med B7.1d: MR Lever)<br><br>
+    Vurder:<br>
+    -Cor T2 Space STIR for fremstilling av lungevener.
+</div>
+
+<div title=" Med kontrast&#013 Dag&#013 120 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B6.14 - MR Barnehjerte intrakardial tumor/trombe</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16610" target="_blank" style="color: white;">E-håndbok: Barnehjerte</a><br><br>
+    T2 HASTE i 3 plan<br>
+    3D trueFISP<br>
+    Cine langakse 2-,3-,4- kammer VV. 2-kammer HV.<br>
+    Cine kortakse (multiple snitt gjennom HV og VV).<br>
+    Cine utløp HV (pulmonalarterien) og VV (aorta) i to plan (perp).<br>
+    Ax T1 BLADE med og uten fatsat<br>
+    Ax T2 BLADE<br>
+    K+ Ax, cor, sag T1 BLADE fatsat og ax T1 BLADE uten fatsat<br>
+    Viabilitets-opptak: 3D Overview 10 min post kontrast etter 1 + 5 min. ved mistanke om fibrom)<br><br>
+    Vurder:<br>
+    - Ax STIR<br>
+    - Ax 3D T1 VIBE DIXON eller enkeltsnitt T1 SE DIXON<br>
+    - Cor T2 SPACE STIR for fremstilling av lungevener (10 min)
+</div>
+
+<div title="ABDOMEN ER FRA DIAFRAGMA TIL SYMFYSEN&#013 &#013 Del Tra T2 space fs i 2: resp trig i abdomen og uten i bekken. &#013 &#013 Cor T1 TSE (For benmarg, behøves ikke ved nyretumores - snitt skal dekke bekken og ryggrad)&#013 &#013 Kontrast settes for hånd. Tra T1 Vibe Dixon starter rett etter kontrastinjeksjon. &#013 1 serie dekker tumor, neste dekker hele abdomen.&#013 &#013 Med kontrast&#013 Dag&#013 75 min&#013 MR 1-3&#013 " class="toggle-header" onclick="toggleContent(this)">
+    B7.1a - MR Barn: Abdomen/bekken - Tumorutredning/preoperativt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16632" target="_blank" style="color: white;">E-håndbok: Abdomen</a><br><br>
+    T2 HASTE (Cor, Tra)<br>
+    T2 SPACE fs (Tra)<br>
+    DWI (Tra)<br>
+    T2 Dixon TSE (Cor)<br>
+    T1 VIBE DIXON (Tra - over tumor)<br>
+    T1 VIBE DIXON (Tra - hele abdomen)<br>
+    Kontrast: Clariscan® ‐ 0.2ml/kg<br>
+    T1 VIBE DIXON (Tra - over tumor)<br>
+    T1 VIBE DIXON (Tra - hele abdomen)<br>
+    T1 VIBE DIXON eller Starvibe (Cor)<br>
+    evt: T1 TSE (Cor)<br>
+    evt: T1 VIBE DIXON eller Starvibe (Sag)
+</div>
+
+<div title="ABDOMEN ER FRA DIAFRAGMA TIL SYMFYSEN&#013 &#013 Radiolog avgjør om det skal kjøres T2 dixon eller space fs og hvilken orientering det skal kjøres i.&#013 &#013 Del Tra T2 space fs i 2: resp trig i abdomen og uten i bekken. &#013 &#013 Cor T1 TSE (For benmarg, behøves ikke ved nyretumores - snitt skal dekke bekken og ryggrad)&#013 &#013 Evt kontrast&#013 Dag&#013 45 min&#013 MR 1-3&#013 " class="toggle-header" onclick="toggleContent(this)">
+    B7.1b - MR Barn: Abdomen/bekken - Tumorkontroll, behandlingsrespons og oppfølging resttumor</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16632" target="_blank" style="color: white;">E-håndbok: Abdomen</a><br><br>
+    T2 HASTE (Cor, Tra)<br>
+    T2 SPACE fs (Tra)<br>
+    T2 Dixon TSE (Cor)<br>
+    DWI (Tra)<br>
+    T1 Vibe Dixon (Tra)<br>
+    evt. T1 TSE (Cor) for benmarg<br>
+    Evt: Tra T1 VIBE DIXON<br>
+    K+ Clariscan® ‐ 0.2ml/kg<br>
+    T1 VIBE DIXON (Tra, Cor, Sag)
+</div>
+
+<div title="Enkeltsnitt: Prøv å få med lever og pancreas uten lunge og minst mulig store kar gjennom lever.&#013 &#013 Uten kontrast&#013 Dag&#013 15 min&#013 45 min med hjerte&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B7.1d - MR Barn: Lever - Jernavleiring</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16643" target="_blank" style="color: white;">E-håndbok: Lever</a><br><br>
+    Localizer<br>
+    Tra T2 HASTE<br>
+    Tra T1 VIBE DIXON<br>
+    Tra T2* FLASH (multiekko enkeltsnitt)<br>
+    T2StarMap_12echo_liver_T2STAR<br>
+    Tra T1 map (enkeltsnitt)
+</div>
+
+<div title="Hør med radiolog om dynamisk us. Ved Primovist tas alltid 20min postkontrast&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-3&#013 (Over 2 dager i kombo med MR Hjerte)" class="toggle-header" onclick="toggleContent(this)">
+    B7.2 - MR Barn: Lever - Parenchym / metastaser</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16643" target="_blank" style="color: white;">E-håndbok: Lever</a><br><br>
+    T2 HASTE (Cor, Tra)<br>
+    T1 VIBE DIXON (Tra)<br>
+    T2 SPACE fs (Tra)<br>
+    DWI (Tra)<br>
+    Evt: Kontrast Primovist eller Clariscan. Se eHåndbok
+</div>
+
+<div title=" Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+    B7.3a - MR Barn: Galleveier - Gallegangsdilatasjon, gallesten, striktur, anomalier</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16647" target="_blank" style="color: white;">E-håndbok: Galleveier</a><br><br>
+    Localizer<br>
+    Cor T2 HASTE<br>
+    Tra T2 HASTE<br>
+    Tra T1 VIBE DIXON<br>
+    Tykksnitt MRCP (Cor, Skrå Cor, Sag)<br>
+    Tynnsnitt MRCP (cor/skrå cor T2 SPACE fs)<br>
+    Tra T2 SPACE fs<br>
+    Evt: Tra DWI<br>
+    Tra Tynnsnitt MRCP
+</div>
+
+<div title="Radiolog avgjør hvor lenge det avbildes&#013 &#013 Med kontrast&#013 Dag&#013 75 min +&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+    B7.3e - MR Barn: Gallelekkasje</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16647" target="_blank" style="color: white;">E-håndbok: Galleveier</a><br><br>
+    Localizer<br>
+    Cor T2 HASTE<br>
+    Tra T2 HASTE<br>
+    Tykksnitt MRCP (Cor, Skrå Cor, Sag)<br>
+    Tynnsnitt MRCP (cor/skrå cor T2 SPACE fs)<br>
+    Cor T1 VIBE DIXON<br>
+    Tra T1 VIBE DIXON<br>
+    Kontrast: Primovist® ‐ 0.1ml/kg (testbolus evt. carebolus på de minste barna)<br>
+    Tra T1 VIBE DIXON (arteriell, portvenøs og eq fase, 5min, 10min, 15min, 20min, 20min+)<br>
+    Cor T1 VIBE DIXON (eq fase, 5min, 10min, 15min, 20min, 20min+)<br>
+    Tra T1 VIBE DIXON flipvinkel ≥35° (20min, 20min+)<br>
+    Cor T1 VIBE DIXON flipvinkel ≥35° (20min, 20min+)<br>
+    Evt: Tra DWI<br>
+    Tra T2 Space fs
+</div>
+
+<div title=" Uten kontrast&#013 Dag&#013 75 min&#013 MR 1-3&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+    B7.4a - MR Barn: Pancreasanomalier, skade, lesjoner, pankreatitt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16648" target="_blank" style="color: white;">E-håndbok: Pancreas</a><br><br>
+    Localizer<br>
+    Cor T2 HASTE<br>
+    Tra T2 HASTE<br>
+    Tra T1 VIBE DIXON<br>
+    Tykksnitt MRCP (Cor, Skrå Cor, Sag)<br>
+    Cor Tynnsnitt MRCP (etter pancreasgang)<br>
+    Tra T2 SPACE fs<br>
+    Tra DWI<br>
+    Evt: Tra Tynnsnitt MRCP
+</div>
+
+<div title="Drikke eller IV-hydrering før undersøkelse.&#013 Be barnet gå på do før us.&#013 Bleieunderlag på bord.&#013 &#013 Med kontrast&#013 Dag&#013 90 min&#013 MR 1-4&#013 " class="toggle-header" onclick="toggleContent(this)">
+    B7.5a - MR Barn: Urografi (Parenchymatøs nyresykdom, obstruktiv nefro/uropati, anatomisk oversikt)</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16651" target="_blank" style="color: white;">E-håndbok: Nyrer</a><br>
+        <a href="Syngo/Furix.htm" target="_blank" style="color: white;">Dosering av Furix®</a><br><br>
+    Localizer<br>
+    Cor T2 HASTE<br>
+    Tra T2 HASTE<br>
+    Cor T2 DIXON resp.trig<br>
+    Tra T2 DIXON resp.trig<br>
+    Cor T2 SPACE fs (urogram)<br>
+    T1 TSE Coronal (Kan droppes)<br>
+    Cor T1 VIBE DIXON<br>
+    Legemiddel: Furix® 0,5-1 mg/kg (max 2 ml) settes rett før kontrastinjeksjon Clariscan® 0.2ml/kg<br>
+    Cor T1 VIBE DIXON (kontinuerlig opptak i 3 minutter)<br>
+    Cor T1 VIBE DIXON (5min, 10min, 15min, 20min)<br>
+    Evt post Furosemid: Tra T1 VIBE DIXON<br>
+    Tra T2 TSE DIXON resp.trig
+</div>
+
+<div title="Samkjøres ofte med MR Caput. Gis kontrast på Caput us, kjøres T1 VIBE DIXON postkontrast.&#013 &#013 Evt kontrast&#013 Dag&#013 30 min&#013 MR 1-3&#013 " class="toggle-header" onclick="toggleContent(this)">
+    B7.5b - MR Barn: Abdomen/nyrer - Angiomyolipom ved tuberøs sclerose</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16632" target="_blank" style="color: white;">E-håndbok: Abdomen</a><br><br>
+    Localizer<br>
+    T2 DIXON TSE (Tra)<br>
+    T2 HASTE fs (Cor)<br>
+    DWI (Tra)<br>
+    T1 VIBE DIXON (Tra)<br>
+    Evt: Kontrast: Clariscan® ‐ 0.2ml/kg<br>
+    T1 Vibe DIXON
+</div>
+
+<div title="Inflammatorisk tarmsykdom og eventuelle komplikasjoner. Brukes til barn over 6 år som klarer å holde pusten&#013 Drikkeblanding: 960ml vann + 40ml Sorbitol (4%), totalt 1000ml. &#013 For barn under 40kg beregnes 25ml drikkeblanding per kg kropsvekt. &#013 Kan blandes med sukkerfri saft for smak. Drikkes jevnt 60 min før undersøkelse. &#013 Barnet bør gå på do rett før undersøkelsen starter.&#013 &#013 Cor 2D trueFISP - dynamisk sekvens, et snitt med flere tidsfaser&#013 &#013 Med kontrast&#013 Dag&#013 90 min&#013 MR 1-4&#013 Faste" class="toggle-header" onclick="toggleContent(this)">
+    B7.7 - MR Barn: Tynntarm</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16653" target="_blank" style="color: white;">E-håndbok: Tynntarm</a><br><br>
+    Localizer<br>
+    Cor T2 HASTE<br>
+    Cor T2 HASTE fs<br>
+    Cor 2D trueFISP (dynamisk)<br>
+    Cor 2D trueFISP<br>
+    Tra 2D trueFISP<br>
+    Legemiddel: Buscopan® - ½ dose intravenøst<br>
+    Cor VIBE DIXON<br>
+    Kontrast: Clariscan® - 0,2 ml/kg intravenøst<br>
+    Cor VIBE DIXON x3 (30sek, 70 sek og 90 sek postkontrast)<br>
+    Evt patologi i bekken: Tra T1 TSE fs, Cor T1 TSE fs, Sag T1 TSE fs
+</div>
+
+<div title="Husk spoler til å dekke abdomen og bekken&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    B8.1a - MR Barn: Bekken - Tumor utredning, preoperativt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/86563" target="_blank" style="color: white;">E-håndbok: Bekken</a><br><br>
+    Localizer<br>
+    Tra T2 TSE DIXON<br>
+    Sag T2 TSE DIXON<br>
+    Cor T2 TSE DIXON<br>
+    Tra T1 TSE DIXON<br>
+    Tra DWI<br>
+    Cor T2 HASTE (Øvre abdomen)<br>
+    Kontrast: Clariscan® 0.2ml/kg<br>
+    Tra T1 TSE DIXON<br>
+    Sag T1 TSE DIXON<br>
+    Evt: Cor T1 TSE DIXON
+</div>
+
+<div title="Husk spoler til å dekke abdomen og bekken&#013 &#013 Evt kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    B8.1b - MR Barn: Bekken - Tumor kontroll</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/86563" target="_blank" style="color: white;">E-håndbok: Bekken</a><br><br>
+    Localizer<br>
+    Tra T2 TSE DIXON<br>
+    Sag T2 TSE DIXON<br>
+    Tra T1 VIBE DIXON (evt. andre plan)<br>
+    Tra DWI<br>
+    Cor T2 HASTE (hele abdomen)<br>
+    Evt kontrast med: Clariscan® 0.2ml/kg<br>
+    Tra T1 TSE DIXON<br>
+    Sag T1 TSE DIXON<br>
+    Evt: Cor T1 TSE DIXON
+</div>
+
+<div title=" Med kontrast&#013 Dag&#013 60 min&#013 MR4" class="toggle-header" onclick="toggleContent(this)">
+    B9.8a - MR Barn: Overekstremitet - Tumor utredning</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16657" target="_blank" style="color: white;">E-håndbok: Ekstremiteter</a><br><br>
+    Localizer<br>
+    Cor / Sag T2 TSE DIXON (dekke hele tilliggende ledd, evt begge ledd ved bentumor)<br>
+    Cor/Sag T1 TSE DIXON<br>
+    Tra T2 TSE DIXON<br>
+    Tra T1 TSE DIXON<br>
+    Tra DWI<br>
+    Kontrast: Clariscan® ‐ 0.2ml/kg (evt. dynamisk med TWIST vibe.)<br>
+    Tra T1 TSE DIXON<br>
+    Cor / Sag T1 TSE DIXON
+</div>
+
+<div title=" Med kontrast&#013 Dag&#013 45 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+    B9.8b - MR Barn: Overekstremitet - Tumor kontroll</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16657" target="_blank" style="color: white;">E-håndbok: Ekstremiteter</a><br><br>
+    Localizer<br>
+    Cor / Sag T2 TSE DIXON (dekke hele tilliggende ledd, evt begge ledd ved bentumor)<br>
+    Tra T2 TSE DIXON<br>
+    Tra T1 TSE DIXON<br>
+    Tra DWI
+</div>
+
+<div title="Planvalg avhengig av lokalisasjon, konf. med ansvarlig radiolog.&#013 Små barn: Cor T2 TSE DIXON over begge ekstremiteter, Spebarn: CorT2 TSE DIXON helkropp&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+    B9.8c - MR Barn: Overekstremitet - Osteomyelitt, artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16657" target="_blank" style="color: white;">E-håndbok: Ekstremiteter</a><br><br>
+    Localizer<br>
+    Cor T2 TSE DIXON<br>
+    Tra T2 TSE DIXON<br>
+    Tra T1 TSE DIXON (kan droppes hvis ikke kontrast)<br>
+    Cor DWI<br>
+    Evt kontrast: Clariscan® ‐ 0.2ml/kg<br>
+    Tra T1 TSE DIXON<br>
+    Cor / Sag T1 TSE DIXON
+</div>
+
+<div title=" Med kontrast&#013 Dag&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+    B10.8a - MR Barn: Underekstremitet - tumor utredning</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16657" target="_blank" style="color: white;">E-håndbok: Ekstremiteter</a><br><br>
+    Localizer<br>
+    Cor / Sag T2 TSE DIXON (dekke hele tilliggende ledd, evt begge ledd ved bentumor)<br>
+    Cor/Sag T1 TSE DIXON<br>
+    Tra T2 TSE DIXON<br>
+    Tra T1 TSE DIXON<br>
+    Tra DWI<br>
+    Kontrast: Clariscan® ‐ 0.2ml/kg (evt. dynamisk med TWIST vibe.)<br>
+    Tra T1 TSE DIXON<br>
+    Cor / Sag T1 TSE DIXON
+</div>
+
+<div title=" Uten kontrast&#013 Dag&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+    B10.8b - MR Barn: Underekstremitet - tumor kontroll</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16657" target="_blank" style="color: white;">E-håndbok: Ekstremiteter</a><br><br>
+    Localizer<br>
+    Cor / Sag T2 TSE DIXON (dekke hele tilliggende ledd, evt begge ledd ved bentumor)<br>
+    Tra T2 TSE DIXON<br>
+    Tra T1 TSE DIXON<br>
+    Tra DWI
+</div>
+
+<div title="Planvalg avhengig av lokalisasjon, konf. med ansvarlig radiolog.&#013 Små barn: Cor T2 TSE DIXON over begge ekstremiteter, Spebarn: CorT2 TSE DIXON helkropp&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+    B10.8c - MR Barn: Underekstremitet - Osteomyelitt, artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16657" target="_blank" style="color: white;">E-håndbok: Ekstremiteter</a><br><br>
+    Localizer<br>
+    Cor T2 TSE DIXON<br>
+    Tra T2 TSE DIXON<br>
+    Tra T1 TSE DIXON (kan droppes hvis ikke kontrast)<br>
+    Cor DWI<br>
+    Evt kontrast: Clariscan® ‐ 0.2ml/kg<br>
+    Tra T1 TSE DIXON<br>
+    Cor / Sag T1 TSE DIXON
+</div>
+
+<div title="Legg på EKG&#013Optimaliser Trufisp i forhold til EKG og pust &#013 &#013 Evt kontrast&#013 Dag&#013 45 min&#013 MR 1-3"
+ class="toggle-header" onclick="toggleContent(this)">
+    B11.5a - MR Barn: Thoraxangio</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16634" target="_blank" style="color: white;">E-håndbok: MR Angio</a><br><br>
+    Localizer<br>
+    Tra T2 HASTE DB<br>
+    Skrå sag T2 HASTE DB<br>
+    Tra Cine trueFisp (FB)<br>
+    Skrå sagittal 3D trueFISP, EKG- og respirasjons-trigget<br>
+    Evt: Flowmålinger, Skrå sag Cine trueFISP, Cine trueFISP (LAX), k+ MRA i 3 faser
+</div>
+
+<div title="Legg på EKG&#013Optimaliser Trufisp i forhold til EKG og pust &#013 &#013Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B11.5b - MR Barn: Thoracalaorta non-kontrast</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16634" target="_blank" style="color: white;">E-håndbok: MR Angio</a><br><br>
+    Localizer<br>
+    Tra T2 HASTE DB<br>
+    Skrå sag T2 HASTE DB<br>
+    Tra Cine trueFisp (FB)<br>
+    Skrå sagittal 3D trueFISP, EKG- og respirasjons-trigget<br>
+    Evt: Flowmålinger, Skrå sag Cine trueFISP, Cine trueFISP (LAX), k+ MRA i 3 faser
+</div>
+
+<div title="beregne kontrastforsinkelse (ikke testbolus under 1ml -empirisk arteriell delay, 10 s på små barn) &#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    B11.7a - MR Barn: Abdomenangio</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16634" target="_blank" style="color: white;">E-håndbok: MR Angio</a><br><br>
+    Localizer<br>
+    Tra T2 HASTE<br>
+    Coronal 3D FLASH T1 tomserie<br>
+    k+ Test bolus 1-2ml<br>
+    Coronal 3D FLASH T1 i 2-3 faser<br>
+    Evt: 3D trueFISP resp.- og ekg-trigget
+</div>
+
+<div title="beregne kontrastforsinkelse (ikke testbolus under 1ml -empirisk arteriell delay, 10 s på små barn) &#013 &#013 Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B11.7b - MR Barn: Abdominalaorta non-kontrast</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16634" target="_blank" style="color: white;">E-håndbok: MR Angio</a><br><br>
+    Localizer<br>
+    Tra T2 HASTE<br>
+    Coronal 3D FLASH T1 tomserie<br>
+    k+ Test bolus 1-2ml<br>
+    Coronal 3D FLASH T1 i 2-3 faser<br>
+    Evt: 3D trueFISP resp.- og ekg-trigget
+</div>
+
+<div title="Legg på EKG&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B11.13 - MR Barn: Totalaorta - Aortapatologi, vaskulitt, takayasu artritt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16634" target="_blank" style="color: white;">E-håndbok: MR Angio</a><br><br>
+    Tra T2 HASTE black blood (skallebasis til bekken)<br>
+    Cor 3D MRA tomserie Thorax<br>
+    Cor 3D MRA tomserie Abdomen<br>
+    k+ Testbolus (Clariscan) i nivå med pulmonalarteriedelingen<br>
+    Cor 3D MRA x 2 med 20 sek intervall mellom seriene i thorax<br>
+    Cor 3D MRA x 2 med 20 sek intervall mellom seriene i abdomen<br>
+    3D T1 Space BB<br>
+    3D IR-Flash
+</div>
+
+<div title="T1 Vibe FS kjøres identisk før og etter kontrast&#013 TWIST i minst 1min45sek og tidsoppløsning ca 3sek.&#013 &#013 Med kontrast&#013 Dag&#013 60 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    B12.1a - MR Barn: Vaskulære malformasjoner</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136160" target="_blank" style="color: white;">E-håndbok: MR Vaskulære malformasjoner</a><br><br>
+    Localizer<br>
+    T2 TSE Dixon Cor / Sag<br>
+    T2 TSE Dixon Tra<br>
+    T1 TSE Dixon (ett plan)<br>
+    Tra T1 Vibe FS<br>
+    Kontrast 0,2ml/kg Clariscan med Cor TWIST (evt SAG)<br>
+    T1 VIBE fs (helt identisk til pre-kontrast VIBE) 2-6min<br>
+    T1 TSE Dixon Cor<br>
+    T1 TSE Dixon Tra eller Sag<br>
+    T1 Vibe fs 15min
+</div>
+
+<div title="planvalg avhengig av lokalisasjon, konf. ansvarlig radiolog (dekke tilliggende ledd). Dersom stort område vurder STIR &#013&#013 Uten kontrast&#013 Dag&#013 45 min&#013 MR 1-4" class="toggle-header" onclick="toggleContent(this)">
+    B12.1b - MR Barn: Vaskulærmalformasjon kontroll</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/136160" target="_blank" style="color: white;">E-håndbok: MR Vaskulære malformasjoner</a><br><br>
+    Localizer<br>
+    Cor/ Sag T2 TSE DIXON<br>
+    Tra T2 TSE DIXON
+</div>
+
+<div title="Helkropps DWI: Coronal DWI (b50 &1000) -Multiple diffusjonssekvenser fra issen til definert område (få med armer og axiller). &#013 NB! Hver diffusjonsserie må nummeres (1, 2, 3, 4)&#013 Coronal T2 TSE DIXON resp.trigget i thorax/abdomen.&#013 &#013 Uten kontrast&#013 Dag&#013 90 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B13.1 - MR Barn: Helkropp - Tumorutbredelse, CRMO</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16659" target="_blank" style="color: white;">E-håndbok: MR Helkropp</a><br><br>
+    Cor DWI<br>
+    Coronal T2 TSE DIXON<br>
+    Radiolog definerer dekning (isse-føtter / skallebasis-lår)
+</div>
+
+<div title="Flere localizere må påberegnes da fosterets posisjon varierer.&#013 &#013 Uten kontrast&#013 Dag&#013 60 min&#013 MR 1-3" class="toggle-header" onclick="toggleContent(this)">
+    B14.1 - MR Barn: Foster - Intrauterin fremstilling anomalier</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/87454" target="_blank" style="color: white;">E-håndbok: MR Foster Intrauterin</a><br><br>
+    Caput: Se nevro protokoll 46<br>
+    Kropp foster:<br>
+    Localizer (mors mage)<br>
+    Localizer (foster)<br>
+    Tra T2 HASTE<br>
+    Cor T2 HASTE<br>
+    Sag T2 HASTE<br>
+    3 plan T1 VIBE DIXON<br>
+    Evt: 2D trueFISP, Coronal DESS
+</div>
+
+<div title=" Uten kontrast&#013 Dag&#013 75 min&#013 MR 4" class="toggle-header" onclick="toggleContent(this)">
+    B15.1 - MR Barn: Dødfødt</div>
+<div class="toggle-content">
+    <a href="https://ehandbok.ous-hf.no/document/16662" target="_blank" style="color: white;">E-håndbok: MR Dødfødt</a><br><br>
+    Caput/collum:<br>
+    Axial T2 TSE<br>
+    Sagittal T1 TSE<br>
+    Thorax/abdomen/bekken:<br>
+    3 plan T2 TSE<br>
+    Evt: Tra / Cor T1 TSE
+</div>
+
+
+</body>
+</html>

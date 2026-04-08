@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5">
+    <title>Telefonliste RH</title>
+    <style>
+        body {
+            background-color: rgb(29, 43, 67);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 75%;
+            margin: 0;
+            padding: px;
+        }
+
+        .content-wrapper {
+            margin-top: 20px;
+            padding: 0 10px;
+            overflow-x: auto;
+        }
+
+        ::-webkit-scrollbar {
+            width: 0px;
+        }
+
+        .search-bar-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-bottom: 5px;
+            position: sticky;
+            top: 0;
+            background-color: rgb(29, 43, 67);
+            z-index: 10;
+            padding: 5px 0 0 5px;
+        }
+
+        .search-container {
+            position: sticky;
+            top: 0;
+            width: 40%;
+            
+        }
+
+        .hjem-container {
+            position: sticky;
+            top: 0;
+            width: 10px;
+        }
+
+        #search {
+            height: 32px;
+            width: 200px;
+            padding: 10px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        .button {
+            background-color: rgb(46, 68, 103);
+            border: none;
+            color: white;
+            padding: 2px 4px;
+            margin-left: auto;
+            text-align: center;
+            text-decoration: none;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .button:hover {
+            background-color: rgb(29, 43, 67);
+        }
+
+        .header {
+            font-weight: bold;
+            cursor: pointer;
+            background-color: rgb(46, 68, 103);
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .content {
+            display: none;
+        }
+
+        .content div {
+            display: flex;
+            min-width: 900px;
+        }
+
+        
+        
+      .content div span {
+    
+    white-space: nowrap;
+    text-align: left;
+    }
+
+    .content div span:first-child {
+    width: 250px; /* Adjust this value as needed */
+    }
+
+    .content div span:not(:first-child) {
+    width: 80px; /* This will make the spans after the first one take up the remaining space */
+    }
+
+
+
+    </style>
+</head>
+<body>
+<div class="search-bar-container">
+    <input type="text" id="search" placeholder="Søk..." oninput="liveSearch()">
+   <!-- <a style="color: white; margin-left: 10px;" href="microsoft-edge:mailto:tisaks@ous-hf.no?subject=Telefonliste">Feil / manglende nummer?</a>-->
+
+<a href="#" class="button" onclick="history.back(); return false;" title="Go Back">🏠</a>
+</div>
+<div class="content-wrapper">
+
+ <div class="header" onclick="toggleContent(this)">Beredskapsnummer</div>
+<div class="content">
+<div title=""><span>Stans</span><span>73333</span><span></span><span></span></div>
+<div title=""><span>MTA Hjemmevakt - Etter 15:00</span><span>90661111</span><span></span></div>    
+<div title=""><span>MTA kundesenter - Før 15:00</span><span>71580</span><span></span></div>
+<div title=""><span title="drift teknisk mtv vann strøm gass">OSS Eiendom - Etter 14:30</span><span>75000</span><span></span></div>
+<div title=""><span title="drift teknisk mtv vann strøm gass">OSS Eiendom - 07:00 - 14:30</span><span>70406</span><span></span></div>
+<div title=""><span title="drift teknisk mtv vann strøm gass">AVBRYTE STRØMSTANS</span><span>70444</span><span></span></div>
+            
+<div title=""><span>Norunn MTA UL</span><span>90475425  </span><span></span></div>
+<div title=""><span>Espen MTA Ultralyd</span><span>94814724  </span><span></span></div>
+<div title=""><span>Matin MTA</span><span>47652927  </span><span></span></div>
+<div title=""><span>MTA / ATD telefon</span><span>47636060 / 71580  </span><span></span></div>
+<div title=""><span title="Vojo">Vojislav Stankovic MTA CT</span><span>73396</span><span>461 99 917</span><span>23996</span></div>
+<div title=""><span>Øystein Merckol MTA</span><span>73999</span><span></span><span>23999</span></div>
+<div title=""><span>Sikkerhetsvakt</span><span>74670</span><span></span><span></span></div>
+
+</div>
+    
+
+    <div class="header" onclick="toggleContent(this)">Administrasjon Radiologisk</div>
+<div class="content">
+<div title=""><span>Anne Bjørnstad</span><span>97157168</span><span>  </span></div>
+<div title=""><span>Marianne Juell, avd. leder radiografer</span><span>72481 / 93047209</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Olga Elin Birkeland, seksjonsleder Konv</span><span>74687</span><span>  </span><span>24687</span><span>D2.2</span></div>
+<div title=""><span>Rikke Littmann, seksjonsleder A/I</span><span>72592</span><span>  </span><span>22592</span><span></span></div>
+<div title=""><span>Staale Norås, seksjonsleder CT</span><span>72213 / 92831754</span><span></span><span>22213</span><span>D2.2023</span></div>
+<div title=""><span>Torunn Bøgseth, sekjsonsleder MR</span><span>74736 / 415 62 601</span><span></span><span>26488</span></div>
+<div title=""><span>Beate Riise, GAT bemanning</span><span>97533836</span><span>  </span></div>
+<div title=""><span>GAT bemanning</span><span>72477 / 47510687</span><span>  </span></div>
+<div title=""><span>Fravær MR</span><span>47668481</span><span>  </span></div>
+<div title=""><span>Fravær Generell</span><span>47672583</span><span>  </span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Anestesi / Intensiv</div>
+<div class="content">
+<div title=""><span>Generell Intensiv (INTI1)</span><span>73702</span><span>23702</span><span>  </span><span>D1.4</span></div>
+<div title=""><span>Generell Intensiv 2 (INTI9)</span><span>73701</span><span>  </span><span>  </span><span>D1.4</span></div>
+<div title=""><span>Innledning MR</span><span>70268</span><span>  </span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Koordinator anestesi Barn CT/MR</span><span>22486</span><span>72486</span><span>D3.2</span></div>
+<div title=""><span>ANE UTE anestesilege CT/MR</span><span>28565</span><span></span><span>D3.2</span></div>
+<div title=""><span>Operasjonsgang 1 (Anestesisykepleier)</span><span>  </span><span>26715</span><span>  </span><span>D2.4</span></div>
+<div title=""><span>Operasjonsgang 2 (Anestesisykepleier)</span><span>  </span><span>26714</span><span> </span><span>  </span><span> </span></div>
+<div title=""><span>Postoperativ enhet (INTI6)</span><span>72907</span><span>  </span><span>  </span><span>D3.4</span></div>
+<div title=""><span>Stansteam Hjertestans</span><span>73333</span><span>  </span></div>
+<div title=""><span>Stikkehjelp anestesi vakt</span></span><span>26716</span></div>
+<div title=""><span>Stikkehjelp PICC-line</span></span><span>28624</span></div>
+<div title=""><span>Stikkehjelp sykepleier anestesi</span></span><span>26602</span></div>
+<div title=""><span>Stikkehjelp UL pvk anestesi</span></span><span>21871</span></div>
+<div title=""><span>Thoraxkir. intensiv (TKAI1)</span><span>73703</span><span>  </span><span>  </span><span>C1.4</span></div>
+<div title=""><span>Thoraxkir. Intensiv 2 (TKAI2)</span><span>76132</span><span>  </span><span>  </span><span>C2.4</span></div>
+<div title=""><span title="Thoraxkir. overvåkningspost RH">Thoraxkir. observasjon </span><span>70776 - base<br>71261 - Vaktrom spl<br>78260 - Ansv spl</span><span>  </span><span>  </span><span>C3.3</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Angio / intervensjon</div>
+<div class="content">
+<div title=""><span>Bestillingsansvarlig RRH</span><span>72881</span><span>23974</span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Libero A/I</span><span></span><span> 28807 </span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Slagcalling Radiograf</span><span>22481</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Teamleder A/I</span><span>26743</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>XA 1 Abdominal</span><span>73955</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>XA 2 Nevro</span><span>73957</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>XA 4</span><span>74182</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>XA 5 Barn</span><span>73965</span><span></span><span>  </span><span>D3.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Barn radiologisk</div>
+<div class="content">
+<div title="BAM"><span title="BAM">Barn ambulerende</span><span></span><span>23393</span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Lab 6 Barn / Muskel/skjelett</span><span>73378</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Patolog barnepatologi, calling</span><span>26690</span><span></span></div>
+<div title=""><span>RF 1 Gjennomlysning</span><span>74147</span><span>23961</span><span>  </span><span>D2.2</span></div>
+<div title=""><span>UL 7 Ultralydkoordinator Barn</span><span>73381</span><span>22485</span><span>  </span><span>D2.2</span></div>
+<div title=""><span>UL 9 Barn</span><span>73379</span><span>73379</span><span>  </span><span>D2.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">CT</div>
+<div class="content">
+<div title=""><span>CT 1</span><span>73975</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>CT 2</span><span>73997</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>CT 3</span><span>70274</span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>CT Libero</span></span><span></span><span>23975</span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Patolog CT-intervensjon</span><span>  </span><span>26689</span></div>
+<div title=""><span>Calling Barnehjerte</span><span>  </span><span>23383</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Endokrinologisk</div>
+<div class="content">
+<div title=""><span>Endokrinologisk dagenhet (ESFD1)</span><span>71900/01 / 71899</span><span> </span><span>  </span><span>C2a.1</span></div>
+<div title=""><span>Endokrinologisk poliklinikk (ESFP1)</span><span>70285 / 74672</span><span></span></div>
+<div title=""><span>Endokrinologisk sengepost (ENDD1)</span><span>70660</span><span></span><span>  </span><span>C2.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Felleslaber Radiologisk</div>
+<div class="content">
+<div title=""><span>GAM / Teamleder vakt</span><span>26741</span><span>74688</span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Lab 1 Thorax</span><span>73932</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Vaktrom radiografer</span><span>72977</span><span></span><span>  </span><span>C1.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Gastrologisk  </div>
+<div class="content">
+<div title=""><span>Gastrokirurgisk poliklinikk (AGKP5)</span><span>73641</span><span></span></div>
+<div title=""><span title="Gastrokir/uro. post RH">Gastrokirurgisk/uro sengepost (AGKS6)</span><span>70680</span><span>26358</span><span>  </span><span>C2.4</span></div>
+<div title=""><span>Gastrolab (ATXD4)</span><span>72400 / 4</span><span>22404</span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Gastrologisk dagenhet (ATXD1)</span><span></span><span>22065</span><span>  </span><span>C6.2</span></div>
+<div title=""><span>Gastromedisinsk poliklinikk (ATXP3)</span><span>70285</span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span title="Nyre-/gast.med. post RH">Nyre-Gastromedisinsk sengepost (ATXS1)</span><span>70660</span><span>22005</span><span>  </span><span>C2.2</span></div>
+<div title=""><span>Lab 12 ERCP-lab</span><span>73954</span><span></span><span>  </span><span>C2.2</span></div>
+<div title=""><span>Medisinsk dagenhet (ATXD1)</span><span>70290</span><span></span><span>  </span><span>C6.2</span></div>
+<div title=""><span>Nyremedisinsk poliklinikk (ATXP5)</span><span>70285</span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span title="Observasjonsenhet nyre, RH">OBS-enhet Nyre (ATXD2)</span><span>73926</span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Urologisk poliklinikk (UROP6)</span><span>72200</span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Hematologisk</div>
+<div class="content">
+<div title=""><span>Blodsykdommer (BLOS1)</span><span>70460</span><span>26588</span><span>  </span><span>C3.2</span></div>
+<div title=""><span>Hematologisk poliklinikk (BLOP1)</span><span>72383</span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Hud</div>
+<div class="content">
+<div title=""><span>Hud dagenhet (RHID1)</span><span></span><span>22065</span><span>  </span><span>C6.2</span></div>
+<div title=""><span>Hud poliklinikk (RHIP3)</span><span>72430</span><span></span><span>  </span><span>D2b.1</span></div>
+<div title=""><span>Hud sengepost (RHIS1)</span><span>70520</span><span>20531</span><span>  </span><span>C5.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Kardiologisk</div>
+<div class="content">
+<div title=""><span>Barnekardiologisk poliklinikk (BKAP1)</span><span>72320/21/17/18</span><span></span><span> 22320 </span><span>E2.1</span></div>
+<div title=""><span>Kardiologisk EKKO-lab (KADL1)</span><span>  </span><span>  </span><span>  </span><span>D1.1</span></div>
+<div title=""><span title="Kard. overvåkning RH">Kardiologisk overvåkning (KADI1)</span><span>71940</span><span></span><span>  </span><span>C1.3</span></div>
+<div title=""><span>Kardiologisk poliklinikk (KADP1)</span><span>72364</span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Kardiologisk sengepost (KADS1)</span><span>70640 - ekspedisjon<br>73877 - team 1<br>78102 - team 2<br>78103 - team 3</span><span></span><span>20675<br><br><br>20675</span><span>C2.3<br><br>E3.3  </span><span></span></div>
+<div title=""><span>Kardiologisk sengepost 2 (TKAS2)(KADS2)</span><span>76135</span><span></span><span>  </span><span>C3.3</span></div>
+<div title=""><span>Kardiologisk TX dagenhet (KADD1)</span><span>77063</span><span></span></div>
+<div title=""><span>OBS-enhet hjerte (KADD2)</span><span>72456</span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Kardiologer:</span><span></span><span></span><span>  </span><span></span></div>
+<div title=""><span>MR Pacemaker kardiolog</span><span>28610</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Kardiologisk forvakt</span><span>26730</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Kardiologisk bakvakt</span><span>26731</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Morten Flattum</span><span>26934</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Erik Lyseggen</span><span>26491</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Trine S. Fink</span><span>22786</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Knut Sevre</span><span>26162</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Erik Kongsgård</span><span>23269</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Ole Gunnar Anfinsen</span><span>22021</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Torbjørn Holm</span><span>26737</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Lars Andreas Dejgaard</span><span>28554</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Stian Ross</span><span>26960</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Hans Morten Kristiansen</span><span>28438</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Aina Brekk</span><span>20428</span><span></span><span>  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Kirurgisk</div>
+<div class="content">
+<div title=""><span>Dagkirurgen<br> - Kir dagbehandling for barn</span><span>72055<br>72058</span><span>  </span><span>  </span><span>D5.1</span></div>
+<div title=""><span>Kirurgisk poliklinikk og dagavd (KDA)(LGBP1)</span><span>74713<br>72208</span><span></span><span>  </span><span>D3b.1</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Kontor radiologisk</div>
+<div class="content">
+<div title=""><span>Bildeimport og eksport IE</span><span>23749</span><span>74881</span><span>  </span><span>D2.2021</span></div>
+<div title=""><span>Ekspedisjon Barnerøntgen</span><span>72487</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor</span><span>72506</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor</span><span>72507</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor CT</span><span>72593</span><span>22593</span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor MR</span><span>72507</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor RF</span><span>72504</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor Røntgen</span><span>72505</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-Kontor Ultralyd</span><span>72509</span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>PI-kontor Ø-hjelp</span><span></span><span>26420</span></div>
+<div title=""><span>Resepsjon Radiologisk avdeling</span><span>72600  </span><span></span><span>  </span><span>D2.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Konvensjonell</div>
+<div class="content">
+<div title=""><span>Fagradiograf Konvensjonell</span><span>26739</span><span>  </span><span></span><span>D2.2</span></div>
+<div title="RRH_RG2"><span title="RRH_RG2">Lab 2 Muskel/skjelett</span><span>73374  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title="RRH_RG3"><span title="RRH_RG3">Lab 3 Muskel/skjelett</span><span>73375  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title="RRH_RG4"><span title="RRH_RG4">Lab 4 Muskel/skjelett</span><span>73376  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title="RRH_RG6"><span title="RRH_RG6">Lab 6 Muskel/skjelett</span><span>73378  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Libero Muskel/skjelett</span><span>  </span><span>22475</span><span>  </span><span>D2.2</span></div>
+<div title="RRH_RF2"><span title="RRH_RF2">RF 2 Gjennomlysning</span><span>73396</span><span>28655</span><span>  </span><span>D2.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Kvinner og barn</div>
+<div class="content">
+<div title=""><span>Barnefysioterapi RH</span><span>72896<br>72284</span><span></span></div>
+<div title=""><span>Barnehjerte poliklinikk</span><span>72317<br>72318  </span><span></span></div>
+<div title=""><span>Barneintensiv (INTI4)</span><span>73704  </span><span></span><span>  </span><span>D1.4</span></div>
+<div title=""><span>Barnekardiologisk poliklinikk (BKAP1)</span><span>72320</span><span></span><span>22320</span><span>E2.1</span></div>
+<div title=""><span>Barnekirurgisk poliklinikk(AGKPB)</span><span>74618<br>72528  </span><span></span><span></span></div>
+<div title=""><span>Barnekreft/Hematologisk poliklinikk (BKBP1)</span><span>74476<br>26560</span><span></span></div>
+<div title=""><span title="Barnekreft og blod post 1 RH">Barnekreft/Hematologisk sengepost (BKBS1)</span><span>74560 - Ekspedisjon<br>74581 - Sykepleierkontor<br>73203 - Vaktrom</span><span></span><span>24560</span><span>E1.3</span></div>
+<div title=""><span title="Barn kreft- og blod sengepost 2">Barn kreft- og blod sengepost 2 (BKBS2)</span><span>73184<br><br></span><span></span><span>26560</span><span></span></div>
+<div title=""><span title="Lever, Nyre og Revmatologisk">Barnemedisinsk dagenhet Medisinsk (BTX)</span><span>74484</span><span></span><span>24011</span><span>E1.1</span></div> 
+<div title=""><span >Barnemedisinsk dagenhet kreft (BTXD)</span><span></span><span></span><span>26560</span><span>E1.1</span></div>
+<div title=""><span title="Barnemed. dagpost RH">Barnemedisinsk dagpost (BTXS3)</span><span>74522</span><span></span><span>26546</span><span>E1.1</span></div>
+<div title=""><span>Barnemedisinsk poliklinikk</span><span>74012</span><span></span><span>26543</span><span>E1.1</span></div>
+<div title=""><span>Barnemedisinsk resepsjon</span><span>80602</span><span></span><span>24513</span><span>E1.1</span></div>
+<div title=""><span title="Barnepost 2 barnepost 1">Barnemedisinsk sengepost 1 (BTXS1)<br>&nbsp;&nbsp;&nbsp;∟Revma / nevro </span><span>72300 - Ekspedisjon<br>72292 - Vaktrom<br>72302 - vaktrom Lunge</span><span></span><span>22560</span><span>E2.2</span></div>
+<div title=""><span>Barnemedisinsk sengepost 2 (BTXS2)<br>&nbsp;&nbsp;&nbsp;∟Hjerte</span><span>74540  </span><span></span><span>26541</span><span>E1</span></div>
+<div title=""><span>Barnemedisinsk timebestilling</span><span>74500  </span><span></span></div>
+<div title=""><span title="Barselpost RH">Barsel (FØDS4)</span><span>72346 - vaktrom<br>72630 - Resepsjon</span><span>  </span><span>  </span><span>E2.3</span></div>
+<div title=""><span>Føde</span><span>72640</span><span></span></div>
+<div title=""><span>GUCH poliklinikk</span><span>73299</span><span></span></div>
+<div title=""><span>Gynekologisk (GYNS2)</span><span>72664</span><span></span><span></span><span>E2.4</span></div>
+<div title=""><span title="Kir. barn nevro/pla Post 1 RH">Kirurgisk barnepost 1 (KABS1)<br>&nbsp;&nbsp;&nbsp;∟NK og plastikk</span><span>74320 - base<br>70616 - vaktrom</span><span></span><span>24839</span><span>C6.4</span></div>
+<div title=""><span title="Kir. barn gas/uro/tx Post 2 RH">Kirurgisk barnepost 2 (KABS2)<br>&nbsp;&nbsp;&nbsp;∟gastro/uro</span><span>74620 - base<br>74607 - vaktrom<br>74631 - intermediærstue</span><span></span><span>24607<br>26333</span><span>E1.4</span></div>
+<div title=""><span title="Kir. barn orto/ønh Post 3 RH">Kirurgisk barnepost 3 (KABS3)<br>&nbsp;&nbsp;&nbsp;∟orto / ønh</span><span>76100 - base<br>70604 - vaktrom</span><span></span><span>28638</span><span>C6.3</span></div>
+<div title=""><span>Kirurgisk dagenhet for barn (KABD2)</span><span>71706</span><span></span><span>24616</span><span>D3b.1</span></div>
+<div title=""><span>Nyfødt intensiv (NINI2)</span><span>72953<br>72954</span><span></span><span></span><span>E2.4</span></div>
+<div title=""><span>Observasjonspost for Gravide (FØDSF)</span><span>74644  </span><span></span><span>  </span><span></span></div>
+<div title=""><span>Seksjon for nevrorehabilitering barn</span><span>70202<br>70203</span><span></span></div>
+<div title=""><span>Spiseteam Malin (logoped)</span><span></span><span></span><span>26365</span></div>
+<div title=""><span>Thorax intensiv 1 barnestue (TKAI1)</span><span>74745</span><span></span><span>  </span><span>D1.4</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Laboratoriet / blodprøver</div>
+<div class="content">
+<div title=""><span>Klinisk kjemisk</span><span>73087 / 74122  </span><span></span><span>  </span><span></span></div>
+<div title=""><span title="07:30 - 15:30 (fredag 15:00)">Blodprøver glassgate</span><span>71920</span><span>  </span><span>  </span><span></span></div>
+<div title=""><span>Blodprøver kveld / helg</span><span></span><span>26663</span><span>  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Lunge</div>
+<div class="content">
+<div title=""><span>Allergi/Lunge (BALF1)</span><span>74496  </span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Lunge dagenhet (LURD1)</span><span></span><span>26571  </span><span>  </span><span>C6.2</span></div>
+<div title=""><span>Lunge poliklinikk (LURP1)</span><span>72368  </span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span title="Lungesykd. post RH">Lunge sengepost (LURS1)</span><span>70671</span><span>26363</span><span>  </span><span>C3.3</span></div>
+<div title=""><span>Lungelab</span><span>72425  </span><span></span><span>  </span><span>D1.1</span></div>
+</div>
+
+<div class="header" onclick="toggleContent(this)">MR</div>
+<div class="content">
+<div title="libero"><span title="libero">MR Teamleder</span><span>28939  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title="RRH_MR1"><span title="RRH_MR1">MR 1</span><span>72212  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title="RRH_MR2"><span title="RRH_MR2">MR 2</span><span>73972  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title="RRH_MR3"><span title="RRH_MR3">MR 3</span><span>74724  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title="RRH_MR4"><span title="RRH_MR4">MR 4</span><span>73966  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title="IRH_MR7"><span title="IRH_MR7">MR D7</span><span>70158  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>MR forberedelse</span><span>73967  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>MR Hjertetegning</span><span>72142  </span><span></span><span>  </span><span>E3.M018</span></div>
+<div title=""><span>MR kroken</span><span>73971  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>MR lunsjrom</span><span>73994  </span><span></span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Bac</span><span></span><span>26738  </span><span>  </span><span>D3.2</span></div>
+<div title=""><span>Calling Barnehjerte</span><span>  </span><span>23383</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">MR Eksterne</div>
+<div class="content">
+<div title=""><span>MR 1 Radium</span><span>22 93 42 51  </span><span></span><span>  </span><span></span></div>
+<div title=""><span>MR 2 Radium</span><span>22 93 42 52  </span><span></span><span>  </span><span></span></div>
+<div title=""><span>MR 3 Radium</span><span>22 93 42 53  </span><span></span><span>  </span><span></span></div>
+<div title=""><span>MR 4 Radium</span><span>22 93 42 54  </span><span></span><span>  </span><span></span></div>
+<div title=""><span>MR Aker</span><span>22 89 41 46</span><span></span><span>  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">MR Radiografer</div>
+<div class="content">
+<div title=""><span>Abes, Jamelle Iris Dancel   </span><span>45398414 </span></div>
+<div title=""><span>Bache, Ingrid Elise   </span><span>	90246325 </span></div>
+<div title=""><span>Bakke, Anita Helset   </span><span>97599389 </span></div>
+<div title=""><span>Torunn Bøgseth</span><span>415 62 601</span><span></div>
+<div title=""><span>Bose, Åshild Margrethe   </span><span>41665489 </span></div>
+<div title=""><span>Espe, Line   </span><span>95090534 </span></div>
+<div title=""><span>Gjøsti, Siri   </span><span>95701761 </span></div>
+<div title=""><span>Gram, Nikolai Våtevik   </span><span>98003414 </span></div>
+<div title=""><span>Hagen-Kersten, Åsmund Aleksander   </span><span>95555018 </span></div>
+<div title=""><span>Hansen, Morten   </span><span>97587386 </span></div>
+<div title=""><span>Hansen, Unni Stensrud   </span><span>95087845 </span></div>
+<div title=""><span>Haugland, Mari-Ann   </span><span>99741374 </span></div>
+<div title=""><span>Hoksnes, Eirik   </span><span>92814795 </span></div>
+<div title=""><span>Häger, Erik Wilhelm Matteus   </span><span>97792024 </span></div>
+<div title=""><span>Isaksen, Thore Bæverfjord   </span><span>97770402 </span></div>
+<div title=""><span>Johansen, Emma Konstanse Suni   </span><span>97046891 </span></div>
+<div title=""><span>Kristoffersen, Trine   </span><span>94784190 </span></div>
+<div title=""><span>Mirchi, Yasmin   </span><span>46771195 </span></div>
+<div title=""><span>Nguyen, Bac   </span><span>97702111 </span></div>
+<div title=""><span>Nielsen, Kolbjørn Donslund   </span><span>40846704 </span></div>
+<div title=""><span>Nordby, Emil   </span><span>90965624 </span></div>
+<div title=""><span>Rolstad, Siw Anita   </span><span>98680929 </span></div>
+<div title=""><span>Smith, Alan Geoffrey   </span><span>98854424 </span></div>
+<div title=""><span>Sohrabi, Tina   </span><span>98691911 </span></div>
+<div title=""><span>Sørlie, Hege Marie   </span><span>95258119 </span></div>
+<div title=""><span>Tomterstad, Anders Høye   </span><span>91128618 </span></div>
+<div title=""><span>Tutt, Susan Anne   </span><span>93838112 </span></div>
+<div title=""><span>Tønnessen, Jane   </span><span>97045289 </span></div>
+<div title=""><span>Wesche, Ida Nordby   </span><span>41650997 </span></div>
+
+</div>
+<div class="header" onclick="toggleContent(this)">Nefrologisk</div>
+<div class="content">
+<div title=""><span title="Nyre-/gast.med. post RH">Nefro (ATXS1)</span><span>70660</span><span>22002</span><span>  </span><span>C2.2</span></div>
+<div title=""><span>Nefrolog til Ultralyd</span><span>  </span><span>26837</span></div>
+<div title=""><span title="Observasjonsenhet nyre, RH">Nyre observasjon (ATXD2)</span><span>73926  </span><span></span><span>  </span><span>D2.1</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Nevrokirurgisk</div>
+<div class="content">
+<div title=""><span title="Nevrokir. int.post RH">NK intermediær 4023</span><span>74912  </span><span></span></div>
+<div title=""><span title="Nevrokir. int.post RH">NK intermediær 4028</span><span>74821  </span><span></span></div>
+<div title=""><span title="Nevrokir. int.post RH">NK intermediær 4029</span><span>74834  </span><span></span></div>
+<div title=""><span title="Nevrokir. int.post RH">NK intermediær 4031</span><span>74406 / 5  </span><span></span></div>
+<div title=""><span>Nevrokirurgisk vaktrom 1-4</span><span>74349<br>74913 /4 /5  </span><span></span></div>
+<div title=""><span>NK Overvåkning 4002</span><span>74833  </span><span></span></div>
+<div title=""><span>NK Overvåkning 4006</span><span>74348  </span><span></span></div>
+<div title=""><span>NK Overvåkning 4043</span><span>74825  </span><span></span></div>
+<div title=""><span>Nevrokirurgisk poliklinikk (NKIP2)</span><span>74854  </span><span></span></div>
+<div title=""><span>Nevrokirurgisk prepol</span><span>74294<br>74297  </span><span></span><span>  </span><span>D4.1</span></div>
+<div title=""><span title="Nevrokir.post RH">Nevrokirurgisk sengepost (NKIS2)</span><span>74340</span><span>26822</span><span>  </span><span>C5.4</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Nevrologisk</div>
+<div class="content">
+<div title=""><span>Klinisk Nevrofysiologi (EEG)</span><span>  </span><span>  </span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Nevrologisk poliklinikk (NEVP5)</span><span>73589<br>73580  </span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span title="Nevro post RH">Nevrologisk sengepost voksen (NEVS2)</span><span>70480<br>74892 - Overvåkning</span><span>20480</span><span>  </span><span>C4.4</span></div>
+<div title=""><span title="Nevro post RH">Jesper Diamox</span><span>944 80156</span><span></span><span>  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Nukleærmedisin</div>
+<div class="content">
+<div title=""><span>Nukleærmedisin ekspedisjon (NUK)</span><span>70840  </span><span></span><span>  </span><span>B1.2</span><span></span></div>
+<div title=""><span>Nukleærmedisin PET (NUK)</span><span>73068  </span><span></span><span>  </span><span>D6.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Ortopedisk</div>
+<div class="content">
+<div title=""><span>Ortopedisk poliklinikk (ORHP1)</span><span>76080-1-2-3<br>91370628 (driftsspl)</span><span>  </span></div>
+<div title=""><span>Ortopedisk poliklinikk voksen/barn</span><span>72197<br>74514  </span><span></span></div>
+<div title=""><span>Ortopedisk sengepost basen (ORHS1)</span><span>76060  </span><span></span><span>  </span><span>C5.3</span></div>
+<div title=""><span>Ortopedisk sengepost, calling generell</span><span></span><span>26008  </span><span>  </span><span>C5.3</span></div>
+<div title=""><span>Ortopedisk sengepost, calling hånd</span><span></span><span>26500  </span><span>  </span><span>C5.3</span></div>
+<div title=""><span>Sophies Minde ortopedi</span><span>  </span><span>  </span><span>  </span><span>D3b.1</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Patolog </div>
+<div class="content">
+<div title=""><span>CT-intervensjon barn</span><span>26689</span></div>
+<div title=""><span>Patolog til cyt, calling</span><span>26690</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Plastikk</div>
+<div class="content">
+<div title=""><span>Plastikkirurgisk poliklinikk (PLAP1)</span><span>72206  </span><span></span><span>  </span><span>D3b.1</span></div>
+<div title=""><span title="Plast. kir. post RH">Plastikkirurgisk sengepost (PLAS2)</span><span>70606</span><span>20606</span><span>  </span><span>C5.3</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Portør</div>
+<div class="content">
+<div title=""><span>Portør</span><span>70722  </span><span></span><span>  </span><span>C1.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Radiologer</div>
+<div class="content">
+<div title=""><span>Radiolog calling</span><span>26740</span></div>
+<div title=""><span>Claudius Steinfeldt-Reisse</span><span>26425</span><span>  </span><span>Abdomen</span></div>
+<div title=""><span>Aart Issa-Epe</span><span>26920</span><span>405 30 675  </span><span>Abdomen</span></div>
+<div title=""><span>Ida Björk</span><span>23385</span><span>414 70 705</span><span>Abdomen</span></div>
+<div title=""><span>Gunter Kemmerich</span><span>26566</span><span>944 39 112  </span><span>Abdomen</span></div>
+<div title=""><span>Håvard Bjørke Hubertz</span><span>23395</span><span>994 69 553  </span><span>Abdomen</span></div>
+<div title=""><span>Kristian Kolrud</span><span>26331</span><span>918 81 314  </span><span>Abdomen</span></div>
+<div title=""><span>Runar Flugstad</span><span>26332</span><span>984 37 525  </span><span>Abdomen</span></div>
+<div title=""><span>Kristoffer Lundesgaard</span><span>28573</span><span>970 16 004  </span><span>Abdomen</span></div>
+<div title=""><span>Karina Hougen</span><span>20275</span><span>918 28 398  </span><span>Abdomen</span></div>
+<div title=""><span>Daniel Østergaard</span><span>21575</span><span>467 62 500  </span><span>Abdomen</span></div>
+<div title=""><span>Josefin Hübner</span><span>21569</span><span>  </span><span>Abdomen</span></div>
+<div title=""><span>Trygve Syversveen</span><span>23953</span><span>975 75 744  </span><span>Abdomen</span></div>
+<div title=""><span>Andreas Abildgaard</span><span>22499</span><span>  </span><span>Abdomen</span></div>
+<div title=""><span>Benedicte Falkenberg-Jensen</span><span>22496</span><span>936 36 342  </span><span>TØK</span></div>
+<div title=""><span>Anne Günther</span><span>21719</span><span>997 28 073  </span><span>TØK</span></div>
+<div title=""><span>Mogens Aaløkken</span><span>21717</span><span>  </span><span>TØK</span></div>
+<div title=""><span>Gerhard Bosse</span><span>20271</span><span>986 87 566  </span><span>TØK</span></div>
+<div title=""><span>Gry Frang</span><span>26553</span><span>957 22 597  </span><span>TØK</span></div>
+<div title=""><span>Haakon Ramsland Hol</span><span>26939</span><span>95108635</span><span>TØK</span></div>
+<div title=""><span>Kristian Fosså</span><span>26443</span><span>901 20 356  </span><span>TØK</span></div>
+<div title=""><span>Jon Magnus Moen</span><span>26941</span><span>911 01 950</span><span>TØK</span></div>
+<div title=""><span>Line Strand</span><span>26305</span><span>997 85 757  </span><span>TØK</span></div>
+<div title=""><span>Natasha Moe</span><span>28574</span><span>  </span><span>TØK</span></div>
+<div title=""><span>Berit Kåvik</span><span>28545</span><span>454 24 920  </span><span>TØK</span></div>
+<div title=""><span>Janne Walle</span><span>26831</span><span>908 84 454  </span><span>TØK</span></div>
+<div title=""><span>Einar Hopp</span><span>24816</span><span>  </span><span>TØK</span></div>
+<div title=""><span>Hanna Aronsen</span><span>28829</span><span>  </span><span>TØK</span></div>
+<div title=""><span>Bjørn Tennøe</span><span>21771</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Erik Per Hjalmar Melin</span><span>20838</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Mona Beyer</span><span>22478</span><span>470 27 497  </span><span>Nevro</span></div>
+<div title=""><span>Martin Sökjer</span><span>21768</span><span>480 78 178  </span><span>Nevro</span></div>
+<div title=""><span>Vanja Cengija</span><span>28547</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Liv Furevik</span><span>26742</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Geir Ringstad</span><span>26856</span><span>984 62 361</span><span>Nevro</span></div>
+<div title=""><span>Oksana Lapina</span><span>28654</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Bård Nedregaard</span><span>26734</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Tomas Sakinis</span><span>24175</span><span>450 43 210  </span><span>Nevro</span></div>
+<div title=""><span>Ruth Sletteberg</span><span>28546</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Anna Latysheva</span><span>21776</span><span>91598432</span><span>Nevro</span></div>
+<div title=""><span>Andres Server Alonso</span><span>21573</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Thor Skattør</span><span>20276</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Pål Bache Marthinsen</span><span>28541</span><span>95158159</span><span>Nevro</span></div>
+<div title=""><span>Øivind Gjertsen</span><span>26426</span><span>926 63 236</span><span>Nevro</span></div>
+<div title=""><span>Bogna Warsza</span><span>28695</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Terje Nome</span><span>21775</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Ragnhild Bakke</span><span>28764</span><span>  </span><span>Nevro</span></div>
+<div title=""><span>Ingegerd Aagenes</span><span>23384</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="LH ">Lise Heiberg</span><span>20277</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="KT ">Kirsti Try </span><span>26745</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="HK ">Heidi Kjosbakken</span><span>26751</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="MT ">Målfrid Tveiterås</span><span>21739</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="KS ">Kathrine Suther</span><span>21774</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="LSM ">Lil-Sofie Müller</span><span>28544</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="KTH ">Kristian Thomassen</span><span>22502</span><span>918 54 011  </span><span>Barn</span></div>
+<div title=""><span title="KL ">Kjetil Løitegård</span><span>26444</span><span>  </span><span>Barn</span></div>
+<div title=""><span title="AH ">Audun Halaas</span><span>26748</span><span>  </span><span>Barn</span></div>
+<div title=""><span>Eva Kirkhus</span><span>26857</span><span>922 50 236</span><span>MSK</span></div>
+<div title=""><span>Alexandra Hankin</span><span>21772</span><span>906 95 289</span><span>MSK</span></div>
+<div title=""><span>Ragnhild Gunderson</span><span>23389</span><span>  </span><span>MSK</span></div>
+<div title=""><span>Trygve Kjensjord</span><span>20844</span><span>917 66 138</span><span>MSK</span></div>
+<div title=""><span>Sofia Berg</span><span>20838</span><span>  </span><span>MSK</span></div>
+<div title=""><span>Mobina Nawaz</span><span>28696</span><span>452 68 911</span><span>MSK</span></div>
+<div title=""><span>Eric Dorenberg</span><span>26747</span><span>  </span><span>Intervensjon</span></div>
+<div title=""><span>Ulrik Carling</span><span>26744</span><span>  </span><span>Intervensjon</span></div>
+<div title=""><span>Sigurd Berger</span><span>28542</span><span>  </span><span>Intervensjon</span></div>
+<div title=""><span>Rune Andersen</span><span>24716</span><span>  </span><span>Intervensjon</span></div>
+<div title=""><span>Eyvind Gjønnæss</span><span>22214</span><span>  </span><span>Intervensjon</span></div>
+<div title=""><span>Anne-Marte Schröder Aasen</span><span>23392</span><span>  </span><span>Intervensjon</span></div>
+<div title=""><span>Hilde Feiring Phillips</span><span>21574</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Magdalena Maria Todorow Aabel</span><span>28697</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Jesper Andre Sagen</span><span>28691</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Øystein Stang</span><span>28650</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Tomas Sakinis</span><span>24175</span><span>  </span><span>LIS</span></div>
+<div title=""><span title="SHL ">Siri Margrete Hugo Lohne</span><span>26389</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Rasmus Jonassen Alvsvåg</span><span>26753</span><span>  </span><span>LIS</span></div>
+<div title=""><span title="MMH ">Martin Mowinckel Keyser Haub</span><span>28840</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Ann-Elin Claudius</span><span>28806</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Per Jørgen Sletto</span><span>21773</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Kjersti Houge Gabrielsen</span><span>22877</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Erlend Solhaug Fløisbonn </span><span>28839</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Ingrid Hedemann Hiorth</span><span>20842</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Mathias Kanold</span><span>28448</span><span>  </span><span>LIS</span></div>
+<div title=""><span>Tania Saman Siamansour</span><span>28829</span><span>  </span><span>LIS</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Radiologisk IT</div>
+<div class="content">
+<div title=""><span>RAD IT</span><span></span><span>21742</span></div>
+<div title=""><span>RIS/PACS RH</span><span>47648656  </span><span></span></div>
+<div title=""><span>Sykehuspartner</span><span>32235330  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Renhold / smittevask</div>
+<div class="content">
+<div title=""><span>Smittevask Helg/Helligdag 08-15.30</span><span>26775 / 26781</span></div>
+<div title=""><span>Smittevask Helg/Helligdag 15.30-08</span><span>26780</span></div>
+<div title=""><span>Smittevask Hverdag 07-14</span><span>26482</span></div>
+<div title=""><span>Smittevask Hverdag 14-21</span><span>26755 / 26781</span></div>
+<div title=""><span>Smittevask Natt 21.00-07.00</span><span>26780</span></div>
+<div title=""><span>Vaskeri</span><span>  </span><span>73890</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Rettsmedisinsk</div>
+<div class="content">
+<div title=""><span>Rettsmedisin(RETMED)</span><span>46913734  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Revma / infeksjon</div>
+<div class="content">
+<div title=""><span>Immunologi/Infeksjon (RHIF4)</span><span>70530</span><span>23307</span><span>  </span><span>C4.2</span></div>
+<div title=""><span>Infeksjonsmedisinsk poliklinikk (RHIP4)</span><span>73905</span><span>  </span><span>  </span><span>D1.1</span></div>
+<div title=""><span>Revma/infeksjon dagenhet</span><span></span><span>22065  </span><span>  </span><span>C6.2</span></div>
+<div title=""><span>Revmatologisk poliklinikk (RHIP2)</span><span>73580<br>73902<br>72774  </span><span></span><span>  </span><span>D1.1</span></div>
+<div title=""><span title="Revma/infeksjon post RH">Revmatologisk sengepost (RHIS2)</span><span>70540</span><span>23307</span><span>  </span><span>C4.2</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Rikshospitalet / diverse</div>
+<div class="content">
+<div title=""><span>Akuttmottak RH (AKMM3)</span><span>70732  </span><span></span><span>  </span><span>C1.2</span></div>
+<div title=""><span>Drift / vedlikehold</span><span>70406  </span><span></span><span>  </span><span></span></div>
+<div title=""><span>Portør</span><span>70722  </span><span></span><span>  </span><span>C1.2</span></div>
+<div title=""><span>Sentralbordet</span><span>70000  </span><span></span></div>
+<div title=""><span>Vaktsentralen (feil på dører etc.)</span><span>74670  </span><span></span></div>
+<div title=""><span>AMK</span><span>64895703</span><span></span><span>  </span><span></span></div>
+<div title=""><span>Helseekspressen</span>81520515<span></span><span></span><span>  </span><span></span></div>
+<div title=""><span>Oliver Geier</span><span>915 39 131</span><span></span><span>  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Sengesentral</div>
+<div class="content">
+<div title=""><span>Putebestilling</span><span>73890  </span><span></span></div>
+<div title=""><span>Putebestilling mobil</span><span>94835836  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">SSE</div>
+<div class="content">
+<div title=""><span title="SSE">Post 1c Solbærtoppen </span><span>90 97 28 33</span><span></span></div>
+<div title=""><span title="SSE">Post 1a</span><span>90 18 29 43</span><span></span></div>
+<div title=""><span title="SSE">Post 2</span><span>90 74 77 01  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Thoraxkirurgisk</div>
+<div class="content">
+<div title=""><span>Thorax intensiv 1 barnestue (TKAI1)</span><span>74745  </span><span></span><span>  </span><span>D1.4</span></div>
+<div title=""><span>Thorax sengepost (TKAS1)</span><span>70800</span><span>20779</span><span>  </span><span>C1.4</span></div>
+<div title=""><span>Thoraxkir obs 3. etg Base (TKAS5)</span><span>70776</span><span></span><span>  </span><span>C3.3</span></div>
+<div title=""><span>Thoraxkir obs 3. etg vaktrom spl (TKAS5)</span><span>71261/2</span><span></span><span>  </span><span>C3.3</span></div>
+<div title=""><span>Thoraxkir obs 3. etg Ansv.spl.(TKAS5)</span><span>78260</span><span></span><span>  </span><span>C3.3</span></div>
+<div title=""><span>Thoraxkir. intensiv (TKAI1)</span><span>73703</span><span>22852</span><span>  </span><span>D1.4</span></div>
+<div title=""><span>Thoraxkir. Intensiv D2 (TKAI2)</span><span>76132  </span><span></span><span>  </span><span>D2.4</span></div>
+<div title=""><span>Thoraxkir. observasjon </span><span>70776 - base<br>71261 - Vaktrom spl<br>78260 - Ansv spl</span><span>  </span><span>  </span><span>C3.3</span></div>
+<div title=""><span title="Thoraxkir. overvåkningspost RH">Thoraxkirurgisk poliklinikk (TKAP1)</span><span>72872<br>70166  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Transplantasjon</div>
+<div class="content">
+<div title=""><span title="Transplant.med post RH">Transplantasjon (TX) (ATXS3)</span><span>70500</span><span>  </span><span>  </span><span>C3.4</span></div>
+<div title=""><span>Transplantasjon poliklinikk (ATXP7)</span><span>72200  </span><span></span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">UL Radiologisk</div>
+<div class="content">
+<div title=""><span>Patolog til cyt, calling</span><span>  </span><span>26689</span></div>
+<div title=""><span>UL 1</span><span>74173  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>UL 2</span><span>72484  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>UL 3</span><span>73377  </span><span></span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Ultralyd kontor (ULK)</span><span>72483</span><span>22976</span><span>  </span><span>D2.2</span></div>
+<div title=""><span>Nefrolog til biopsi dagtid</span><span>  </span><span>26837</span></div>
+<div title=""><span>Nefrolog til biopsi vakt</span><span>  </span><span>26818</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">Vakthavende leger</div>
+<div class="content">
+<div title=""><span>Anestesi Barn, Thorax</span><span>26707</span></div>
+<div title=""><span>Anestesi Generell Intensiv</span><span>26711</span></div>
+<div title=""><span title="akutt hjelp stans">Anestesi Operasjon / PO</span><span>26710</span></div>
+<div title=""><span>Barneklinikken</span><span>26870</span></div>
+<div title=""><span>Kirurgiske avd</span><span>26850</span></div>
+<div title=""><span>Medisinske avd</span><span>26830</span></div>
+<div title=""><span>Nevrokirurgisk</span><span>26800</span></div>
+<div title=""><span>Nevrolog</span><span>26770</span></div>
+<div title=""><span>Radiolog</span><span>26740</span></div>
+<div title=""><span>Thoraxkirurgisk</span><span>26840</span></div>
+<div title=""><span>ØNH</span><span>26750</span></div>
+</div>
+<div class="header" onclick="toggleContent(this)">ØNH</div>
+<div class="content">
+<div title=""><span>ØNH dagenhet(ØNHD1)</span><span>70577</span><span>20577</span><span>  </span><span>D4.1</span></div>
+<div title=""><span>ØNH poliklinikk(ØNHP4)</span><span>71643<br>71644</span><span>21643</span><span>  </span><span>D4.1</span></div>
+<div title=""><span title="ØNH Voksenpost RH">ØNH sengepost(ØNHS1)</span><span>70580  </span><span></span><span>  </span><span>C4.3</span></div>
+<div title=""><span title="Dagkirurgi">ØNH operasjon RH</span><span>72034</span><span>22034</span><span>  </span><span>D5.2</span></div>
+    </div>
+</div>
+<script>
+function toggleContent(header) {
+    var content = header.nextElementSibling;
+
+    if (content.style.display === "none") {
+        content.style.display = "block";
+    } else {
+        content.style.display = "none";
+    }
+}
+
+function liveSearch() {
+    var input = document.getElementById('search');
+    var filter = input.value.toLowerCase();
+    var headers = document.getElementsByClassName('header');
+    for (var i = 0; i < headers.length; i++) {
+        var header = headers[i];
+        var content = header.nextElementSibling;
+        var divs = content.getElementsByTagName('div');
+        var hasHit = false;
+        for (var j = 0; j < divs.length; j++) {
+            var div = divs[j];
+            if (div.innerText.toLowerCase().indexOf(filter) > -1 || div.querySelector('span').title.toLowerCase().indexOf(filter) > -1) {
+                div.style.display = "flex";
+                hasHit = true;
+            } else {
+                div.style.display = "none";
+            }
+        }
+        if (hasHit) {
+            header.style.display = "block";
+            content.style.display = "block";
+        } else {
+            header.style.display = "none";
+            content.style.display = "none";
+        }
+    }
+}
+
+
+
+</script>
+</body>
+</html>
