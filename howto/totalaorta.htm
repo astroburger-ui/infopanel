@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rekonstruksjoner i Syngo.via</title>
+<style>
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1C1C1C;
+      padding: 5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 3px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+    }
+
+    .round-button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 4px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .toggle-header {
+      font-weight: normal;
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #2E2E2E;
+      color: #FFFFFF;
+         }
+
+    .toggle-content {
+      display: none;
+      margin-left: 20px;
+      padding: 5px;
+      background-color: #2E2E2E;
+      border-left: 3px solid #FF7F00;
+      color: #B0B0B0;
+    }
+  
+.toggle-container {
+  margin-bottom: 1em;
+}
+
+.toggle-header {
+      color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+  background-color: #2E2E2E;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 10px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #FF7F00;
+  transition: transform 0.3s ease;
+}
+
+.toggle-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  display: none;
+  padding: 10px;
+  border-left: 2px solid #FF7F00;
+}
+
+
+</style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+<a class="round-button-active">Totalaorta</a>
+<a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
+<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
+</div>
+<a class="button" href="..\info panel.htm" target="_self">🏠</a>
+</div>
+<div class="content-wrapper">
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Skal du rekonstruere i Syngo se her. Gjøres rekonstruksjonene på maskinen, gå til neste steg.
+    </div>
+<div class="toggle-content">
+<div>
+            Start Syngo.via Enterprise fra startmenyen<br/><br/>
+            Søk etter pasientens etternavn eller fødselsdato med * først, f.eks: *Nilsen <br/><br/>
+            Høyre-klikk på pasienten -&gt; "Assign Workflow" -&gt; "MR Oncology" <br/><br/>
+            Nå kan undersøkelsen åpnes<br/><br/>
+</div>
+<iframe allowfullscreen="" frameborder="0" height="480" scrolling="no" src="https://hsorhf-my.sharepoint.com/personal/bacngu_ous-hf_no/_layouts/15/embed.aspx?UniqueId=8b45b2cd-2246-4ff1-a87b-1b8b2e3d03d7&amp;nav=%7B%22playbackOptions%22%3A%7B%22startTimeInSeconds%22%3A0%7D%7D&amp;embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create" title="totalaorta_recon_syngovia.mp4" width="853"></iframe></div>
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Subtraksjon: tombilde - arteriell og tombilde - venøs i begge stasjoner
+    </div>
+<div class="toggle-content">
+<div>
+    Velg en fornuftig layout, for eksempel 2x3<br><br>
+    Dra over tomserier og kontrastserier<br><br>
+    Merk tomserie og kontrastserier for thorax ved å holde CTRL<br><br>
+    Velg subtraction fra verktøyene eller trykk &#9728; nede i høyre hjørne -> Analysis Tools -> Subtraction<br><br>
+    Trykk ok i vinduet som kommer og begge fasene vil bli subtrahert<br><br>
+    Gjenta for abdomen <br><br>
+    </div>
+<div><iframe allowfullscreen="" frameborder="0" height="480" scrolling="no" src="https://hsorhf-my.sharepoint.com/personal/bacngu_ous-hf_no/_layouts/15/embed.aspx?UniqueId=8b45b2cd-2246-4ff1-a87b-1b8b2e3d03d7&amp;nav=%7B%22playbackOptions%22%3A%7B%22startTimeInSeconds%22%3A29%7D%7D&amp;embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&amp;referrer=StreamWebApp&amp;referrerScenario=EmbedDialog.Create" title="totalaorta_recon_syngovia.mp4" width="853"></iframe></div>
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Tra MPR (2/2) av arteriell og venøs fase i begge stasjoner
+    </div>
+<div class="toggle-content">
+    Dra inn et ikke subtrahert kontrastbilde<br><br>
+    Velg ranges fra verktøyene <br><br>
+    (I syngo: Trykk "2" på tastaturet for å aktivere MPR-modus. I hodet &#128483; øverst til venstre: "Ranges" -> "Parallel Ranges")<br><br>
+    Bruk ferdige presets som ligger under "Public presets". Første gang man gjør dette høyreklikker man på "MPR 2/2 tra" og "Add to Favorites"<br><br>
+    Tilpass snittene til FOV og klikk "Start"<br><br>
+    Gi sekvensen et fornuftig navn i "Range Series Name" -> "Accept" -> "Close"<br><br>
+    Gjenta for resten av kontraseseriene<br><br>
+<div><iframe src="https://hsorhf-my.sharepoint.com/personal/bacngu_ous-hf_no/_layouts/15/embed.aspx?UniqueId=8b45b2cd-2246-4ff1-a87b-1b8b2e3d03d7&nav=%7B%22playbackOptions%22%3A%7B%22startTimeInSeconds%22%3A90%7D%7D&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="853" height="480" frameborder="0" scrolling="no" allowfullscreen title="totalaorta_recon_syngovia.mp4"></iframe></div>
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      MIP Thorax: Hele Thorax, Carotis (separat) og Subclavia
+    </div>
+<div class="toggle-content">
+    Dra inn den subtreherte thorax-serien<br><br>
+    I hodet &#128483; øverst til venstre: "Ranges" -> "Radial Ranges"<br><br>
+    Akriver MIP-modus ved å trykke 4 på tastaturet<br><br>
+    Lag Thorax mip ved å bruke preset "MIP 3.9/47slices" under "Public presets" ("Add to favourites" første gang)<br><br>
+    "Start" -> Gi serien navn -> "Accept"<br><br>
+    Lag Carotis mip ved å klippe FOV: &#128483; -> "Clip Box"<br><br>
+    Tilpass klippeboksen slik at du dekker høyre carotis og tilpass det nye FOVet ved å flytte og zoome<br><br>
+    "Start" -> Gi navn -> Accept<br><br>
+    Gjenta for venstre carotis<br><br>
+    Lag Subclavia ved å velge preset "subclavia 3.9/47slices" under "Public presets" ("Add to favourites" første gang)<br><br>
+    Tilpass klippboksen til subclavia<br><br>
+    "Start" -> Gi navn -> Accept<br><br>
+    "Close"<br><br>
+<div><iframe src="https://hsorhf-my.sharepoint.com/personal/bacngu_ous-hf_no/_layouts/15/embed.aspx?UniqueId=8b45b2cd-2246-4ff1-a87b-1b8b2e3d03d7&nav=%7B%22playbackOptions%22%3A%7B%22startTimeInSeconds%22%3A222%7D%7D&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="853" height="480" frameborder="0" scrolling="no" allowfullscreen title="totalaorta_recon_syngovia.mp4"></iframe></div>
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      MIP Abdomen: Hele abdomen, nyrer og bekkenkar (separat)
+    </div>
+<div class="toggle-content">
+    Dra inn den subtreherte abdomen-serien<br><br>
+    I hodet &#128483; øverst til venstre: "Ranges" -> "Radial Ranges"<br><br>
+    Akriver MIP-modus ved å trykke 4 på tastaturet<br><br>
+    Lag abdomen MIP ved å bruke preset "MIP 3.9/47slices"<br><br>
+    Lag Nyre-MIP ved å klippe FOV: &#128483; -> "Clip Box"<br><br>
+    Bruk preset "subclavia 3.9/47slices" 
+    Tilpass klippboksen til høyre femoralis og bruk preset "MIP 3.9/47slices"<br><br>
+    Gjenta for venstre femoralis<br><br>
+    "Close"<br><br>
+<div><iframe src="https://hsorhf-my.sharepoint.com/personal/bacngu_ous-hf_no/_layouts/15/embed.aspx?UniqueId=8b45b2cd-2246-4ff1-a87b-1b8b2e3d03d7&nav=%7B%22playbackOptions%22%3A%7B%22startTimeInSeconds%22%3A500%7D%7D&embed=%7B%22af%22%3Atrue%2C%22hvm%22%3Atrue%2C%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="853" height="480" frameborder="0" scrolling="no" allowfullscreen title="totalaorta_recon_syngovia.mp4"></iframe></div>   
+</div>
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Send bilder til PACS
+    </div>
+<div class="toggle-content">
+    <img src="..\backup\fallout.png" alt="Description of image" width="200" height="200">
+
+</div>
+
+
+
+
+</div>
+<script>
+
+
+function toggleContent(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.style.display = content.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

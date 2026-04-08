@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rekonstruksjoner i Syngo.via</title>
+<style>
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1C1C1C;
+      padding: 5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 3px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+    }
+
+    .round-button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .toggle-header {
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #2E2E2E;
+      color: #FFFFFF;
+         }
+
+    .toggle-content {
+      display: none;
+      margin-left: 20px;
+      padding: 5px;
+      background-color: #2E2E2E;
+      border-left: 3px solid #FF7F00;
+      color: #B0B0B0;
+    }
+  
+.toggle-container {
+  margin-bottom: 1em;
+}
+
+.toggle-header {
+      color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+  background-color: #2E2E2E;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 10px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #FF7F00;
+  transition: transform 0.3s ease;
+}
+
+.toggle-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  display: none;
+  padding: 10px;
+  border-left: 2px solid #FF7F00;
+}
+
+ img {
+      max-width: 70%;
+      align-items: start;
+    }
+
+</style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+  <a class="round-button" href="totalaorta.htm">Totalaorta</a>
+  <a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button-active" href>Spektroskopi</a>
+<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
+
+</div>
+<a class="button" href="..\info panel.htm" target="_self">🏠</a>
+</div>
+
+<div class="content-wrapper">
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Kjøring   </div>
+<div class="toggle-content">
+ Når spektroskopien åpner seg vil bildet under åpnes. <br><br>
+ Dra inn serien du vil bruke til å planlegge spektroskopien. (Dette må være en original serie og ikke MPR)<br><br>
+ Klikk hvor som helst i bildet for å sette ROI og trykk deretter Convert Images.<br>NB! Det er bildet man klikker i her det blir laget MPR av<br><br>
+ Maskinen vil nå automatisk lage MPR av sekvensen som du kan bruke i planleggingen.<br><br>
+   <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/convert.png?csf=1&web=1&e=U594s4" alt="Planlegge">                   
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Metabolittkart   </div>
+<div class="toggle-content">
+  Dersom man vil endre metabolitter i kartet klikker man oppe til høyre i bildet med matabolittkartet og velger "Define Metabolite Image"<br><br>
+  Erstatt deretter deretter eksisterende metablitt med ønsket metabolitt (se video under)<br><br>
+  <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/kart.png?csf=1&web=1&e=U594s4" alt="Metabloitter">                    
+    <iframe src="https://hsorhf.sharepoint.com/sites/OUSHF-O-820566RadiografiMRRH/_layouts/15/embed.aspx?UniqueId=d98f996b-ae8f-4ad5-8164-1426ea0580e6&nav=%7B%22playbackOptions%22%3A%7B%22startTimeInSeconds%22%3A52%7D%7D&embed=%7B%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="spectroscopy_XA.mp4"></iframe>
+
+  </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Postprossesering  </div>
+<div class="toggle-content">          
+    Når du har valgt ønsket metabolittkart kan Postprosseseringen utføres<br><br>
+    Klikk gjennom alle voxlene linje for linje og velg "Layout snapshot" nede til venstre<br><br>
+    Til slutt sendes stacken med snapshots til PACS og Syngo<br><br>
+    Skal det kjøres flere spektroskopier må stacken med snapshots slettes før neste postprossesering kan starte. (bilde 2)<br><br>
+    <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/post.png?csf=1&web=1&e=U594s4" alt="postprossesering">                    
+    <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/spektstack.png?csf=1&web=1&e=U594s4" alt="Slette stack med snapshots">                    
+
+
+
+</div>
+<script>
+
+
+function toggleContent(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.style.display = content.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

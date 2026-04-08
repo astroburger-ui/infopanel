@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rekonstruksjoner i Syngo.via</title>
+<style>
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1C1C1C;
+      padding: 5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 3px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+    }
+
+    .round-button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 4px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .toggle-header {
+      font-weight: normal;
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #2E2E2E;
+      color: #FFFFFF;
+         }
+
+    .toggle-content {
+      display: none;
+      margin-left: 20px;
+      padding: 5px;
+      background-color: #2E2E2E;
+      border-left: 3px solid #FF7F00;
+      color: #B0B0B0;
+    }
+  
+.toggle-container {
+  margin-bottom: 1em;
+}
+
+.toggle-header {
+      color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+  background-color: #2E2E2E;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 10px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #FF7F00;
+  transition: transform 0.3s ease;
+}
+
+.toggle-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  display: none;
+  padding: 10px;
+  border-left: 2px solid #FF7F00;
+}
+        input { height: 25px; width: 80px; margin-left: 0px; font-size: 17px; margin-right: 10px; text-align: center; }
+
+        select { height: 25px; width: 100px; margin-left: 0px; font-size: 17px; margin-right: 10px; text-align: center; }
+
+
+</style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+<a class="round-button" href="totalaorta.htm">Totalaorta</a>
+<a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
+<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button">Furix</a>
+<a class="round-button-active" href="Grasp.htm" target="_self">Grasp Vibe</a>
+</div>
+<a class="button" href="..\info panel.htm" target="_self">🏠</a>
+</div>
+<div class="content-wrapper">
+
+
+<div>
+
+<h1>Splitting av Grasp Vibe ved MR Lever</h1>
+<h3>  1 - Dra Grasp Vibe Reduced (RED) inn øverst til venstre <br><br>
+      2 - Trykk 4D. Sekvensen splittes nå opp i de aktuelle fasene <br><br>
+      3 - Trykk på hodet øverst til venstre i bildet og "Save as Series"<br><br>
+      4 - Gi sekvensen navn etter fase (fasen står med lilla skrift under bildet) <br> <br>
+      5 - Gjenta for alle seks faser inkludert prekontrast<br><br>
+      6 - Til PACS: for barn sendes de splittede fasene, static og hele grunnsekvensen. For abdomen sendes de splittede fasene, static og Reduced
+      
+              </h3>
+   <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/grasp.png?csf=1&web=1&e=8Cm75s" alt="Grasp Vibe">
+
+</body>
+</html>

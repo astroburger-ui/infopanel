@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rekonstruksjoner i Syngo.via</title>
+<style>
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1C1C1C;
+      padding: 5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 3px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+    }
+
+    .round-button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 4px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .toggle-header {
+      font-weight: normal;
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #2E2E2E;
+      color: #FFFFFF;
+         }
+
+    .toggle-content {
+      display: none;
+      margin-left: 20px;
+      padding: 5px;
+      background-color: #2E2E2E;
+      border-left: 3px solid #FF7F00;
+      color: #B0B0B0;
+    }
+  
+.toggle-container {
+  margin-bottom: 1em;
+}
+
+.toggle-header {
+      color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+  background-color: #2E2E2E;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 10px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #FF7F00;
+  transition: transform 0.3s ease;
+}
+
+.toggle-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  display: none;
+  padding: 10px;
+  border-left: 2px solid #FF7F00;
+}
+
+
+</style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+<a class="round-button" href="totalaorta.htm">Totalaorta</a>
+<a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
+<a class="round-button-active">Blodprøver</a>
+<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
+</div>
+<a class="button" href="..\info panel.htm" target="_self">🏠</a>
+</div>
+<div class="content-wrapper">
+
+
+<div>
+<br>
+
+
+<h2> blodprøver i DIPS Arena</h2><br>
+1.	Velge «bestilling» fra startmenyen øverst til venstre<br><br>
+2.	Omsorgsnivå: inneliggende<br><br>
+3.	Avdeling RLR – Radiologi RH<br><br>
+4.	Rekvirerende enhet RLRR4 - Intervensjonsradiologi RH<br><br>
+5.	Rekvirent: ansvarlig radiolog<br><br>
+6.	Søk etter EVF i søkefeltet under og huk av<br><br>
+7.	Fyll ut feltene nederst<br><br>
+8.	Send bestilling<br><br>
+<img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820566RadiografiMRRH/Shared%20Documents/Oppl%C3%A6ring,%20tips%20og%20triks/Blodpr%C3%B8ver%20i%20DIPS%20Arena.png?csf=1&web=1&e=pxxK0m" alt="DIPS Arena">
+</div>
+
+
+
+<script>
+
+
+function toggleContent(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.style.display = content.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>
