@@ -143,10 +143,10 @@
 <a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
 <a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
 <a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
-<a class="round-button-active">Furix</a>
+<a class="round-button">Furix</a>
 <a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
 <a class="round-button" href="Henginger.htm" target="_self">Henginger</a>
-<a class="round-button" href="SECTRAguide.htm" target="_self">Hurtigguider Sectra</a>
+<a class="round-button-active" href="SECTRAguide.htm" target="_self">Hurtigguider Sectra</a>
 <a class="round-button" href="Opplæring.htm" target="_self">Opplæringsplan Sectra</a>
 </div>
 <a class="button" href="..\info panel.htm" target="_self">🏠</a>
@@ -156,49 +156,11 @@
 
 <div>
 
-<h1>Dosering av Furix</h1>
-<h2><a href="https://www.felleskatalogen.no/medisin/furix-orifarm-healthcare-559469" target="_blank" style="color: white;">Felleskatalogen</a><br><br></h2>
-
-<p>Dosering: <strong>0.5–1 mg/kg</strong>, maks <strong>20 mg</strong>.<br><br>Styrke: <strong>10 mg/ml</strong></p>
-
-<label for="weight">Pasientens vekt (kg): </label>
-<input type="number" id="weight" oninput="calculate()" />
-<br><br>
-<label for="dose">Dose (mg/kg): </label>
-<select id="dose" onchange="calculate()">
-  <option value="1">1 mg/kg</option>
-  <option value="0.75">0.75 mg/kg</option>
-  <option value="0.5">0.5 mg/kg</option>
-  
-  
-</select>
-<div class="result">
-<br>
-
- <h3>Dose i mg: <span id="mg"></span></h3>
- <h3>Mengde i ml: <span id="ml"></span></h3>
+<iframe src="Bilder/HurtigguiderSectra.pdf" width="70%" height="1200px">
+    This browser does not support PDFs. Please download the PDF to view it:
+    <a href="Bilder/HurtigguiderSectra.pdf">Download PDF</a>.
+</iframe>
 
 
-
-
-
-<script>
-
-function calculate() {
-    let weight = parseFloat(document.getElementById('weight').value);
-    let doseFactor = parseFloat(document.getElementById('dose').value);
-    if (isNaN(weight) || weight <= 0) {
-        document.getElementById('mg').textContent = 'Ugyldig vekt';
-        document.getElementById('ml').textContent = '';
-        return;
-    }
-    let doseMg = Math.min(weight * doseFactor, 20);
-    let doseMl = doseMg / 10;
-    document.getElementById('mg').textContent = doseMg.toFixed(1) + ' mg';
-    document.getElementById('ml').textContent = doseMl.toFixed(2) + ' ml';
-}
-
-
-</script>
 </body>
 </html>

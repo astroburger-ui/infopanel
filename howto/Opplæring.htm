@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Opplæringsplan Sectra</title>
+<style>
+    body {
+      background-color: #000000;
+      color: #FFFFFF;
+      font-family: Arial, sans-serif;
+      font-size: 0.8em;
+      margin: 0;
+      padding: 10px;
+    }
+
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #1C1C1C;
+      padding: 5px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 3px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+    }
+
+    .round-button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .toggle-header {
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #2E2E2E;
+      color: #FFFFFF;
+         }
+
+    .toggle-content {
+      display: none;
+      margin-left: 20px;
+      padding: 5px;
+      background-color: #2E2E2E;
+      border-left: 3px solid #FF7F00;
+      color: #B0B0B0;
+    }
+  
+.toggle-container {
+  margin-bottom: 1em;
+}
+
+.toggle-header {
+      color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+  background-color: #2E2E2E;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 10px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #FF7F00;
+  transition: transform 0.3s ease;
+}
+
+.toggle-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  display: none;
+  padding: 10px;
+  border-left: 2px solid #FF7F00;
+}
+
+
+</style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+<a class="round-button-active" href="sepå.htm">¯\_(ツ)_/¯</a>
+<a class="round-button" href="totalaorta.htm">Totalaorta</a>
+<a class="round-button" href="Helkropp.htm">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
+<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
+<a class="round-button" href="Henginger.htm" target="_self">Henginger</a>
+<a class="round-button" href="SECTRAguide.htm" target="_self">Hurtigguider Sectra</a>
+<a class="round-button-active" href="Opplæring.htm" target="_self">Opplæringsplan Sectra</a>
+</div>
+<a class="button" href="..\info panel.htm" target="_self">🏠</a>
+</div>
+<div class="content-wrapper">
+<h2>Relevante dokumenter</h2>
+<a href="http://intranett.ous-hf.no/ikbViewer/page/ous/mittskrivebord/organisasjon/klinikk/avdeling?p_section_dim_id=812113&level=4" target="_blank" style="color: white;">Ha kjennskap til og kunne bruke Sectra brukermanual</a><br><br>
+<a href="https://ehandbok.ous-hf.no/document/142129" target="_blank" style="color: white;">Ha kjennskap til startside "Nedetid RIS/PACS</a><br><br>
+<a href="https://ehandbok.ous-hf.no/document/129042" target="_blank" style="color: white;">Ha kjennskap til prosedyre for VIP håndtering</a><br><br>
+<a href="Bilder/HurtigguiderSectra.pdf" target="_blank" style="color: white;">Hurtigguider Sectra</a><br><br>
+<h2>Generelle funksjoner i SECTRA IDS7</h2>
+
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Beherske inn-/utlogging av Sectra IDS7 </div>
+<div class="toggle-content">
+   Innlogging:<br>
+Finne programmet "Sectra IDS7 PROD RAM" på startmenyen<br>
+Logge seg inn
+<br><br>
+Utlogging:<br>
+- Kjenne til ikoner for utlogging i RIS og PACS
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+     Kjenne til ulike vinduer i RIS </div>
+<div class="toggle-content">
+Henvisningsvindu (Vindu for manuell registrering eller
+verifisering av henvisning)<br><br>
+
+Timebok (Vindu for booking i timebok og
+reservasjon/sperring i timebok)<br><br>
+
+Besøksliste (Vindu for å vise dagens pasienter, for
+ekspedisjon/skranke)<br><br>
+
+Undersøkelsesskjema (Vindu for å kunne se henv ID og
+ID ifm bilderydding)<br><br>
+
+Pasientvindu (Vindu for pasientrelaterte opplysninger)<br><br>
+
+Søke opp pasient i RIS
+           
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Kjenne til ulike vinduer i PACS </div>
+<div class="toggle-content">
+Informasjonsvindu<br>
+- Arbeidslister og Lablister (kolonne til venstre)<br>
+-Pasienthistorikk (Noen undersøkelser er uthevet i posienthistorikken.<br>
+Dette er de som foreslås som mest relevante til sammenligning)<br>
+-Demonstrasjoner<br>
+-Prioritering av radiolog<br>
+- Fritekst<br>
+- Søkefunksjoner<br>
+<br><br>
+Undersøkelsesvindu<br>
+- Utføre og dokumentere undersøkelse på lab<br>
+- Legge til flere undersøkelser på samme henvisning<br>
+- Endre undersøkelsesnavn<br>
+- Endre lab og klokkeslett<br>
+- NCRP koder<br>
+- Legemiddel<br>
+- Journalanmerkning<br>
+- Henvisningsanmerkning<br><br>
+
+Matrisevindu<br>
+- Oversikt over bilder<br>
+- Bildehengning (visning)<br>
+- Bilderydding (dele serier, slette osv)<br><br>
+
+Bildevindu<br>
+- Der man ser og gransker bildene<br><br>
+
+Hurtigvindu<br>
+- Dobbeltklikke på bilde/serie i Informasjonsvinduet, Matrisevinduet
+eller miniatyrvisning i Bildevinduet for å åpne i eget vindu.<br><br>
+
+Chatvindu<br>
+-Brukes for å sende direktemelding til en annen bruker eller gruppe av
+brukere.<br><br>
+- Det er mulig å legge ved en link til en undersøkelse når man sender
+chat-melding ved å klikke på «Link til den aktuelle undersøkelsen» over
+tekstboksen<br>
+- Under Innstillinger er det mulig å velge hvordan man vil bli varslet om
+ny mottatt chat-melding.<br><br>
+
+Skrivebordssynkronisering<br>
+- Når skrivebordssynkronisering er på, vil samme pasient og
+undersøkelse være aktiv i RIS og PACS.<br>
+Bør alltid være på! Unntaket er for import/eksport eller bilderydding
+der man skal koble bilder til en annen pasient.<br><br>
+
+Søke opp pasient i PACS<br>
+-Søkefelt (enkeltsøk)<br>
+- Søkepanel (flere søkekriterier)
+
+ </div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Aktuell undersøkelse i PACS </div>
+<div class="toggle-content">
+Den aktuelle undersøkelsen er markert med grønn bakgrunn i
+de ulike PACS-vinduene.<br>
+I noen vinduer/arbeidslister er det også markert med en liten grønn
+trekant.<br>
+I Matrisevinduet har bilder/serier fra den aktuelle undersøkelsen
+grønn ramme.<br><br>
+
+Velge aktuell undersøkelse:<br>
+- Klikk på undersøkelsen i arbeidslisten, prioriteringsvinduet eller
+svarvinduet i Informasjonsvinduet, eller klikk på undersøkelsen i
+Undersøkelsesvinduet.<br>
+- I Pasienthistorikken i Informasjonsvinduet og i Matrisevinduet kan man
+dobbeltklikke på undersøkelsen, eller hø-klikk og velg «Definer som aktuell
+undersøkelse».<br><br>
+
+Funksjoner man kan velge som skal gjelde for den aktuelle
+undersøkelsen eller for flere undersøkelser<br>
+-f.eks: Sette på flagg, endre fagområde/klinikk, prioritere, beskrive
+
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Kjenne til aktiverte funksjoner i PACS </div>
+<div class="toggle-content">
+Noen funksjoner har ikon som fungerer som av/på. Blå strek
+under viser at funksjonen er aktiv.<br>
+Eksempel: Redigeringsknapp, Skrivebordssynkronisering,
+Hurtigfiltere i arbeidslisten.
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+     Ha kjennskap til undersøkelsesstatus i RIS og PACS  </div>
+<div class="toggle-content">
+Alle undersøkelser har en status. I PACS brukes disse betegnelsene:<br>
+Registrert<br> Prioritert<br> Satt på venteliste<br> Bestilt<br> Innkalt<br>
+Ankomstregistrert<br> Påbegynt<br> Utført<br> Godkjent<br> Skrevet<br> Prelim.signert<br>
+signert<br> avsluttet<br><br>
+I RIS brukes ikoner for å vise hvilken status undersøkelsen har.<br> Du kan
+også se status med tekst i RIS Navigator.
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+    Ha kjennskap til bruk av "særskilt anmerkning og viktig pasientinformasjon"  </div>
+<div class="toggle-content">
+Særskilt anmerkning<br>
+- Anmerkning på pasientnivå, vises på linjen nedenfor
+pasientbanneret i Undersøkelsesvinduet (ikke i Informasjonsvinduet).<br>
+- Anmerkningen kan registreres i RIS Pasientvindu eller i PACS
+Undersøkelsesvindu<br>
+- Man kan kun registrere en særskilt anmerkning fra nedtrekksmenyen
+pr pasient.<br>
+Hvis det er behov for flere anmerkninger:<br>
+- Velg «OBS!»<br>
+- Skriv i feltet for «Viktig pasientinformasjon»<br><br>
+
+Viktig pasientinformasjon:<br>
+Informasjon på pasientnivå, vises på linjen nedenfor pasientbanneret i
+Undersøkelsesvinduet og i Informasjonsvinduet, og i RIS Pasientvindu.<br>
+Skriv også inn brukernavn, dato og lokasjon da dette ikke kommer
+automatisk ved lagring.<br>
+- Feltet «Viktig pasientinformasjon» vises i PACS. Kommentarfeltet i RIS
+vises ikke i PACS. Derfor er det viktig at man skriver i riktig felt.
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+     Ha kjennskap til bruk av "Flagg" i RIS og PACS  </div>
+<div class="toggle-content">
+ Sette på flagg i RIS og PACS
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+     Ha kjennskap til FDB (Fritt databasefelt)  </div>
+<div class="toggle-content">
+<strong></strong> FDB</strong><br>
+-Fritekst<br>
+
+- Lab prio<br>
+- Observeres<br>
+- F-PACS<br>
+- Marker VIP pasient<br>
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+    Ha kjennskap til feltet "DIPS-info"   </div>
+<div class="toggle-content">
+Under pasientens navn i Informasjonsvinduet finnes sekundærvisning
+av oppdatert info fra DIPS. Ligger under DIPS-Info.<br>
+Dersom det er registrert informasjon, vises dette med rød sirkel for cave,
+gul sirkel for kritisk info og blå sirkel for pasientlokasjon. <br>Dersom det ikke
+er registrert informasjon vil det være en hvit sirkel.<br><br>
+
+-Cave<br>
+-Kritisk info<br>
+- Lokasjon<br>
+-Timeavtaler<br>
+- Prøvesvar
+ </div>
+
+ <h2>Verifisere/registrere henvisninger</h2>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+  Ha kjennskap til verifisering i PACS    </div>
+<div class="toggle-content">
+Verfisere henvisning i PACS<br><br>
+
+Velge undersøkelse fra verifiseringslisten<br><br>
+
+Kontrollere henvisende instans / lege<br><br>
+
+Sjekk henvisningskategori<br><br>
+
+Velge riktig undersøkelsesnavn<br><br>
+
+Velge fagområde / seksjon<br><br>
+
+Kontrollere prioriteringshake
+ </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+   Ha kjennskap til manuell registrering av henvisning   </div>
+<div class="toggle-content">
+    <strong>   RIS:</strong><br>
+•	Opprette ny henvisning<br>
+•	Kontrolere henvisningsdato<br>
+•	Legge til henvisende instans / lege<br>
+•	Henvinsingskategori<br><br>
+      <strong>PACS:</strong><br>
+•	Legge til undersøkelser<br>
+•	Velge fagområde<br>
+•	Dropp inn/akutt<br>
+•	Bestille til lab<br>
+•	Prioriteringshake<br>
+•	Scanne dokument<br>
+
+ </div>
+
+ <h2>Arbeidsflyt på lab</h2>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+   Kunne utføre arbeidsflyt på Laboratorium</div>
+<div class="toggle-content">
+ Planlegge dagens program<br><br>
+
+Finne lab liste<br><br>
+
+Hastegrad<br><br>
+
+Fritekst<br>
+Obs-tekst<br>
+særskilt anmerkning<br>
+Flagg<br><br>
+
+Dato og tid for undersøkelse<br><br>
+
+Prioriteringsvindu og protokoll<br><br>
+
+Endre lab og tidspunkt<br><br>
+
+Ankomstregistrere pasient<br><br>
+
+Identifisering av pasient (metode i
+undersøkelsesvindu)<br><br>
+
+Registrere høyde og vekt<br><br>
+
+Endre eller legge til/fjerne undersøkelser<br><br>
+
+Start/ Utført/ Godkjenn<br>
+-Registrere ansvarlig personell<br>
+- Registrere legemiddel<br>
+- Legge til/ fjerne journalanmerkning<br><br>
+
+Kontrollere undersøkelsesnavn og NCRP-koder<br><br>
+
+Legge til Demo
+ </div>
+
+<h2>Bildebehandling / Bildekontroll</h2>
+
+  <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+  Ha kjennskap til ulike funksjoner i matrisevindu </div>
+<div class="toggle-content">
+ Henge-bilder<br><br>
+
+Redigere bildevisning<br>
+Skjermdeling<br><br>
+
+Visningsprotokoller<br><br>
+
+Systempresentasjon
+ </div>
+
+  <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+  Ha kjennskap til ulike funksjoner i bildevindu </div>
+<div class="toggle-content">
+ Legge til tekst og mål på bilder<br><br>
+
+Beskjære/endre bilderetning<br><br>
+
+Endre vindu/nivå (WW/WL)
+ </div>
+
+  <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+   Ha kjennskap til undersøkelsesadministrasjon</div>
+<div class="toggle-content">
+ Flytte bilder fra en pasient til en annen<br><br>
+
+Endre henvisnings id og undersøkelses id<br><br>
+
+Laste inn arkiverte undersøkelser<br><br>
+
+Sletting av undersøkelser<br><br>
+
+Søke opp tilsendte bilder<br><br>
+ </div>
+
+<h2>Administrative avvik</h2>
+
+  <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+   Ha kjennskap til hvordan man registrerer ulike administrative avvik</div>
+<div class="toggle-content">
+ Registrering av administrative avvik i PACS<br><br>
+
+Slette administrative avvik<br><br>
+
+Registrere "pasient ikke møtt"<br><br>
+
+Registrere "Undersøkelse avbrutt"
+ </div>
+
+ <h2>Praktiske øvelser</h2>
+
+ 
+
+  <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+  Kunne utføre praktiske øvelser knyttet til de viktigste funksjoner i RIS og PACS </div>
+<div class="toggle-content">
+ Verifisere og manuelt registrere henvisning + utføre
+undersøkelse<br><br>
+
+Flytte bilder til annen undersøkelse<br><br>
+
+Legge undersøkelse til demonstrasjon, endre
+demonstrasjon<br><br>
+
+Slette undersøkelser<br><br>
+
+Rutiner for dokumentering av avbrutt undersøkelse (med og
+uten diagnostiske bilder)
+ </div>
+
+</div>
+<script>
+
+
+function toggleContent(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.style.display = content.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

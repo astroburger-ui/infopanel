@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Rekonstruksjoner i Syngo.via</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #B0B0B0;
+    margin: 20px;
+}
+
+h1, h2, h3 {
+    color: white;
+}
+
+h6 {
+    color: #2E2E2E;
+    margin: 3px;
+}
+
+a {
+    color: #FF7F00;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.screen-wrap {
+    display: flex;
+    gap: 0px;
+}
+
+.screen {
+    flex: 1;
+}
+
+/* PDF-like borders but adapted to dark theme */
+table {
+    width: 70%;
+    border-collapse: collapse;
+    border: 1px solid #B0B0B0;
+    background-color: #2E2E2E;
+}
+
+th, td {
+    border: 1px solid #B0B0B0;
+    padding: 4px;
+    text-align: center;
+    padding: 10px;
+}
+
+
+    .button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 3px 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+
+    .button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+    }
+
+    .round-button-container {
+      display: flex;
+      gap: 5px;
+    }
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+
+    .toggle-header {
+      font-weight: bold;
+      cursor: pointer;
+      margin: 5px 0;
+      padding: 5px;
+      background-color: #2E2E2E;
+      color: #FFFFFF;
+         }
+
+    .toggle-content {
+      display: none;
+      margin-left: 20px;
+      padding: 5px;
+      background-color: #2E2E2E;
+      border-left: 3px solid #FF7F00;
+      color: #B0B0B0;
+    }
+  
+.toggle-container {
+  margin-bottom: 1em;
+}
+
+.toggle-header {
+      color: #FFFFFF;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  padding: 5px;
+  background-color: #2E2E2E;
+}
+
+.arrow {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 10px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-left: 8px solid #FF7F00;
+  transition: transform 0.3s ease;
+}
+
+.toggle-header.active .arrow {
+  transform: rotate(90deg);
+}
+
+.toggle-content {
+  display: none;
+  padding: 10px;
+  border-left: 2px solid #FF7F00;
+}
+
+ img {
+      max-width: 70%;
+      align-items: start;
+    }
+
+</style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+  <a class="round-button" href="sepå.htm">¯\_(ツ)_/¯</a>
+  <a class="round-button" href="totalaorta.htm">Totalaorta</a>
+  <a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button" href>Spektroskopi</a>
+<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
+<a class="round-button-active" href="Henginger.htm" target="_self">Henginger</a>
+<a class="round-button" href="SECTRAguide.htm" target="_self">Hurtigguider Sectra</a>
+<a class="round-button" href="Opplæring.htm" target="_self">Opplæringsplan Sectra</a>
+<a style="margin-left: auto;" class="button" href="..\info panel.htm" target="_self">🏠</a>
+
+</div>
+
+</div>
+
+<div class="content-wrapper">
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Barnehjerte uten bilder til sammenligning   </div>
+<div class="toggle-content">
+ 
+<h1>Barnehjerte – uten bilder til sammenligning</h1>
+
+
+<h2>1. Anatomi og bilder fra andre modaliteter</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Tra Haste</td><td>Cor Haste</td><td>Sag Haste</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;</td><td></td></tr><tr><td>&#8203;</td><td></td></tr></table></div>
+</div>
+<p>Evt også T1 Space BB og IR Flash. Dersom det finnes relevante CT/rtg vil det henges her. <br><br>
+Rekontruksjoner: Trufisp/IR-flash/T1 space: MPR tra/sag (HAP/VAP) tynneste snitt. Trufisp: cor mipthin 5/1</p>
+
+<h2>2. Anatomi og funksjon</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Tra Haste</td><td>Cor Haste</td><td>Sag Haste</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine 4k</td><td>Cine 3k</td><td>Cine 2kh</td><td>Cine pulmonal</td></tr><tr><td>Cine 2k</td><td>Cine Aorta</td><td></td><td>Cine pulmonal</td></tr></table></div>
+</div>
+<p>T1 Space BB og IR Flash henges også her, da med 3x3 deling</p>
+<h2>3. Twist og lymfografi</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cor MRCP mip</td><td>Cor MRCP</td><td>Cor MRCP mipthin</td></tr><tr><td>Tra Space STIR</td><td>cor Space STIR</td><td>Cor Space STIR mipthin</td></tr><tr><td>Tra Twist MIP</td><td>Cor Twist MIP</td><td>Sag Twist MIP</td></tr></table></div>
+<div class='screen'><table><tr><td>Tra Haste</td><td>Cor Haste</td><td>Sag Haste</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr><tr><td>Tra t1 space / IR flash</td><td>Cor t1 space / IR flash</td><td>Sag t1 space / IR flash</td></tr></table></div>
+</div>
+<p>Rekontruksjoner: MRCP/Space stir: Cor Mipthin 5/1. MRCP mip (autogenerert bilde) føres over fra maskinen</p>
+<h2>4. Funksjon kortakse</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine 4k</td></tr></table></div>
+</div>
+
+<h2>5. Vevskarakteristikk</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td><td></td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td><td></td></tr></table></div>
+</div>
+<p>DE Overview vil henge seg automatisk. Radiolog henger resten av bildene selv</p>
+
+<h2>6. T2 Map</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>7. STIR</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Stir Lax</td><td>Stir Lax</td><td>Stir Lax</td></tr><tr><td>Stir Sax</td><td>Stir Sax</td><td>Stir Sax</td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td></tr></table></div>
+</div>
+
+<h2>8. T1 Map før kontrast</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>9. T1 Map etter kontrast</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>10. LGE</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>DE overview Lax MAG</td><td>DE overview Sax MAG</td><td>HR LGE Lax Stack MAG</td></tr><tr><td>DE overview Lax PSIR</td><td>DE overview Sax PSIR</td><td>HR LGE Lax Stack PSIR</td></tr></table></div>
+<div class='screen'><table><tr><td>HR LGE sax<br> stack MAG</td><td>&#8203;&#8203;</td><td>TI-scout</td></tr><tr><td>HR LGE sax<br> stack PSIR</td><td>&#8203;</td><td></td></tr></table></div>
+</div>
+
+<h2>11. Flow aorta/pulm</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow aorta anatomisk bilde</td><td>Flow Aorta Fasebilde</td><td>Resultat Aorta</td></tr><tr><td>Cine 3k</td><td>Cine Aorta</td><td>Tra Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow Pulm anatomisk bilde</td><td>Flow Pulm Fasebilde</td><td>Resultat Pulm</td></tr><tr><td>Cine Pulm</td><td>Cine Pulm</td><td>Sag Trufisp</td></tr></table></div>
+</div>
+
+<h2>12. Flow HAP/VAP</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow HAP anatomisk bilde</td><td>Flow Hap Fasebilde</td><td>Resultat HAP</td></tr><tr><td>Tra Trufisp</td><td>HAP Trufisp</td><td>Cor Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow VAP anatomisk bilde</td><td>Flow VAP Fasebilde</td><td>Resultat VAP</td></tr><tr><td>Vap Trufisp</td><td>Sag Trufisp</td><td></td></tr></table></div>
+</div>
+
+<h2>13. Flow VCI/VCS</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow VCI anatomisk bilde</td><td>Flow VCI Fasebilde</td><td>Resultat VCI</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow VCS anatomisk bilde</td><td>Flow VCS Fasebilde</td><td>Resultat VCS</td></tr><tr><td>&#8203;</td><td>&#8203;</td><td>&#8203;</td></tr></table></div>
+</div>
+
+<h2>14. Volum</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;<br>Resultat<br>&#8203;</td><td>&#8203;<br>Resultat<br>&#8203;</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine 4k</td><td>Cine 3k</td><td>Cine 2k</td><td>Cine 2kh</td></tr><tr><td>&#8203;</td><td>Cine aorta</td><td>Cine pulm</td><td>Cine pulm</td></tr></table></div>          
+</div>
+
+        
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Barnehjerte med bilder til sammenligning   </div>
+<div class="toggle-content">
+ 
+<h1>Barnehjerte – uten bilder til sammenligning</h1>
+
+<h2>1. Anatomi (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Tra Haste</td><td>Cor Haste</td><td>Sag Haste</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Tra Haste</td><td>Cor Haste</td><td>Sag Haste</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+</div>
+<p>T1 Space BB og IR Flash henges også her, da med 3x3 deling<br><br>
+Rekontruksjoner: Trufisp/IR-flash/T1 space: MPR tra/sag (HAP/VAP) tynneste snitt. Trufisp: cor mipthin 5/1</p>
+
+<h2>2. Twist og lymfografi (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cor MRCP mip</td><td>Cor MRCP</td><td>Cor MRCP mipthin</td></tr><tr><td>Tra Space STIR</td><td>cor Space STIR</td><td>Cor Space STIR mipthin</td></tr><tr><td>Tra Twist MIP</td><td>Cor Twist MIP</td><td>Sag Twist MIP</td></tr></table></div>
+<div class='screen'><table><tr><td>Cor MRCP mip</td><td>Cor MRCP</td><td>Cor MRCP mipthin</td></tr><tr><td>Tra Space STIR</td><td>cor Space STIR</td><td>Cor Space STIR mipthin</td></tr><tr><td>Tra Twist MIP</td><td>Cor Twist MIP</td><td>Sag Twist MIP</td></tr></table></div>
+</div>
+
+<h2>3. Funksjon langakse (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cine 4k</td><td>Cine 3k</td><td>Cine 2kh</td><td>Cine pulmonal</td></tr><tr><td>Cine 2k</td><td>Cine Aorta</td><td></td><td>Cine pulmonal</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine 4k</td><td>Cine 3k</td><td>Cine 2kh</td><td>Cine pulmonal</td></tr><tr><td>Cine 2k</td><td>Cine Aorta</td><td></td><td>Cine pulmonal</td></tr></table></div>
+</div>
+
+<p>Rekontruksjoner: MRCP/Space stir: Cor Mipthin 5/1. MRCP mip (autogenerert bilde) føres over fra maskinen</p>
+
+<h2>4. Funksjon kortakse (bare nye)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine 4k</td></tr></table></div>
+</div>
+
+<h2>5. Funksjon kortakse (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine 4k</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td><td>Cine 4k</td></tr></table></div>
+</div>
+
+<h2>6. Vevskarakteristikk</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td><td></td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td><td></td></tr></table></div>
+</div>
+<p>DE Overview vil henge seg automatisk. Radiolog henger resten av bildene selv</p>
+
+<h2>7. T2 Map (bare nye)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>8. STIR (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Stir Lax</td><td>Stir Lax</td><td>Stir Lax</td></tr><tr><td>Stir Sax</td><td>Stir Sax</td><td>Stir Sax</td></tr></table></div>
+<div class='screen'><table><tr><td>Stir Lax</td><td>Stir Lax</td><td>Stir Lax</td></tr><tr><td>Stir Sax</td><td>Stir Sax</td><td>Stir Sax</td></tr></table></div>
+</div>
+
+<h2>9. T1 Map før kontrast (bare nye)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>10. T1 Map etter kontrast (bare nye)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>11. T1 Map (bare nye)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map stack k-</td><td>Sax map stack k-</td></tr><table><tr><td>Lax Map stack k+</td><td>Sax map stack k+</td></table></div>
+<div class='screen'><table><tr><td>Lax Map stack k-</td><td>Sax map stack k-</td></tr><table><tr><td>Lax Map stack k+</td><td>Sax map stack k+</td></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>12. Fibrose, LGE (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>DE overview Lax MAG</td><td>DE overview Sax MAG</td><td>HR LGE Lax Stack MAG</td><td>HR LGE Sax Stack MAG</td></tr><tr><td>DE overview Lax PSIR</td><td>DE overview Sax PSIR</td><td>HR LGE Lax Stack PSIR</td><td>HR LGE Lax Stack PSIR</td></tr></table></div>
+<div class='screen'><table><tr><td>DE overview Lax MAG</td><td>DE overview Sax MAG</td><td>HR LGE Lax Stack MAG</td><td>HR LGE Sax Stack MAG</td></tr><tr><td>DE overview Lax PSIR</td><td>DE overview Sax PSIR</td><td>HR LGE Lax Stack PSIR</td><td>HR LGE Lax Stack PSIR</td></tr></table></div>
+</div>
+
+<h2>13. Flow aorta (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow aorta anatomisk bilde</td><td>Flow Aorta Fasebilde</td><td>Resultat Aorta</td></tr><tr><td>Cine 3k</td><td>Cine Aorta</td><td>Tra Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow aorta anatomisk bilde</td><td>Flow Aorta Fasebilde</td><td>Resultat Aorta</td></tr><tr><td>Cine 3k</td><td>Cine Aorta</td><td>Tra Trufisp</td></tr></table></div>
+</div>
+
+<h2>14. Flow pulm (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow Pulm anatomisk bilde</td><td>Flow Pulm Fasebilde</td><td>Resultat Pulm</td></tr><tr><td>Cine Pulm</td><td>Cine Pulm</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow Pulm anatomisk bilde</td><td>Flow Pulm Fasebilde</td><td>Resultat Pulm</td></tr><tr><td>Cine Pulm</td><td>Cine Pulm</td><td>Sag Trufisp</td></tr></table></div>
+</div>
+
+<h2>15. Flow HAP (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow HAP anatomisk bilde</td><td>Flow Hap Fasebilde</td><td>Resultat HAP</td></tr><tr><td>Tra Trufisp</td><td>HAP Trufisp</td><td>Cor Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow HAP anatomisk bilde</td><td>Flow Hap Fasebilde</td><td>Resultat HAP</td></tr><tr><td>Tra Trufisp</td><td>HAP Trufisp</td><td>Cor Trufisp</td></tr></table></div>
+</div>
+
+<h2>16. Flow VAP (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow VAP anatomisk bilde</td><td>Flow VAP Fasebilde</td><td>Resultat VAP</td></tr><tr><td>Tra Trufisp</td><td>Vap Trufisp</td><td>Sag trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow VAP anatomisk bilde</td><td>Flow VAP Fasebilde</td><td>Resultat VAP</td></tr><tr><td>Tra Trufisp</td><td>Vap Trufisp</td><td>Sag trufisp</td></tr></table></div>
+</div>
+
+<h2>17. Flow VCI (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow VCI anatomisk bilde</td><td>Flow VCI Fasebilde</td><td>Resultat VCI</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow VCI anatomisk bilde</td><td>Flow VCI Fasebilde</td><td>Resultat VCI</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+</div>
+
+<h2>18. Flow VCS (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow VCS anatomisk bilde</td><td>Flow VCS Fasebilde</td><td>Resultat VCS</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></table></div>
+<div class='screen'><table><tr><td>Flow VCS anatomisk bilde</td><td>Flow VCS Fasebilde</td><td>Resultat VCS</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+</div>
+
+<h2>19. Volumberegninger (bare nye)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;<br>Resultat<br>&#8203;</td><td>&#8203;<br>Resultat<br>&#8203;</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine 4k</td><td>Cine 3k</td><td>Cine 2k</td><td>Cine 2kh</td></tr><tr><td>&#8203;</td><td>Cine aorta</td><td>Cine pulm</td><td>Cine pulm</td></tr></table></div>          
+</div>
+
+<h2>20. Volumberegninger (nye og gamle)</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;<br>Resultat<br>&#8203;</td><td>&#8203;<br>Resultat<br>&#8203;</td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;<br>Resultat<br>&#8203;</td><td>&#8203;<br>Resultat<br>&#8203;</td></tr></table></div>
+</div>
+   
+  </div>
+
+ <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Totalaorta med gamle bilder  </div>
+<div class="toggle-content">   
+
+<h2>1. Thoracal rotasjons-MIP</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Høyre carotis</td><td>Venstre carotis</td></tr><tr><td>Begge subclavia *</td><td>Aorta med avgangskar</td></table></div>
+<div class='screen'><table><tr><td>Høyre carotis</td><td>Venstre carotis</td></tr><tr><td>Begge subclavia *</td><td>Aorta med avgangskar</td></table></div>
+</div>
+  <p>For alle rotasjonene velges pre-set «MIP 47»<br><br>
+
+*: Subclavia-MIP roteres horisontalt, de andre vertikalt.</p>
+
+<h2>2. Thoracal MPR</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Tra arteriell</td><td>Tra venøs *</td></tr><tr><td>Cor arteriell</td><td>Cor venøs</td></table></div>
+<div class='screen'><table><tr><td>Tra arteriell</td><td>Tra venøs</td></tr><tr><td>Cor arteriell</td><td>Cor venøs</td></table></div>
+</div>
+<p>*: Gjelder vaskulittpasientene. For kirurgiske pasienter (henvist fra karkirurgen, ikke revma), erstattes denne med skråsagittal rekonstruksjon av arterielt opptak.</p>
+
+<h2>3. HASTE og abdominal rotasjons-MIP</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Tra HASTE</td><td>Nyre / Lever / Miltarterie</td></tr><tr><td>Hø femoralis</td><td>Ve femoralis</td><td>Bukaorta med avganger</td></table></div>
+<div class='screen'><table><tr><td>Hø femoralis</td><td>Ve femoralis</td><td>Bukaorta med avganger</td></tr><tr><td>Cor arteriell</td><td>Cor venøs</td></table></div>
+</div>
+<p>T1 Space BB og IR Flash henges også her, da med 3x3 deling</p>
+<h2>3. Twist og lymfografi</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cor MRCP mip</td><td>Cor MRCP</td><td>Cor MRCP mipthin</td></tr><tr><td>Tra Space STIR</td><td>cor Space STIR</td><td>Cor Space STIR mipthin</td></tr><tr><td>Tra Twist MIP</td><td>Cor Twist MIP</td><td>Sag Twist MIP</td></tr></table></div>
+<div class='screen'><table><tr><td>Tra Haste</td><td>Cor Haste</td><td>Sag Haste</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr><tr><td>Tra t1 space / IR flash</td><td>Cor t1 space / IR flash</td><td>Sag t1 space / IR flash</td></tr></table></div>
+</div>
+<p>Rekontruksjoner: MRCP/Space stir: Cor Mipthin 5/1. MRCP mip (autogenerert bilde) føres over fra maskinen</p>
+<h2>4. Funksjon kortakse</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine sax</td></tr><tr><td>Cine sax</td><td>Cine sax</td><td>Cine 4k</td></tr></table></div>
+</div>
+
+<h2>5. Vevskarakteristikk</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td><td></td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td><td></td></tr></table></div>
+</div>
+<p>DE Overview vil henge seg automatisk. Radiolog henger resten av bildene selv</p>
+
+<h2>6. T2 Map</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>7. STIR</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Stir Lax</td><td>Stir Lax</td><td>Stir Lax</td></tr><tr><td>Stir Sax</td><td>Stir Sax</td><td>Stir Sax</td></tr></table></div>
+<div class='screen'><table><tr><td>&#8203;</td><td></td><td></td></tr><tr><td>&#8203;</td><td></td><td></td></tr></table></div>
+</div>
+
+<h2>8. T1 Map før kontrast</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>9. T1 Map etter kontrast</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr><table><tr><td>Lax Map</td><td>Lax rå</td><td>Lax rå MOCO</td></tr></table></div>
+<div class='screen'><table><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr><tr><td>Sax Map</td><td>Sax rå</td><td>Sax rå MOCO</td></tr></table></div>
+</div>
+<p>Radiolog stacker selv etter undersøkelsen</p>
+
+<h2>10. LGE</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>DE overview Lax MAG</td><td>DE overview Sax MAG</td><td>HR LGE Lax Stack MAG</td></tr><tr><td>DE overview Lax PSIR</td><td>DE overview Sax PSIR</td><td>HR LGE Lax Stack PSIR</td></tr></table></div>
+<div class='screen'><table><tr><td>HR LGE sax<br> stack MAG</td><td>&#8203;&#8203;</td><td>TI-scout</td></tr><tr><td>HR LGE sax<br> stack PSIR</td><td>&#8203;</td><td></td></tr></table></div>
+</div>
+
+<h2>11. Flow aorta/pulm</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow aorta anatomisk bilde</td><td>Flow Aorta Fasebilde</td><td>Resultat Aorta</td></tr><tr><td>Cine 3k</td><td>Cine Aorta</td><td>Tra Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow Pulm anatomisk bilde</td><td>Flow Pulm Fasebilde</td><td>Resultat Pulm</td></tr><tr><td>Cine Pulm</td><td>Cine Pulm</td><td>Sag Trufisp</td></tr></table></div>
+</div>
+
+<h2>12. Flow HAP/VAP</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow HAP anatomisk bilde</td><td>Flow Hap Fasebilde</td><td>Resultat HAP</td></tr><tr><td>Tra Trufisp</td><td>HAP Trufisp</td><td>Cor Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow VAP anatomisk bilde</td><td>Flow VAP Fasebilde</td><td>Resultat VAP</td></tr><tr><td>Vap Trufisp</td><td>Sag Trufisp</td><td></td></tr></table></div>
+</div>
+
+<h2>13. Flow VCI/VCS</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>Flow VCI anatomisk bilde</td><td>Flow VCI Fasebilde</td><td>Resultat VCI</td></tr><tr><td>Tra Trufisp</td><td>Cor Trufisp</td><td>Sag Trufisp</td></tr></table></div>
+<div class='screen'><table><tr><td>Flow VCS anatomisk bilde</td><td>Flow VCS Fasebilde</td><td>Resultat VCS</td></tr><tr><td>&#8203;</td><td>&#8203;</td><td>&#8203;</td></tr></table></div>
+</div>
+
+<h2>14. Volum</h2>
+<div class='screen-wrap'>
+<div class='screen'><table><tr><td>&#8203;<br>Resultat<br>&#8203;</td><td>&#8203;<br>Resultat<br>&#8203;</td></tr></table></div>
+<div class='screen'><table><tr><td>Cine 4k</td><td>Cine 3k</td><td>Cine 2k</td><td>Cine 2kh</td></tr><tr><td>&#8203;</td><td>Cine aorta</td><td>Cine pulm</td><td>Cine pulm</td></tr></table></div>          
+</div>
+
+</div>
+<script>
+
+
+function toggleContent(header) {
+  header.classList.toggle('active');
+  const content = header.nextElementSibling;
+  content.style.display = content.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>

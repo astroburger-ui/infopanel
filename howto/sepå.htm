@@ -134,9 +134,9 @@
 <body>
 <div class="header-bar">
 <div class="round-button-container">
-  <a class="round-button" href="sepå.htm">¯\_(ツ)_/¯</a>
+<a class="round-button-active" href="sepå.htm">¯\_(ツ)_/¯</a>
 <a class="round-button" href="totalaorta.htm">Totalaorta</a>
-<a class="round-button-active" href>Helkropp</a>
+<a class="round-button" href="Helkropp.htm">Helkropp</a>
 <a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
 <a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
 <a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
@@ -149,82 +149,67 @@
 <a class="button" href="..\info panel.htm" target="_self">🏠</a>
 </div>
 <div class="content-wrapper">
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B50 composed (ingen MPR)    </div>
-<div class="toggle-content">
- MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine
+<h1>Henge bilder? Kontrast? Lege se på?  ¯\_(ツ)_/¯</h1>
 
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Nevro  </div>
+<div class="toggle-content">
+Radiograf henger bilder<br><br>
+Ses på av radiolog dersom anført i prio og ved narkoser<br><br>
+<strong>Kontrast:</strong><br>
+Clariscan 0,2 ml/kg (max 20 ml)<br>
+Hypofyse: Clariscan 0,1 ml/kg (max 10 ml)<br>
+Perfusjon: Gadovist 0,1 ml/kg (max 10 ml) 5 ml/sek (sett på measurement 10)
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      TØK </div>
+<div class="toggle-content">
+Radiograf henger totalaorta og hjerte.<br><br>
+MR Hjerte: bare nye bilder skal henges<br><br>
+Radiolog henger andre undersøkelser.<br><br>
+Se på hals / generelle utredninger før ivk og til slutt dagtid<br><br>
+
+<strong>Kontrast</strong><br>
+Clariscan 0,2 ml/kg (max 20 ml)<br>
+Totalaorta:  Clariscan 0,4 ml/kg (max 40 ml) i trykksprøyte<br>
+Hjerte: Gadovist 0,1 ml/kg (max 15 ml)<br>
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      MSK </div>
+<div class="toggle-content">
+    Radiograf henger bilder<br><br>
+    Radiolog ser på før kontrast på dagtid og undersøkelser som er spesifisert som dagtid<br><br>
+<strong>Kontrast</strong><br>
+Clariscan 0,2 ml/kg (max 20 ml)
+</div>
+
+<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
+      Barn  </div>
+<div class="toggle-content">
+Radiolog henger bilder. Radiograf henger barnehjerter<br><br>
+Narkose: Radiolog calles når us starter<br><br>
+Våkne pas uten ivk: radiograf kjører us uten å calle lege<br><br>
+Våkne pas med ivk: Radiolog avgjør om radiograf kan kjøre selvestendig<br><br>
+Primær tumorutredning: Call radiolog når us starter<br><br>
+Barnehjerte: call radiolog når undersøkelsen starter<br><br>
+<strong>Kontrast:</strong><br>
+Clariscan 0,2 ml/kg (max 20)<br>
+Hjerte: Gadovist 0,2 ml (max 15 ml)
            
 </div>
 
 <div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) composed   </div>
+      Abdomen </div>
 <div class="toggle-content">
-  MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      Calc B1500 composed (MR 2 og 3)  </div>
-<div class="toggle-content">
-  MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      ADC composed  </div>
-<div class="toggle-content">
-      MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine      
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      ADC MPR tra (5/3mm) (små barn: 3-4/1,6 mm)   </div>
-<div class="toggle-content">
-  Dra inn ADC comp i viewing og velg Ranges. Bruk preset "WB_MPR_tra"
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) MPR tra (5/3 mm) (små barn: 3-4/1,6 mm)  </div>
-<div class="toggle-content">
- Dra inn B1000 (B800) comp i viewing og velg Ranges. Bruk preset "WB_MPR_tra"
+Radiolog henger bilder<br><br>
+evt se på<br><br>
+<strong></strong>Kontrast:</strong><br>
+Clariscan 0,2 ml/kg (max 20 ml)<br>
+MRA Abdomen: Clariscan 0,3 ml/kg (max 25 ml)<br>
+Primovist 0,1 ml/kg (max 10) ved MR Lever<br>
  </div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) MPR cor (5/1,6 mm) (små barn: 3-4/1,6 mm)  </div>
-<div class="toggle-content">
-  Bruk preset "WB_MPR_cor"
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-    B1000 (800) MPR cor invert  </div>
-<div class="toggle-content">
-  Mens du fortsatt er inne i ranges, Trykk F10 for å invertere bildet. Trykk start på nytt, navngi og accept
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-     1000 (800) MIP invert  </div>
-<div class="toggle-content">
-  Velg parallel ranges og bruk preset WB_mip
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) MIP</div>
-<div class="toggle-content">
-    Trykk F10 for å invertere tilbake til normale gråtoner. Start, navngi og accept.                 
-</div>
 
 
 
