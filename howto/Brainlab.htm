@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Spinalangio</title>
+<title>Splitte Grasp vibe</title>
 <style>
     body {
       background-color: #000000;
@@ -51,7 +51,7 @@
       background-color: #2E2E2E;
       border: 1px solid #FF7F00;
       color: #FFFFFF;
-      padding: 4px 8px;
+      padding: 4px 4px;
       font-size: 12px;
       cursor: pointer;
       border-radius: 3px;
@@ -76,7 +76,7 @@
     }
 
     .toggle-header {
-      font-weight: bold;
+      font-weight: normal;
       cursor: pointer;
       margin: 5px 0;
       padding: 5px;
@@ -93,11 +93,6 @@
       color: #B0B0B0;
     }
   
-    img {
-      max-width: 80%;
-      align-items: start;
-    }
-
 .toggle-container {
   margin-bottom: 1em;
 }
@@ -132,6 +127,9 @@
   padding: 10px;
   border-left: 2px solid #FF7F00;
 }
+        input { height: 25px; width: 80px; margin-left: 0px; font-size: 17px; margin-right: 10px; text-align: center; }
+
+        select { height: 25px; width: 100px; margin-left: 0px; font-size: 17px; margin-right: 10px; text-align: center; }
 
 
 </style>
@@ -140,13 +138,13 @@
 <div class="header-bar">
 <div class="round-button-container">
   <a class="round-button" href="sepå.htm">¯\_(ツ)_/¯</a>
-  <a class="round-button" href="totalaorta.htm">Totalaorta</a>
-  <a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
-<a class="round-button-active" href>Spinalangio</a>
+<a class="round-button" href="totalaorta.htm">Totalaorta</a>
+<a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
 <a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
-<a class="round-button" href="Brainlab.htm" target="_self">Brainlab</a>
+<a class="round-button-active" href="Brainlab.htm" target="_self">Brainlab</a>
 <a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
-<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Furix.htm" target=_self> Furix</a>
 <a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
 <a class="round-button" href="Henginger.htm" target="_self">Henginger</a>
 <a class="round-button" href="SECTRAguide.htm" target="_self">Hurtigguider Sectra</a>
@@ -155,46 +153,11 @@
 <a class="button" href="..\info panel.htm" target="_self">🏠</a>
 </div>
 <div class="content-wrapper">
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      Subtraksjon arteriell - tomserie   </div>
-<div class="toggle-content">
-  Merk tomfase og arteriell fase i viewing <br><br>
-  Velg subtraction i menyen til venstre eller under analysis tools i solen nede til høyre i bildet. <br><br>
-  <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/spinal-sub.png?csf=1&web=1&e=U594s4" alt="Subtraksjon">         
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-     MIP Thin (5/1mm) x 3 av subtrahert serie </div>
-<div class="toggle-content">
- Dra inn den subtraherte serien i viewing. Aktiver MIP Thin med (5) eller nede til venstre i bildet. Velg ranges og rekontruer i tre plan<br><br>
- I syngo: Ranges finner man i hodet &#128483; øverst til venstre i bildet etter man har aktivert MIP Thin<br><br>
-  <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/spinal-mpr.png?csf=1&web=1&e=U594s4" alt="Subtraksjon">         
-  
- 
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      MIP på aksialt snitt  </div>
-<div class="toggle-content">
- Det bør rekonstrueres MIP på aksialt snitt fra 19 vinkler (projeksjoner) i 180 grader felt, fra høyre mot venstre. <br><br> 
- Mens du fortsatt er inne i ranges, velg radial ranges. Aktiver MIP ved å trykke (4) eller nederst til venstre i bildet.<br><br>
- Bruk Clip Box i hodet &#128483; øverst til venstre i bildet til å snevre inn FOV
-
-    <img src="https://hsorhf.sharepoint.com/:i:/r/sites/OUSHF-O-820568AvdforradiografiRH/Shared%20Documents/General/Sectra/Infopanel/Syngo/Bilder/spinal-mip.png?csf=1&web=1&e=U594s4" alt="Subtraksjon">         
-         
-</div>
 
 
+<div>
 
-</div>
-<script>
-
-
-function toggleContent(header) {
-  header.classList.toggle('active');
-  const content = header.nextElementSibling;
-  content.style.display = content.style.display === 'block' ? 'none' : 'block';
-}
-</script>
+<h1>Lage brainlab fra en 3D-sekvens</h1>
+<h3> 
 </body>
 </html>
