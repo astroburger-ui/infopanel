@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Rekonstruksjon av helkropp</title>
+<title>Blodprøver i DIPS</title>
 <style>
     body {
       background-color: #000000;
@@ -51,7 +51,7 @@
       background-color: #2E2E2E;
       border: 1px solid #FF7F00;
       color: #FFFFFF;
-      padding: 4px 8px;
+      padding: 4px 4px;
       font-size: 12px;
       cursor: pointer;
       border-radius: 3px;
@@ -76,7 +76,7 @@
     }
 
     .toggle-header {
-      font-weight: bold;
+      font-weight: normal;
       cursor: pointer;
       margin: 5px 0;
       padding: 5px;
@@ -136,11 +136,11 @@
 <div class="round-button-container">
   <a class="round-button" href="sepå.htm">¯\_(ツ)_/¯</a>
 <a class="round-button" href="totalaorta.htm">Totalaorta</a>
-<a class="round-button-active" href>Helkropp</a>
+<a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
 <a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
 <a class="round-button" href="Spektroskopi.htm" target="_self">Spekstroskopi</a>
 <a class="round-button" href="Brainlab.htm" target="_self">Brainlab</a>
-<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button-active">Blodprøver</a>
 <a class="round-button" href="fmri.htm">fMRI</a>
 <a class="round-button" href="Furix.htm" target="_self">Furix</a>
 <a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
@@ -151,86 +151,17 @@
 <a class="button" href="..\info panel.htm" target="_self">🏠</a>
 </div>
 <div class="content-wrapper">
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B50 composed (ingen MPR)    </div>
-<div class="toggle-content">
- MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine
-
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) composed   </div>
-<div class="toggle-content">
-  MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      Calc B1500 composed (MR 2 og 3)  </div>
-<div class="toggle-content">
-  MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      ADC composed  </div>
-<div class="toggle-content">
-      MR 2 og 3: Dra en DWI inn i viewing og velg Combine/Compose nederst til venstre. <br><br>
- Tøm kolonnen til venstre før du velger riktig b-verdi i kolonnen til høyre og fører de over med pilen.<br><br>
- Gjentas for B800, Calc B1500 og ADC<br><br>
-Syngo: Composer finnes ved å velge "Switch Workflow" og velge MR Whole spine      
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      ADC MPR tra (5/3mm) (små barn: 3-4/1,6 mm)   </div>
-<div class="toggle-content">
-  Dra inn ADC comp i viewing og velg Ranges. Bruk preset "WB_MPR_tra"
-           
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) MPR tra (5/3 mm) (små barn: 3-4/1,6 mm)  </div>
-<div class="toggle-content">
- Dra inn B1000 (B800) comp i viewing og velg Ranges. Bruk preset "WB_MPR_tra"
- </div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) MPR cor (5/1,6 mm) (små barn: 3-4/1,6 mm)  </div>
-<div class="toggle-content">
-  Bruk preset "WB_MPR_cor"
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-    B1000 (800) MPR cor invert  </div>
-<div class="toggle-content">
-  Mens du fortsatt er inne i ranges, Trykk F10 for å invertere bildet. Trykk start på nytt, navngi og accept
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-     1000 (800) MIP invert  </div>
-<div class="toggle-content">
-  Velg parallel ranges og bruk preset WB_mip
-</div>
-
-<div class="toggle-header" onclick="toggleContent(this)"><span class="arrow"></span>
-      B1000 (800) MIP</div>
-<div class="toggle-content">
-    Trykk F10 for å invertere tilbake til normale gråtoner. Start, navngi og accept.                 
-</div>
 
 
+<div>
+  <a href="https://hsorhf.sharepoint.com/:x:/r/sites/OUSHF-O-820566RadiografiMRRH/Shared%20Documents/General/Kontrast/Kontrastdosering%20MR,%20RH%20-%20regneark.xlsx?d=w30b4ad221894409392486f9927fecd22&csf=1&web=1&e=M4uP8e&em=2&wdAllowInteractivity=false&wdDownloadButton=False" target="_blank" style="color: white;">Ha kjennskap til og kunne bruke Sectra brukermanual</a><br><br>
+<br>
+<iframe src="https://intranett.ous-hf.no/Content/1671177/cache=20231704212902/RH_regneark_15.11.18.xls?d=w30b4ad221894409392486f9927fecd22&csf=1&web=1&e=M4uP8e&em=2&wdAllowInteractivity=True&wdDownloadButton=False" width="100%" height="600px" frameborder="0" scrolling="no"></iframe>
 
 </div>
+
+
+
 <script>
 
 
