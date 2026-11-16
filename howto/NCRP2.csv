@@ -1,0 +1,109 @@
+Regionkode;Lokalisasjon;;NCRP-kode 2024;Kodetekst 2024;;;Refusjons-kategori;H/V/Begge
+A;Hode;;SAA0AG;MR Caput;;;MR 2;
+A;Hode;;SAF0AG;MR Ansikt;;;MR 2;
+A;Hode;;SAH0AG;MR Hjernenerver;;;MR 1;
+A;Hode;;SAX0AG;fMRI Funksjonell magnetresonanstomografi;;;MR 5;
+A;Hode;;SBE0AG;MR Hypofyse;;;MR 2;
+A;Hode;;SCA0AG;MR Orbita;;;MR 1;
+A;Hode;;SDE0AG;MR Tinningbein;;;MR 1;
+A;Hode;;SDX0AG;MR Bihuler;;;MR 3;
+A;Hode;;SEG0AG;MR Kjeveledd;;;MR 1;
+B;Hals;;SSB0AG;MR Hals;;;MR 2;
+B;Hals;;SAC0BG;MR Plexus brachialis;;;MR 1;
+C;Toraks;;SFY0AG;MR Hjerte;;;MR 5;
+C;Toraks;;SFY0BG;MR Hjerte med farmakologisk stressbelastning;;;MR 5;
+C;Toraks;;SFY0CG;MR Hjerte med fysisk stressbelasning;;;MR 5;
+C;Toraks;;SFY0DG;MR Hjerte med farmakologisk og fysisk stressbelastning;;;MR 5;
+C;Toraks;;SGA0AG;MR Sternum;;;MR 1;
+C;Toraks;;SGE0AG;MR Mediastinum;;;MR 1;
+C;Toraks;;SSC0AG;MR Toraks;;;MR 3;
+D;Abdomen;;SBC0AG;MR Binyrer;;;MR 1;
+D;Abdomen;;SJF0AG;MR Tynntarm;;;MR 2;
+D;Abdomen;;SJF0BG;MR Tykktarm;;;MR 3;
+D;Abdomen;;SJJ0AG;MR Lever;;;MR 4;
+D;Abdomen;;SJK0AG;MR MRCP - Magnetresonans kolangio-pankreatikografi;;;MR 2;
+D;Abdomen;;SJL0AG;MR Pancreas;;;MR 3;
+D;Abdomen;;SJL0AG;MR Pancreas;;;MR 6;
+D;Abdomen;;SKA0AG;MR Nyrer;;;MR 2;
+D;Abdomen;;SSD0AG;MR Abdomen;;;MR 3;
+E;Bekken;;SJG0AG;MR Rectum;;;MR 3;
+E;Bekken;;SKC0AG;MR Urinblære;;;MR 2;
+E;Bekken;;SKE0AG;MR Prostata;;;MR 2;
+E;Bekken;;SKH0AG;MR Mannlige genitalia;;;MR 3;
+E;Bekken;;SKX0AG;MR Urinveier;;;MR 3;
+E;Bekken;;SLX0AG;MR Kvinnelige genitalia;;;MR 3;
+E;Bekken;;SNE0BG;MR Iliosakralledd;;;MR 1;
+E;Bekken;;SSE0AG;MR Bekken;;;MR 2;
+F;Underekstremitet;;SNF0AG;MR Hofte;;;MR 2;H/V/B
+F;Underekstremitet;;SNF0BG;MR Lår;;;MR 2;H/V/B
+F;Underekstremitet;;SNG0AG;MR Kne;;;MR 1;H/V/B
+F;Underekstremitet;;SNG0BG;MR Legg;;;MR 1;H/V/B
+F;Underekstremitet;;SNH0AG;MR Fot;;;MR 1;H/V/B
+F;Underekstremitet;;SNH0BG;MR Ankelledd;;;MR 1;H/V/B
+F;Underekstremitet;;SNJ0AG;MR Underekstremitet;;;MR 3;H/V/B
+G;Overekstremitet;;SNB0AG;MR Overarm;;;MR 1;H/V/B
+G;Overekstremitet;;SNB0BG;MR Skulder;;;MR 1;H/V/B
+G;Overekstremitet;;SNC0AG;MR Albueledd;;;MR 1;H/V/B
+G;Overekstremitet;;SNC0BG;MR Underarm;;;MR 1;H/V/B
+G;Overekstremitet;;SND0AG;MR Håndledd og håndrot;;;MR 1;H/V/B
+G;Overekstremitet;;SND0BG;MR Hånd og fingre;;;MR 1;H/V/B
+G;Overekstremitet;;SNI0AG;MR Overekstremitet;;;MR 3;H/V/B
+H;Kolumna;;SNA0AG;MR Cervikalkolumna;;;MR 1;
+H;Kolumna;;SNA0BG;MR Torakalkolumna;;;MR 1;
+H;Kolumna;;SNA0EG;MR Cervikal og torakalkolumna;;;MR 2;
+H;Kolumna;;SNA0FG;MR Torakal og lumbalkolumna;;;MR 2;
+H;Kolumna;;SNA0GG;MR Lumbosakralkolumna;;;MR 1;
+H;Kolumna;;SAC0CG;MR Plexus lumbosacralis;;;MR 1;
+H;Kolumna;;SNA0HG;MR Cervikal, torakal og lumbalkolumna;;;MR 2;
+H;Kolumna;;SNA0SG;MR Cervikal- og lumbosakralkolumna;;;MR 2;
+H;Kolumna;;SNA0JG;MR Torakolumbosakralkolumna;;;MR 2;
+H;Kolumna;;SNA0KG;MR Totalkolumna;;;MR 2;
+I;Mamma;;SHA0AG;MR Mamma;;;MR 3;H/V/B
+J;Uspesifisert;;SSZ0XG;MR Uspesifisert;;;MR 1;
+A+B;Flere tilgrensende områder;;SSH0AG;MR Hode og hals;;;MR 2;
+A+H;Flere tilgrensende områder;;SNA0LG;MR Caput og totalkolumna;;;MR 4;
+A+H;Flere tilgrensende områder;;SNA0NG;MR Caput og deler av kolumna;;;MR 3;
+B+C;Flere tilgrensende områder;;SSJ0AG;MR Hals og toraks;;;MR 4;
+C+D;Flere tilgrensende områder;;SSK0AG;MR Toraks og abdomen;;;MR 3;
+D+E;Flere tilgrensende områder;;SSL0AG;MR Abdomen og bekken;;;MR 4;
+E+F;Flere tilgrensende områder;;SSM0AG;MR Bekken og underekstremiteter;;;MR 3;
+E+H;Flere tilgrensende områder;;SNA0TG;MR Bekken og deler av kolumna;;;MR 3;
+H+E;Flere tilgrensende områder;;SNA0MG;MR Totalkolumna og bekken;;;MR 3;
+A+B+C;Flere tilgrensende områder;;SSN0AG;MR Hode, hals og toraks;;;MR 4;
+A+H+G;Flere tilgrensende områder;;SNA0PG;MR Caput, kolumna og overekstremitet;;;MR 2;
+B+C+D;Flere tilgrensende områder;;SSP0AG;MR Hals, toraks og abdomen;;;MR 4;
+C+D+E;Flere tilgrensende områder;;SSQ0AG;MR Toraks, abdomen og bekken;;;MR 4;
+D+E+F;Flere tilgrensende områder;;SSR0AG;MR Abdomen, bekken og underekstremiteter;;;MR 4;
+A+B+C+D;Flere tilgrensende områder;;SSS0AG;MR Hode, hals, toraks og abdomen;;;MR 5;
+B+C+D+E;Flere tilgrensende områder;;SST0AG;MR Hals, toraks, abdomen og bekken;;;MR 3;
+C+D+E+F;Flere tilgrensende områder;;SSU0AG;MR Toraks, abdomen, bekken og underekstremiteter;;;MR 5;
+A+B+C+D+E;Flere tilgrensende områder;;SSV0AG;MR Hode, hals, toraks, abdomen og bekken;;;MR 3;
+B+C+D+E+F;Flere tilgrensende områder;;SSW0AG;MR Hals, toraks, abdomen, bekken og underekstremiteter;;;MR 4;
+A+B+C+D+E+F;Flere tilgrensende områder;;SSY0AG;MR Hode, hals, toraks, abdomen, bekken og underekstremiteter (Helkropp);;;MR 5;
+;;;SMA0AG;MR Gravid livmor (ink. foster);;;MR 3;
+A;Hode;;SAA0AQ;MRANG angiografi av caput;;;MR 1;
+A;Hode;;SAA0GQ;MR Caput og MRANG angiografi av caput;;;MR 4;
+B;Hals;;SPA0AQ;MRANG angiografi av hals;;;MR 2;
+C;Toraks;;SFC0AQ;MRANG angiografi av torakal- og abdominalaorta;;;MR 2;
+C;Toraks;;SSC0AQ;MRANG angiografi av toraks;;;MR 3;
+D;Abdomen;;SSD0AQ;MRANG angiografi av abdomen;;;MR 2;
+D;Abdomen;;SSD0BQ;MR Abdomen og MRANG angiografi av abdomen;;;MR 5;
+E;Bekken;;SSE0AQ;MRANG angiografi av bekken;;;MR 3;
+F;Underekstremitet;;SPX0KQ;MRANG angiografi av underekstremitet;;;MR 1;H/V/B
+G;Overekstremitet;;SPB0AQ;MRANG angiografi av overekstremitet;;;MR 3;H/V/B
+J;Uspesifisert;;SSZ0XQ;MRANG angiografi av uspesifiserte arterier og vener;;;MR 1;
+A+B;Flere tilgrensende områder;;SSH0AQ;MRANG angiografi av hode og hals;;;MR 2;
+B+C;Flere tilgrensende områder;;SSJ0AQ;MRANG angiografi av hals og toraks;;;MR 4;
+C+D;Flere tilgrensende områder;;SSK0AQ;MRANG angiografi av toraks og abdomen;;;MR 3;
+D+E;Flere tilgrensende områder;;SSL0AQ;MRANG angiografi av abdomen og bekken;;;MR 2;
+E+F;Flere tilgrensende områder;;SSM0AQ;MRANG angiografi av bekken og underekstremiteter;;;MR 2;
+A+B+C;Flere tilgrensende områder;;SSN0AQ;MRANG angiografi av hode, hals og toraks;;;MR 4;
+B+C+D;Flere tilgrensende områder;;SSP0AQ;MRANG angiografi av hals, toraks og abdomen;;;MR 4;
+C+D+E;Flere tilgrensende områder;;SSQ0AQ;MRANG angiografi av toraks, abdomen og bekken;;;MR 3;
+D+E+F;Flere tilgrensende områder;;SSR0AQ;MRANG angiografi av abdomen, bekken og underekstremiteter;;;MR 2;
+A+B+C+D;Flere tilgrensende områder;;SSS0AQ;MRANG angiografi av hode, hals, toraks og abdomen;;;MR 5;
+B+C+D+E;Flere tilgrensende områder;;SST0AQ;MRANG angiografi av hals, toraks, abdomen og bekken;;;MR 4;
+C+D+E+F;Flere tilgrensende områder;;SSU0AQ;MRANG angiografi av toraks, abdomen, bekken og underekstremiteter;;;MR 4;
+A+B+C+D+E;Flere tilgrensende områder;;SSV0AQ;MRANG angiografi av hode, hals, toraks, abdomen og bekken;;;MR 4;
+B+C+D+E+F;Flere tilgrensende områder;;SSW0AQ;MRANG angiografi av hals, toraks, abdomen, bekken og underekstremiteter;;;MR 4;
+A+B+C+D+E+F;Flere tilgrensende områder;;SSY0AQ;MRANG angiografi av hode, hals, toraks, abdomen, bekken og underex;;;MR 4;

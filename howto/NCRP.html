@@ -1,0 +1,836 @@
+3
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>MR-refusjonskalkulator</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #000;
+      --panel: #1c1c1c;
+      --panel-raised: #2e2e2e;
+      --text: #fff;
+      --muted: #b0b0b0;
+      --accent: #ff7f00;
+      --border: #454545;
+      --danger: #ff7777;
+      --success: #8bd49c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 20px;
+      background: var(--bg);
+      color: var(--text);
+      font: 15px/1.5 Arial, sans-serif;
+    }
+
+    button, input, select { font: inherit; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin: -20px -20px 24px;
+      padding: 12px 20px;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .brand { font-size: 15px; font-weight: 700; }
+    .brand span { color: var(--accent); }
+    .topbar-note { color: var(--muted); font-size: 12px; }
+
+    main { max-width: 1440px; margin: 0 auto; }
+    h1 { margin: 0 0 6px; font-size: clamp(25px, 4vw, 36px); }
+    h2 { margin: 0 0 14px; font-size: 19px; }
+    h3 { margin: 0 0 8px; font-size: 16px; }
+    p { margin: 6px 0 12px; }
+
+    .intro { margin-bottom: 22px; color: var(--muted); }
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(340px, .85fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 18px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 9px;
+    }
+
+    .search-row {
+      display: flex;
+      gap: 10px;
+      margin: 12px 0 8px;
+    }
+
+    #search {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      color: var(--text);
+      background: #101010;
+      border: 1px solid #666;
+      border-radius: 5px;
+    }
+
+    #search:focus, button:focus-visible, select:focus-visible, input:focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 2px;
+    }
+
+    .button {
+      padding: 8px 12px;
+      color: var(--text);
+      background: var(--panel-raised);
+      border: 1px solid var(--accent);
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover { color: #000; background: var(--accent); }
+    .button.subtle { border-color: var(--border); }
+    .button.subtle:hover { border-color: var(--accent); }
+    .small-note, .count, .meta { color: var(--muted); font-size: 12px; }
+
+    #procedure-list { max-height: 68vh; overflow: auto; padding-right: 4px; }
+    .region-group { margin-top: 16px; }
+    .region-title {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      margin: 0;
+      padding: 7px 9px;
+      color: var(--text);
+      background: var(--panel-raised);
+      border-left: 3px solid var(--accent);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .procedure {
+      display: grid;
+      grid-template-columns: 22px minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: start;
+      padding: 10px 7px;
+      border-bottom: 1px solid #353535;
+    }
+
+    .procedure > input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      margin: 2px 0 0;
+      accent-color: var(--accent);
+    }
+
+    .procedure-label { cursor: pointer; }
+    .procedure-name { display: block; font-weight: 700; }
+    .procedure-code { color: var(--muted); font: 12px/1.5 Consolas, monospace; }
+    .rate-badge {
+      align-self: center;
+      padding: 3px 7px;
+      color: var(--accent);
+      background: #17110b;
+      border: 1px solid #70400d;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-size: 12px;
+    }
+
+    .options {
+      grid-column: 2 / -1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      padding-top: 3px;
+    }
+
+    .options label { color: var(--muted); font-size: 12px; }
+    .options select {
+      min-height: 32px;
+      padding: 4px 8px;
+      color: var(--text);
+      background: #101010;
+      border: 1px solid #666;
+      border-radius: 4px;
+    }
+    .options input[type="checkbox"] { accent-color: var(--accent); }
+
+    .result-panel { position: sticky; top: 76px; }
+    .total-box {
+      margin: 14px 0;
+      padding: 15px;
+      background: #111;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+    }
+
+    .total-label { color: var(--muted); font-size: 12px; }
+    #total { color: var(--accent); font-size: clamp(26px, 4vw, 34px); font-weight: 700; }
+    #status { margin-top: 5px; font-size: 13px; font-weight: 700; }
+    #status.valid { color: var(--success); }
+    #status.invalid { color: var(--danger); }
+    #status.pending { color: var(--accent); }
+
+    .result-list { margin: 8px 0 16px; padding: 0; list-style: none; }
+    .result-list li { padding: 8px 0; border-bottom: 1px solid #353535; }
+    .result-name { font-weight: 700; }
+    .result-details { display: block; color: var(--muted); font-size: 12px; }
+
+    .messages { display: grid; gap: 8px; margin: 12px 0; }
+    .message {
+      padding: 10px 11px;
+      background: #171717;
+      border-left: 3px solid var(--accent);
+      font-size: 13px;
+    }
+    .message.error { border-left-color: var(--danger); }
+    .message.suggestion { border-left-color: var(--success); }
+    .message button { margin: 7px 6px 0 0; }
+    .question-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 9px; }
+    .empty { padding: 18px 8px; color: var(--muted); text-align: center; }
+    .legal-note {
+      margin-top: 16px;
+      padding-top: 12px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+    }
+
+    @media (max-width: 900px) {
+      .layout { grid-template-columns: 1fr; }
+      .result-panel { position: static; grid-row: 1; }
+      #procedure-list { max-height: none; }
+    }
+
+    @media (max-width: 560px) {
+      body { padding: 12px; }
+      .topbar { margin: -12px -12px 18px; padding: 10px 12px; }
+      .topbar-note { display: none; }
+      .panel { padding: 13px; }
+      .procedure { grid-template-columns: 22px minmax(0, 1fr); }
+      .rate-badge { grid-column: 2; justify-self: start; }
+      .options { grid-column: 2; }
+      .search-row { flex-direction: column; }
+    }
+
+   
+
+    .round-button {
+      background-color: #2E2E2E;
+      border: 1px solid #FF7F00;
+      color: #FFFFFF;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button-active {
+      background-color: #FF7F00;
+      border: 1px solid #FF7F00;
+      color: #000000;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 3px;
+      text-decoration: none;
+    }
+
+    .round-button:hover {
+      background-color: #FF7F00;
+      color: #000000;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+<div class="header-bar">
+<div class="round-button-container">
+  <a class="round-button" href="sepå.htm">¯\_(ツ)_/¯</a>
+  <a class="round-button" href="totalaorta.htm">Totalaorta</a>
+  <a class="round-button" href="Helkropp.htm" target="_self">Helkropp</a>
+<a class="round-button" href="Spinalangio.htm" target="_self">Spinalangio</a>
+<a class="round-button" href>Spektroskopi</a>
+<a class="round-button" href="Brainlab.htm" target="_self">Brainlab</a>
+<a class="round-button" href="Blodprøver.htm" target="_self">Blodprøver</a>
+<a class="round-button" href="fmri.htm">fMRI</a>
+<a class="round-button" href="Furix.htm" target="_self">Furix</a>
+<a class="round-button" href="Grasp.htm" target="_self">Grasp Vibe</a>
+<a class="round-button" href="Henginger.htm" target="_self">Henginger</a>
+<a class="round-button" href="SECTRAguide.htm" target="_self">Hurtigguider Sectra</a>
+<a class="round-button-active" href="NCRP.html" target="_self">NCRP</a>
+<a class="round-button" href="Opplæring.htm" target="_self">Opplæringsplan Sectra</a>
+<a style="margin-left: auto;" class="button" href="..\info panel.htm" target="_self">🏠</a>
+
+  <header class="topbar" style="margin-top: 30px">
+    <div class="brand">MR <span>REFUSJONSKALKULATOR</span></div>
+    <div class="topbar-note">NCRP-koder · refusjon i norske kroner · regelverk 2026</div>
+  </header>
+
+  <main>
+    <h1>Beregn refusjon for MR</h1>
+    <p class="intro">Søk etter NCRP-koder, velg én eller flere undersøkelser, og få et estimat med forslag til koding.</p>
+
+    <div class="layout">
+      <section class="panel" aria-labelledby="codes-heading">
+        <h2 id="codes-heading">Velg undersøkelseskoder</h2>
+        <label class="small-note" for="search">Søk i kodetekst, kode eller region. Trefflisten oppdateres mens du skriver.</label>
+        <div class="search-row">
+          <input id="search" type="search" autocomplete="off" placeholder="For eksempel «caput», «SAA0AG» eller «abdomen»">
+          <button id="clear" class="button subtle" type="button">Tøm valg</button>
+        </div>
+        <div id="result-count" class="count" aria-live="polite"></div>
+        <div id="procedure-list"></div>
+      </section>
+
+      <aside class="panel result-panel" aria-labelledby="estimate-heading">
+        <h2 id="estimate-heading">Refusjonsestimat</h2>
+        <p class="small-note">Beregningen forutsetter at kodene gjenspeiler faktisk utførte, selvstendige undersøkelser.</p>
+        <div id="questions" class="messages"></div>
+        <div class="total-box" aria-live="polite">
+          <div class="total-label">Estimert refusjon for foreslått koding</div>
+          <div id="total">0,00&nbsp;kr</div>
+          <div id="status" class="pending">Velg minst én kode</div>
+        </div>
+        <h3>Foreslått koding</h3>
+        <ul id="selected-codes" class="result-list"><li class="small-note">Ingen koder valgt.</li></ul>
+        <div id="messages" class="messages" aria-live="polite"></div>
+        <button id="reset-answers" class="button subtle" type="button" hidden>Nullstill spørsmål</button>
+        <div class="legal-note">
+          Satsene er beregnet fra MR 1–6. Regelkontrollen følger vedlagt regelverk for 2026, inkludert maksimalt to refusjonskrav per pasient per dag og at bilateral teller som to. Dette er et beslutningsstøtteverktøy, ikke en garanti for godkjent refusjon. Kontroller alltid gjeldende regelverk og at kodene beskriver utført aktivitet.
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <script src="codes.js"></script>
+  <script>
+    (() => {
+      "use strict";
+
+      const rates = {
+        1: 163.85,
+        2: 395.20,
+        3: 680.52,
+        4: 858.81,
+        5: 1037.73,
+        6: 2204.67
+      };
+      const regionNames = {
+        A: "Hode", B: "Hals", C: "Toraks", D: "Abdomen", E: "Bekken",
+        F: "Underekstremitet", G: "Overekstremitet", H: "Kolumna",
+        I: "Mamma", J: "Uspesifisert"
+      };
+      const sameRegionAllowed = new Set(["A", "C", "F", "G", "I"]);
+      const forbidden = {
+        MR: [["A", "B"], ["A", "H"], ["C", "D"], ["D", "E"], ["E", "H"]],
+        MRA: [["A", "B"], ["B", "C"], ["C", "D"], ["D", "E"], ["E", "F"]]
+      };
+      const numberFormat = new Intl.NumberFormat("nb-NO", {
+        style: "currency", currency: "NOK", minimumFractionDigits: 2, maximumFractionDigits: 2
+      });
+      const list = document.getElementById("procedure-list");
+      const search = document.getElementById("search");
+      const questions = document.getElementById("questions");
+      const messages = document.getElementById("messages");
+      const selectedList = document.getElementById("selected-codes");
+      const total = document.getElementById("total");
+      const status = document.getElementById("status");
+      const selections = new Map();
+      const answers = { caput: null, mrcp: null };
+      let allProcedures = PROCEDURES;
+
+      function regionsOf(procedure) {
+        return (procedure.region || "").split("+").filter(Boolean);
+      }
+
+      function categoryNumber(procedure) {
+        const match = String(procedure.category || "").match(/MR\s*(\d+)/i);
+        return match ? Number(match[1]) : 0;
+      }
+
+      function amountFor(procedure) {
+        return rates[categoryNumber(procedure)] || 0;
+      }
+
+      function rateFor(procedure, multiplier = 1) {
+        return amountFor(procedure) * multiplier;
+      }
+
+      function formatMoney(amount) {
+        return numberFormat.format(amount);
+      }
+
+      function regionLabel(procedure) {
+        const regions = regionsOf(procedure);
+        return regions.map((region) => regionNames[region] || region).join(" + ") || "Uspesifisert";
+      }
+
+      function findCode(code) {
+        return allProcedures.find((procedure) => procedure.code === code);
+      }
+
+      function displayLabel(procedure) {
+        return `${procedure.name} (${procedure.code})`;
+      }
+
+      function matchesSearch(procedure, query) {
+        const aliases = procedure.code === "SJK0AG" ? "MR galleveier galleveier galleganger" : "";
+        const value = `${procedure.name} ${procedure.code} ${procedure.location} ${procedure.region} ${regionLabel(procedure)} ${aliases}`;
+        return value.toLocaleLowerCase("nb-NO").includes(query);
+      }
+
+      function renderList() {
+        const query = search.value.trim().toLocaleLowerCase("nb-NO");
+        const matches = allProcedures.filter((procedure) => matchesSearch(procedure, query));
+        document.getElementById("result-count").textContent =
+          `${matches.length} av ${allProcedures.length} koder`;
+        list.replaceChildren();
+
+        const groups = new Map();
+        for (const procedure of matches) {
+          const key = procedure.region || "J";
+          if (!groups.has(key)) groups.set(key, []);
+          groups.get(key).push(procedure);
+        }
+
+        for (const [region, procedures] of groups) {
+          const group = document.createElement("section");
+          group.className = "region-group";
+          const heading = document.createElement("h3");
+          heading.className = "region-title";
+          heading.textContent = `${regionNames[region] || "Flere regioner"}${region.includes("+") ? ` (${region})` : ` · Region ${region}`}`;
+          group.append(heading);
+
+          for (const procedure of procedures) {
+            const row = document.createElement("div");
+            row.className = "procedure";
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.id = `code-${procedure.code}`;
+            checkbox.checked = selections.has(procedure.code);
+            checkbox.setAttribute("aria-label", `Velg ${displayLabel(procedure)}`);
+            checkbox.addEventListener("change", () => onSelectionChange(procedure, checkbox.checked));
+
+            const label = document.createElement("label");
+            label.className = "procedure-label";
+            label.htmlFor = checkbox.id;
+            const name = document.createElement("span");
+            name.className = "procedure-name";
+            name.textContent = procedure.name;
+            const code = document.createElement("span");
+            code.className = "procedure-code";
+            code.textContent = `${procedure.code} · ${procedure.category}`;
+            label.append(name, code);
+
+            const badge = document.createElement("span");
+            badge.className = "rate-badge";
+            badge.textContent = formatMoney(amountFor(procedure));
+            row.append(checkbox, label, badge);
+
+            if (checkbox.checked && procedure.sided) {
+              const options = document.createElement("div");
+              options.className = "options";
+              const sideLabel = document.createElement("label");
+              sideLabel.htmlFor = `side-${procedure.code}`;
+              sideLabel.textContent = "Side:";
+              const side = document.createElement("select");
+              side.id = `side-${procedure.code}`;
+              side.setAttribute("aria-label", `Side for ${procedure.name}`);
+              for (const [value, text] of [["one", "Ensidig"], ["both", "Bilateral"]]) {
+                const option = document.createElement("option");
+                option.value = value;
+                option.textContent = text;
+                side.append(option);
+              }
+              side.value = selections.get(procedure.code).side;
+              side.addEventListener("change", () => {
+                selections.get(procedure.code).side = side.value;
+                renderEstimate();
+              });
+              options.append(sideLabel, side);
+              row.append(options);
+            }
+
+            if (checkbox.checked && procedure.code === "SJL0AG") {
+              const options = document.createElement("div");
+              options.className = "options";
+              const label = document.createElement("label");
+              const medication = document.createElement("input");
+              medication.type = "checkbox";
+              medication.checked = selections.get(procedure.code).chirhostim;
+              medication.addEventListener("change", () => {
+                selections.get(procedure.code).chirhostim = medication.checked;
+                renderEstimate();
+              });
+              label.append(medication, document.createTextNode(" ChirHoStim brukt (MR 6)"));
+              options.append(label);
+              row.append(options);
+            }
+
+            group.append(row);
+          }
+          list.append(group);
+        }
+        if (!matches.length) {
+          const empty = document.createElement("div");
+          empty.className = "empty";
+          empty.textContent = "Ingen koder samsvarer med søket.";
+          list.append(empty);
+        }
+      }
+
+      function onSelectionChange(procedure, checked) {
+        if (checked) {
+          selections.set(procedure.code, { procedure, side: "one", chirhostim: false });
+        } else {
+          selections.delete(procedure.code);
+          if (procedure.code === "SAA0AQ") {
+            answers.caput = null;
+            if (answers.caputIncluded) {
+              selections.delete("SAA0AG");
+              answers.caputIncluded = false;
+            }
+          }
+          if (procedure.code === "SJK0AG") answers.mrcp = null;
+          if (procedure.code === "SAA0AG" && selections.has("SAA0AQ")) {
+            answers.caput = "no";
+            answers.caputIncluded = false;
+          }
+        }
+        renderList();
+        renderEstimate();
+      }
+
+      function setAnswer(name, value) {
+        answers[name] = value;
+        if (name === "caput" && value === "yes") {
+          const caput = findCode("SAA0AG");
+          if (caput && !selections.has(caput.code)) {
+            selections.set(caput.code, { procedure: caput, side: "one", chirhostim: false });
+            answers.caputIncluded = true;
+          }
+        }
+        renderList();
+        renderEstimate();
+      }
+
+      function addMessage(text, kind = "") {
+        const item = document.createElement("div");
+        item.className = `message ${kind}`.trim();
+        item.textContent = text;
+        messages.append(item);
+      }
+
+      function addCodeSuggestion(procedure, description) {
+        const item = document.createElement("div");
+        item.className = "message suggestion";
+        const text = document.createElement("div");
+        text.textContent = `${description}: ${displayLabel(procedure)} · ${procedure.category} · ${formatMoney(amountFor(procedure) * (selections.get(procedure.code)?.side === "both" ? 2 : 1))}`;
+        item.append(text);
+        messages.append(item);
+      }
+
+      function buildQuestion(title, description, options) {
+        const box = document.createElement("div");
+        box.className = "message";
+        const heading = document.createElement("strong");
+        heading.textContent = title;
+        const detail = document.createElement("div");
+        detail.textContent = description;
+        const actions = document.createElement("div");
+        actions.className = "question-actions";
+        for (const option of options) {
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "button";
+          button.textContent = option.label;
+          button.addEventListener("click", option.action);
+          actions.append(button);
+        }
+        box.append(heading, detail, actions);
+        questions.append(box);
+      }
+
+      function selectedEntries() {
+        return Array.from(selections.values()).map((entry) => ({
+          procedure: entry.procedure,
+          side: entry.side,
+          units: entry.side === "both" ? 2 : 1,
+          category: entry.procedure.code === "SJL0AG" && entry.chirhostim ? 6 : categoryNumber(entry.procedure),
+          amount: entry.procedure.code === "SJL0AG" && entry.chirhostim
+            ? rates[6]
+            : amountFor(entry.procedure)
+        }));
+      }
+
+      function replaceEntries(entries, fromCodes, replacement) {
+        const picked = entries.filter((entry) => fromCodes.includes(entry.procedure.code));
+        if (!replacement || picked.length !== fromCodes.length) return entries;
+        const firstIndex = entries.findIndex((entry) => fromCodes.includes(entry.procedure.code));
+        const remaining = entries.filter((entry) => !fromCodes.includes(entry.procedure.code));
+        remaining.splice(Math.min(firstIndex, remaining.length), 0, {
+          procedure: replacement,
+          side: "one",
+          units: 1,
+          category: categoryNumber(replacement),
+          amount: amountFor(replacement),
+          sourceCodes: fromCodes
+        });
+        return remaining;
+      }
+
+      function normalizeEntries() {
+        let entries = selectedEntries();
+        const suggestions = [];
+
+        if (selections.has("SAA0AG") && selections.has("SAA0AQ")) {
+          const combined = findCode("SAA0GQ");
+          entries = replaceEntries(entries, ["SAA0AG", "SAA0AQ"], combined);
+          if (combined) suggestions.push({ procedure: combined, description: "Bruk kombinasjonskoden for MR Caput og MRA Caput" });
+        }
+
+        if (selections.has("SSD0AQ")) {
+          const abdomenCodes = entries.filter((entry) => regionsOf(entry.procedure).includes("D"));
+          if (abdomenCodes.length === 2) {
+            const other = abdomenCodes.find((entry) => entry.procedure.code !== "SSD0AQ");
+            if (other) {
+              const combined = findCode("SSD0BQ");
+              entries = replaceEntries(entries, ["SSD0AQ", other.procedure.code], combined);
+              if (combined) suggestions.push({ procedure: combined, description: "Bruk den kombinerte abdomen/MRA-koden" });
+            }
+          }
+        }
+
+        if (answers.mrcp === "no" && selections.has("SJK0AG")) {
+          const liver = findCode("SJJ0AG");
+          entries = replaceEntries(entries, ["SJK0AG"], liver);
+          if (liver) suggestions.push({ procedure: liver, description: "Ikke kun MRCP-sekvens: foreslå MR Lever" });
+        }
+
+        for (const [region, umbrellaCode] of [["F", "SNJ0AG"], ["G", "SNI0AG"]]) {
+          const regional = entries.filter((entry) => regionsOf(entry.procedure).length === 1 && regionsOf(entry.procedure)[0] === region);
+          if (regional.length >= 3) {
+            const umbrella = findCode(umbrellaCode);
+            const codes = regional.map((entry) => entry.procedure.code);
+            entries = replaceEntries(entries, codes, umbrella);
+            if (umbrella) suggestions.push({
+              procedure: umbrella,
+              description: `Tre eller flere valgte undersøkelser i region ${region}: vurder regional kode`
+            });
+          }
+        }
+
+        const unique = [];
+        const seen = new Set();
+        for (const entry of entries) {
+          const key = `${entry.procedure.code}:${entry.category}:${entry.side}`;
+          if (!seen.has(key)) {
+            unique.push(entry);
+            seen.add(key);
+          }
+        }
+        return { entries: unique, suggestions };
+      }
+
+      function codeDescription(entry) {
+        const category = entry.category === 6 && entry.procedure.code === "SJL0AG"
+          ? "MR 6 (ChirHoStim)"
+          : `MR ${entry.category}`;
+        const multiplier = entry.side === "both" ? 2 : 1;
+        return { category, multiplier, amount: entry.amount * multiplier };
+      }
+
+      function validate(entries) {
+        const errors = [];
+        const units = entries.reduce((sum, entry) => sum + entry.units, 0);
+        if (units > 2) errors.push(`Valget tilsvarer ${units} refusjonskrav. Maksimalt to krav kan fremmes per pasient per dag; bilateral teller som to.`);
+
+        const regionCounts = new Map();
+        for (const entry of entries) {
+          for (const region of regionsOf(entry.procedure)) {
+            regionCounts.set(region, (regionCounts.get(region) || 0) + 1);
+          }
+        }
+        for (const [region, count] of regionCounts) {
+          if (count > 1 && !sameRegionAllowed.has(region)) {
+            errors.push(`Flere valgte koder dekker region ${region} (${regionNames[region]}); regelverket tillater ikke to krav fra denne regionen.`);
+          }
+        }
+        for (let i = 0; i < entries.length; i++) {
+          for (let j = i + 1; j < entries.length; j++) {
+            const left = entries[i];
+            const right = entries[j];
+            const leftRegions = regionsOf(left.procedure);
+            const rightRegions = regionsOf(right.procedure);
+            const modality = left.procedure.name.toLocaleLowerCase("nb-NO").includes("mrang") ||
+              right.procedure.name.toLocaleLowerCase("nb-NO").includes("mrang") ? "MRA" : "MR";
+            const blockedPair = forbidden[modality].find(([a, b]) =>
+              (leftRegions.includes(a) && rightRegions.includes(b)) ||
+              (leftRegions.includes(b) && rightRegions.includes(a)));
+            if (blockedPair) {
+              errors.push(`${modality}-krav for region ${blockedPair[0]}+${blockedPair[1]} kan ikke fremmes som to separate undersøkelser.`);
+            }
+            const overlap = leftRegions.find((region) => rightRegions.includes(region));
+            if (overlap && (leftRegions.length > 1 || rightRegions.length > 1)) {
+              errors.push(`Kodene ${left.procedure.code} og ${right.procedure.code} overlapper i region ${overlap}. Kontroller om de skal erstattes av én kombinasjonskode.`);
+            }
+          }
+        }
+        return { errors, units };
+      }
+
+      function findRegionCombination(entries) {
+        if (entries.length !== 2) return null;
+        const regionSet = Array.from(new Set(entries.flatMap((entry) => regionsOf(entry.procedure)))).sort();
+        if (regionSet.length < 2) return null;
+        const regions = regionSet.join("+");
+        const mraFlags = entries.map((entry) => entry.procedure.name.toLocaleLowerCase("nb-NO").includes("mrang"));
+        if (mraFlags.some(Boolean) && !mraFlags.every(Boolean)) return null;
+        const bothMra = mraFlags.every(Boolean);
+        return allProcedures.find((procedure) =>
+          regionsOf(procedure).slice().sort().join("+") === regions &&
+          procedure.name.toLocaleLowerCase("nb-NO").includes("mrang") === bothMra);
+      }
+
+      function renderQuestions() {
+        questions.replaceChildren();
+        if (selections.has("SAA0AQ") && !selections.has("SAA0AG") && answers.caput === null) {
+          buildQuestion(
+            "MRA Caput er valgt alene",
+            "Er MR Caput også utført? Hvis ja, kalkuleres kombinasjonskoden for MR Caput og MRA Caput.",
+            [
+              { label: "Ja, MR Caput er utført", action: () => setAnswer("caput", "yes") },
+              { label: "Nei", action: () => setAnswer("caput", "no") }
+            ]
+          );
+        }
+        if (selections.has("SJK0AG") && answers.mrcp === null) {
+          buildQuestion(
+            "MR Galleveier / MRCP er valgt",
+            "Er det kun utført en MRCP-sekvens? MR MRCP beholdes ved ja; ved nei foreslås MR Lever.",
+            [
+              { label: "Ja, kun MRCP-sekvens", action: () => setAnswer("mrcp", "yes") },
+              { label: "Nei, ikke kun MRCP", action: () => setAnswer("mrcp", "no") }
+            ]
+          );
+        }
+      }
+
+      function renderEstimate() {
+        renderQuestions();
+        messages.replaceChildren();
+        const { entries, suggestions } = normalizeEntries();
+        const { errors, units } = validate(entries);
+        if (suggestions.some((suggestion) => suggestion.description.includes("Tre eller flere"))) {
+          errors.push("Tre eller flere valgte undersøkelser er utenfor regelverkets grense på maksimalt to refusjonskrav per pasient per dag.");
+        }
+        const pending = (selections.has("SAA0AQ") && !selections.has("SAA0AG") && answers.caput === null) ||
+          (selections.has("SJK0AG") && answers.mrcp === null);
+
+        const sum = entries.reduce((value, entry) => value + codeDescription(entry).amount, 0);
+        total.textContent = formatMoney(sum);
+        selectedList.replaceChildren();
+        if (!selections.size) {
+          selectedList.innerHTML = '<li class="small-note">Ingen koder valgt.</li>';
+          total.textContent = formatMoney(0);
+          status.className = "pending";
+          status.textContent = "Velg minst én kode";
+          document.getElementById("reset-answers").hidden = true;
+          return;
+        }
+
+        for (const entry of entries) {
+          const item = document.createElement("li");
+          const name = document.createElement("span");
+          name.className = "result-name";
+          name.textContent = displayLabel(entry.procedure);
+          const details = document.createElement("span");
+          details.className = "result-details";
+          const description = codeDescription(entry);
+          const sideText = entry.side === "both" ? " · bilateral (2 undersøkelser)" : "";
+          details.textContent = `${description.category}${sideText} · ${formatMoney(description.amount)}`;
+          item.append(name, details);
+          selectedList.append(item);
+        }
+
+        if (pending) {
+          status.className = "pending";
+          status.textContent = "Svar på spørsmålet for å fullføre kodeforslaget";
+        } else if (errors.length) {
+          status.className = "invalid";
+          status.textContent = `Kan bli avvist · ${units} refusjonskrav`;
+        } else {
+          status.className = "valid";
+          status.textContent = `Innenfor regelkontrollen · ${units} refusjonskrav`;
+        }
+
+        for (const error of new Set(errors)) addMessage(error, "error");
+        for (const suggestion of suggestions) addCodeSuggestion(suggestion.procedure, suggestion.description);
+
+        if (!pending && entries.length === 2) {
+          const combination = findRegionCombination(entries);
+          if (combination && !suggestions.some((suggestion) => suggestion.procedure.code === combination.code)) {
+            addCodeSuggestion(combination, "Kombinasjonskode finnes i kodetabellen; vurder denne i stedet for separate koder");
+          }
+        }
+
+        if (!errors.length && !pending && entries.length === 1 && selections.has("SAA0AQ") && answers.caput === "no") {
+          const caput = findCode("SAA0AG");
+          addMessage(`MRA Caput alene er valgt. Hvis MR Caput også ble utført, velg den koden; systemet foreslår da kombinasjonskoden.`, "");
+          if (caput) addMessage(`Mulig tilleggskode ved utført MR Caput: ${displayLabel(caput)}.`, "");
+        }
+
+        if (answers.mrcp === "no" && selections.has("SJK0AG")) {
+          addMessage("MR MRCP er erstattet med forslaget MR Lever. Kontroller at dette samsvarer med utført undersøkelse.", "");
+        }
+
+        if (suggestions.some((suggestion) => suggestion.description.includes("Tre eller flere"))) {
+          addMessage("Tre eller flere undersøkelser kan ikke kreves som tre separate refusjoner. Regional kode er bare et forslag når den korrekt beskriver den utførte aktiviteten.", "error");
+        }
+        document.getElementById("reset-answers").hidden = answers.caput === null && answers.mrcp === null;
+      }
+
+      search.addEventListener("input", renderList);
+      document.getElementById("clear").addEventListener("click", () => {
+        selections.clear();
+        answers.caput = null;
+        answers.caputIncluded = false;
+        answers.mrcp = null;
+        renderList();
+        renderEstimate();
+        search.focus();
+      });
+      document.getElementById("reset-answers").addEventListener("click", () => {
+        answers.caput = null;
+        if (answers.caputIncluded) selections.delete("SAA0AG");
+        answers.caputIncluded = false;
+        answers.mrcp = null;
+        renderList();
+        renderEstimate();
+      });
+
+      renderList();
+      renderEstimate();
+    })();
+  </script>
+</body>
+</html>
