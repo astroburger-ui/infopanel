@@ -1,136 +1,481 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="no">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Info Panel</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f7fb">
+  <title>Infopanel</title>
   <style>
-    /* Base styles */
+    :root {
+      color-scheme: light;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #17243b;
+      background: #f4f7fb;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      --muted: #64748b;
+      --line: #e2e8f0;
+      --blue: #1769aa;
+      --card: #fff;
+    }
+
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      padding: 10px;
-      font-family: Arial, sans-serif;
-      transition: background-color 0.3s, color 0.3s;
+      min-width: 320px;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at 12% 0%, #e6f2ff 0, transparent 34rem),
+        #f4f7fb;
     }
-    h1, h2 {
-      text-align: center;
-      margin-top: 2px;
-      margin-bottom: 5px;
-	font-size: 100%;
-    }
-	  ::-webkit-scrollbar {
-        width: 0px;
-    }
-    
-    /* Dark mode (default) */
+
     body.dark-mode {
-      background-color: rgb(19, 31, 52);
-      color: white;
+      color: #f8fafc;
+      background: #131f34;
+      --muted: #b1bed1;
+      --line: #33445f;
+      --blue: #78baf0;
+      --card: #1d2b43;
     }
-    body.dark-mode h1, 
-    body.dark-mode h2 {
-      color: white;
+
+    button, input { font: inherit; }
+    a { color: inherit; }
+
+    .page {
+      width: min(100% - 32px, 1040px);
+      margin: 0 auto;
+      padding: 48px 0 56px;
     }
-    body.dark-mode .button {
-      background-color: rgb(29, 43, 67);
-      border: none;
-      color: white;
-      padding: 10px 15px;
-      margin: 5px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s;
+
+    .header { margin-bottom: 28px; }
+    .header-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
     }
-    body.dark-mode .button:hover {
-      background-color: rgb(46, 68, 103);
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue);
+      font-size: .75rem;
+      font-weight: 750;
+      letter-spacing: .12em;
+      text-transform: uppercase;
     }
-    
-    /* Light mode */
-    body.light-mode {
-      background-color: rgb(235, 237, 240);
-      color: black;
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.15rem);
+      letter-spacing: -.055em;
+      line-height: 1.05;
     }
-    body.light-mode h1, 
-    body.light-mode h2 {
-      color: black;
-    }
-    body.light-mode .button {
-      background-color: rgb(201, 216, 236);
-      border: none;
-      color: black;
-      padding: 10px 15px;
-      margin: 5px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      font-size: 12px;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.light-mode .button:hover {
-      background-color: rgb(37, 55, 83);
-      color: white;
-    }
-    
-    /* Toggle button styling in the top right corner */
+    .intro { margin: 11px 0 0; color: var(--muted); }
     #modeToggle {
-      position: fixed;
-      top: 5px;
-      right: 10px;
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      outline: none;
+      flex: 0 0 auto;
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
       color: inherit;
+      background: var(--card);
+      font-size: 1.25rem;
+      cursor: pointer;
     }
-    
-    /* Section spacing */
-    .section {
-      margin-bottom: 5px;
+
+    .search-card, .card {
+      border: 1px solid rgba(226, 232, 240, .9);
+      border-radius: 20px;
+      background: var(--card);
+      box-shadow: 0 12px 32px rgba(27, 55, 92, .055);
+    }
+
+    .search-card { padding: 20px; margin-bottom: 20px; }
+    .search-card label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: .9rem;
+      font-weight: 700;
+    }
+    .search-form { display: flex; gap: 10px; }
+    .search-form input {
+      flex: 1;
+      min-width: 0;
+      min-height: 50px;
+      padding: 0 16px;
+      border: 1px solid #cbd5e1;
+      border-radius: 12px;
+      color: #17243b;
+      background: #fff;
+    }
+    .search-form input::placeholder { color: #8794a7; }
+    body.dark-mode .search-form input {
+      border-color: #485a75;
+      color: #f8fafc;
+      background: #17243b;
+    }
+    body.dark-mode .search-form input::placeholder { color: #a7b5ca; }
+    .search-form button, .refresh {
+      min-height: 48px;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      background: #1769aa;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .search-form button { padding: 0 21px; }
+    .search-form button:hover, .refresh:hover { background: #0e568f; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: 20px;
+      align-items: start;
+    }
+    .card { min-width: 0; padding: 22px; }
+    .card-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    h2 { margin: 0; font-size: 1.15rem; letter-spacing: -.02em; }
+    .card-subtitle { margin: 5px 0 0; color: var(--muted); font-size: .88rem; }
+    .refresh {
+      flex: 0 0 auto;
+      min-height: 38px;
+      padding: 0 12px;
+      font-size: .82rem;
+    }
+    .current-weather {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 16px;
+      border-radius: 15px;
+      background: #eff7ff;
+    }
+    .weather-icon { font-size: 2.4rem; line-height: 1; }
+    .temperature { font-size: 2.2rem; font-weight: 750; letter-spacing: -.06em; }
+    .conditions { margin-top: 2px; color: #41536b; font-size: .9rem; }
+    .weather-detail { margin: 13px 0 0; color: var(--muted); font-size: .86rem; }
+    .forecast {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .forecast-day {
+      min-width: 0;
+      padding: 12px 8px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      text-align: center;
+    }
+    .forecast-name { color: var(--muted); font-size: .78rem; }
+    .forecast-icon { margin: 7px 0; font-size: 1.35rem; }
+    .forecast-temp { font-size: .84rem; font-weight: 700; white-space: nowrap; }
+
+    .news-list { display: grid; gap: 0; }
+    .news-item { padding: 13px 0; border-top: 1px solid var(--line); }
+    .news-item:first-child { padding-top: 0; border-top: 0; }
+    .news-item a {
+      color: #1c3e62;
+      font-weight: 700;
+      line-height: 1.45;
+      text-decoration: none;
+    }
+    .news-item a:hover { color: var(--blue); text-decoration: underline; }
+    body.dark-mode .news-item a { color: #d7eaff; }
+    body.dark-mode .current-weather { background: #263b57; }
+    body.dark-mode .conditions { color: #d2deed; }
+    .news-date { display: block; margin-top: 5px; color: var(--muted); font-size: .78rem; }
+    .status { color: var(--muted); font-size: .9rem; line-height: 1.5; }
+    .news-link { color: var(--blue); font-weight: 700; }
+    .footer { margin-top: 18px; color: var(--muted); font-size: .78rem; text-align: center; }
+
+    .links-card { margin-bottom: 20px; }
+    .quick-links {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .quick-link {
+      display: flex;
+      min-height: 48px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 13px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--blue);
+      font-size: .9rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+    .quick-link:hover { border-color: var(--blue); background: rgba(23, 105, 170, .06); }
+    body.dark-mode .quick-link:hover { background: rgba(120, 186, 240, .1); }
+
+    :focus-visible { outline: 3px solid #75b9f1; outline-offset: 3px; }
+
+    @media (max-width: 700px) {
+      .page { width: min(100% - 24px, 520px); padding: 30px 0 36px; }
+      .header { margin-bottom: 21px; }
+      .grid { grid-template-columns: 1fr; gap: 14px; }
+      .search-card, .card { padding: 18px; border-radius: 17px; }
+      .links-card { margin-bottom: 14px; }
+      .quick-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 420px) {
+      .search-form { flex-direction: column; }
+      .search-form button { width: 100%; }
+      .card-heading { align-items: flex-start; }
+      .refresh { min-height: 40px; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .card, .search-card { animation: appear .35s ease-out both; }
+      .card:nth-child(2) { animation-delay: .06s; }
+      @keyframes appear {
+        from { opacity: 0; transform: translateY(6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
     }
   </style>
 </head>
 <body class="dark-mode">
-  <!-- Toggle button in top-right corner -->
-  <button id="modeToggle" title="Unni-modus">☀</button>
+  <main class="page">
+    <header class="header">
+      <div class="header-top">
+        <div>
+          <p class="eyebrow">God morgen</p>
+          <h1>Infopanel</h1>
+        </div>
+        <button id="modeToggle" type="button" title="Bytt fargetema" aria-label="Bytt fargetema" aria-pressed="true">☀</button>
+      </div>
+      <p class="intro" id="today"></p>
+    </header>
 
-  <h1>Diverse lenker</h1>
-  <div class="section">
+    <section class="search-card" aria-labelledby="search-title">
+      <label id="search-title" for="search">Søk på Google</label>
+      <form class="search-form" action="https://www.google.com/search" method="get" role="search">
+        <input id="search" name="q" type="search" placeholder="Hva leter du etter?" autocomplete="off">
+        <button type="submit">Søk</button>
+      </form>
+    </section>
 
-    <a href="Telefonliste.htm" class="button" target="_self">Telefonliste</a>
-    
-    <a href="protokoller.htm" class="button" target="_self">Protokoller</a>
-    <a href="howto/totalaorta.htm" class="button" target="_blank">How-to</a>
-    <a href="regneark/MRA15.htm" class="button" target="_self">test</a>
-   
-  </div>
+    <section class="card links-card" aria-labelledby="links-title">
+      <div class="card-heading">
+        <h2 id="links-title">Diverse lenker</h2>
+      </div>
+      <nav class="quick-links" aria-label="Diverse lenker">
+        <a class="quick-link" href="../Telefonliste.htm" target="_self">Telefonliste <span aria-hidden="true">›</span></a>
+        <a class="quick-link" href="../protokoller.htm" target="_self">Protokoller <span aria-hidden="true">›</span></a>
+        <a class="quick-link" href="../howto/totalaorta.htm" target="_blank" rel="noopener noreferrer">How-to <span aria-hidden="true">↗</span></a>
+        <a class="quick-link" href="../regneark/MRA15.htm" target="_self">test <span aria-hidden="true">›</span></a>
+      </nav>
+    </section>
 
-  
-  	
+    <div class="grid">
+      <section class="card" aria-labelledby="weather-title">
+        <div class="card-heading">
+          <div>
+            <h2 id="weather-title">Været i Oslo</h2>
+            <p class="card-subtitle">Vær akkurat nå og de neste dagene</p>
+          </div>
+          <button class="refresh" id="weather-refresh" type="button">Oppdater</button>
+        </div>
+        <div id="weather" class="status" aria-live="polite">Henter værvarsel …</div>
+      </section>
 
-  
+      <section class="card" aria-labelledby="news-title">
+        <div class="card-heading">
+          <div>
+            <h2 id="news-title">Siste nytt fra NRK</h2>
+            <p class="card-subtitle">Toppnyheter fra NRK.no</p>
+          </div>
+          <button class="refresh" id="news-refresh" type="button">Oppdater</button>
+        </div>
+        <div id="news" class="news-list" aria-live="polite">
+          <p class="status">Henter siste nytt …</p>
+        </div>
+      </section>
+    </div>
+    <footer class="footer">Værdata fra Open-Meteo · Nyheter fra NRK</footer>
+  </main>
 
   <script>
-    const toggleBtn = document.getElementById('modeToggle');
-    const body = document.body;
+    const weatherEl = document.getElementById("weather");
+    const newsEl = document.getElementById("news");
+    const weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=59.9139&longitude=10.7522&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=Europe%2FOslo&forecast_days=4";
+    const newsUrl = "https://www.nrk.no/toppsaker.rss";
 
-    toggleBtn.addEventListener('click', () => {
-      if (body.classList.contains('dark-mode')) {
-        body.classList.remove('dark-mode');
-        body.classList.add('light-mode');
-        toggleBtn.textContent = '🌙';
-      } else {
-        body.classList.remove('light-mode');
-        body.classList.add('dark-mode');
-        toggleBtn.textContent = '☀';
+    document.getElementById("today").textContent = new Intl.DateTimeFormat("no-NO", {
+      weekday: "long", day: "numeric", month: "long"
+    }).format(new Date());
+
+    function weatherInfo(code) {
+      if (code === 0) return ["☀️", "Klart"];
+      if (code <= 2) return ["🌤️", "Delvis skyet"];
+      if (code === 3) return ["☁️", "Skyet"];
+      if (code === 45 || code === 48) return ["🌫️", "Tåke"];
+      if (code >= 51 && code <= 57) return ["🌦️", "Yr"];
+      if (code >= 61 && code <= 67) return ["🌧️", "Regn"];
+      if (code >= 71 && code <= 77) return ["🌨️", "Snø"];
+      if (code >= 80 && code <= 82) return ["🌧️", "Regnbyger"];
+      if (code >= 85 && code <= 86) return ["🌨️", "Snøbyger"];
+      if (code >= 95) return ["⛈️", "Tordenvær"];
+      return ["🌡️", "Værvarsel"];
+    }
+
+    function formatTemperature(value) {
+      return `${Math.round(value)}°`;
+    }
+
+    async function loadWeather() {
+      weatherEl.textContent = "Henter værvarsel …";
+      try {
+        const response = await fetch(weatherUrl);
+        if (!response.ok) throw new Error(`Værtjenesten svarte ${response.status}`);
+        const data = await response.json();
+        if (!data.current || !data.daily || !Array.isArray(data.daily.time)) {
+          throw new Error("Værtjenesten returnerte ufullstendige data");
+        }
+
+        const [icon, description] = weatherInfo(data.current.weather_code);
+        const current = document.createElement("div");
+        current.className = "current-weather";
+        const currentIcon = document.createElement("span");
+        currentIcon.className = "weather-icon";
+        currentIcon.setAttribute("aria-hidden", "true");
+        currentIcon.textContent = icon;
+        const currentInfo = document.createElement("div");
+        const temperature = document.createElement("div");
+        temperature.className = "temperature";
+        temperature.textContent = formatTemperature(data.current.temperature_2m);
+        const conditions = document.createElement("div");
+        conditions.className = "conditions";
+        conditions.textContent = description;
+        currentInfo.append(temperature, conditions);
+        current.append(currentIcon, currentInfo);
+
+        const detail = document.createElement("p");
+        detail.className = "weather-detail";
+        detail.textContent = `Føles som ${formatTemperature(data.current.apparent_temperature)} · Vind ${Math.round(data.current.wind_speed_10m)} km/t`;
+
+        const forecast = document.createElement("div");
+        forecast.className = "forecast";
+        for (let i = 1; i < Math.min(data.daily.time.length, 4); i += 1) {
+          const day = document.createElement("div");
+          day.className = "forecast-day";
+          const date = new Date(`${data.daily.time[i]}T12:00:00`);
+          const name = document.createElement("div");
+          name.className = "forecast-name";
+          name.textContent = new Intl.DateTimeFormat("no-NO", { weekday: "short" }).format(date);
+          const [dayIcon, dayDescription] = weatherInfo(data.daily.weather_code[i]);
+          const iconEl = document.createElement("div");
+          iconEl.className = "forecast-icon";
+          iconEl.setAttribute("role", "img");
+          iconEl.setAttribute("aria-label", dayDescription);
+          iconEl.textContent = dayIcon;
+          const temps = document.createElement("div");
+          temps.className = "forecast-temp";
+          temps.textContent = `${formatTemperature(data.daily.temperature_2m_min[i])} / ${formatTemperature(data.daily.temperature_2m_max[i])}`;
+          day.append(name, iconEl, temps);
+          forecast.append(day);
+        }
+        weatherEl.replaceChildren(current, detail, forecast);
+      } catch (error) {
+        console.error("Kunne ikke hente værvarsel:", error);
+        const message = document.createElement("p");
+        message.className = "status";
+        message.textContent = "Værvarselet kunne ikke lastes. Kontroller internettilkoblingen og prøv igjen.";
+        weatherEl.replaceChildren(message);
       }
+    }
+
+    function safeHttpUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" || url.protocol === "http:" ? url.href : null;
+      } catch {
+        return null;
+      }
+    }
+
+    async function loadNews() {
+      newsEl.replaceChildren();
+      const loading = document.createElement("p");
+      loading.className = "status";
+      loading.textContent = "Henter siste nytt …";
+      newsEl.append(loading);
+      try {
+        const response = await fetch(newsUrl);
+        if (!response.ok) throw new Error(`NRK svarte ${response.status}`);
+        const xml = new DOMParser().parseFromString(await response.text(), "application/xml");
+        if (xml.querySelector("parsererror")) throw new Error("Ugyldig RSS-feed fra NRK");
+        const items = Array.from(xml.querySelectorAll("item")).slice(0, 6);
+        if (!items.length) throw new Error("NRK-feeden inneholder ingen nyheter");
+
+        const fragment = document.createDocumentFragment();
+        items.forEach((item) => {
+          const title = item.querySelector("title")?.textContent?.trim();
+          const href = safeHttpUrl(item.querySelector("link")?.textContent?.trim());
+          if (!title || !href) return;
+          const article = document.createElement("article");
+          article.className = "news-item";
+          const link = document.createElement("a");
+          link.href = href;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = title;
+          article.append(link);
+          const dateText = item.querySelector("pubDate")?.textContent?.trim();
+          if (dateText) {
+            const date = new Date(dateText);
+            if (!Number.isNaN(date.getTime())) {
+              const time = document.createElement("time");
+              time.className = "news-date";
+              time.dateTime = date.toISOString();
+              time.textContent = new Intl.DateTimeFormat("no-NO", {
+                day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"
+              }).format(date);
+              article.append(time);
+            }
+          }
+          fragment.append(article);
+        });
+        if (!fragment.childNodes.length) throw new Error("Fant ingen visbare nyheter i NRK-feeden");
+        newsEl.replaceChildren(fragment);
+      } catch (error) {
+        console.error("Kunne ikke hente NRK-nyheter:", error);
+        const message = document.createElement("p");
+        message.className = "status";
+        message.textContent = "Nyhetene kunne ikke lastes herfra. RSS-feeden kan være blokkert av nettleseren eller nettverket. ";
+        const link = document.createElement("a");
+        link.className = "news-link";
+        link.href = "https://www.nrk.no/";
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = "Gå til NRK.no";
+        message.append(link);
+        newsEl.replaceChildren(message);
+      }
+    }
+
+    document.getElementById("weather-refresh").addEventListener("click", loadWeather);
+    document.getElementById("news-refresh").addEventListener("click", loadNews);
+    document.getElementById("modeToggle").addEventListener("click", (event) => {
+      const button = event.currentTarget;
+      const dark = document.body.classList.toggle("dark-mode");
+      button.textContent = dark ? "☀" : "🌙";
+      button.setAttribute("aria-pressed", String(dark));
     });
+    loadWeather();
+    loadNews();
   </script>
 </body>
 </html>
